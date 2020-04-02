@@ -14,10 +14,10 @@ namespace l2g.Controllers
         public IHttpActionResult GetCars()
         {
             CarBL carBL = new CarBL();
-            var carResponse = carBL.GetCars();
-            if (carResponse == null)
+            var getResponse = carBL.GetCars();
+            if (getResponse == null)
                 return BadRequest();
-            return Ok(carResponse);
+            return Ok(getResponse);
         }
     }
 }
