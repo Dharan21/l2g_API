@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f3a60a7f4af64ba8834aa65731d6dcb7" Name="Diagram1">
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_Brand" Width="1.5" PointX="1.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_Car" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_Contract" Width="1.5" PointX="3.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_EmployeeStatus" Width="1.5" PointX="3.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_Fuel" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_Gearbox" Width="1.5" PointX="1.5" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_Mileage" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_PaybackTime" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_Quote" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_User" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_UserBankDetails" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_UserDetails" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.l2g_tbl_UserEmployeementDetails" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Lead2OrderGenerateDbModel.sysdiagram" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_Car_l2g_tbl_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_Car_l2g_tbl_Fuel" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_Car_l2g_tbl_Gearbox" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_Quote_l2g_tbl_Car" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_UserEmployeementDetails_tbl_Contract" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_UserEmployeementDetails_tbl_EmployeeStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_Quote_l2g_tbl_Mileage" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_Quote_l2g_tbl_PaybackTime" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_Quote_l2g_tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_UserBankDetails_l2g_tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_UserDetails_l2g_tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Lead2OrderGenerateDbModel.FK_l2g_tbl_UserEmployeementDetails_l2g_tbl_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
