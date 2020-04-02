@@ -10,16 +10,25 @@ namespace l2g.BL
 {
     public class CarBL
     {
-        public CarResponse GetCars()
+        public GetResponse GetCars()
         {
             CarDL carDL = new CarDL();
             var cars = carDL.GetCars();
-            if (cars == null)
+            var brands = carDL.GetBrands();
+            var fuelTypes = carDL.GetFuelTypes();
+            var gearBoxTypes = carDL.GetGearboxTypes();
+            if (cars == null && brands == null && fuelTypes == null && gearBoxTypes == null)
                 return null;
-            CarResponse response = new CarResponse()
+            GetResponse response = new GetResponse()
             {
-                Count = cars.Count,
-                Cars = cars
+                CarCount = cars.Count,
+                Cars = cars,
+                BrandCount = brands.Count,
+                Brands = brands,
+                FuelTypeCount = fuelTypes.Count,
+                fuelTypes = fuelTypes,
+                GearBoxTypeCount = gearBoxTypes.Count,
+                gearBoxTypes = gearBoxTypes
             };
             return response;
         }
