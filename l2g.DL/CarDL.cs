@@ -28,5 +28,59 @@ namespace l2g.DL
                 return new List<CarVM>();
             }
         }
+
+        public List<BrandVM> GetBrands()
+        {
+            using (var db = new Lead2OrderGenerateDbEntities())
+            {
+                List<l2g_tbl_Brand> brands = db.l2g_tbl_Brand.ToList();
+                if (brands.Count > 0)
+                {
+                    List<BrandVM> brandVMs = new List<BrandVM>();
+                    foreach (var brand in brands)
+                    {
+                        brandVMs.Add(MappingConfig.BrandToBusinessEntity(brand));
+                    }
+                    return brandVMs;
+                }
+                return new List<BrandVM>();
+            }
+        }
+
+        public List<FuelVM> GetFuelTypes()
+        {
+            using (var db = new Lead2OrderGenerateDbEntities())
+            {
+                List<l2g_tbl_Fuel> fuelTypes = db.l2g_tbl_Fuel.ToList();
+                if (fuelTypes.Count > 0)
+                {
+                    List<FuelVM> fuelVMs = new List<FuelVM>();
+                    foreach (var fuelType in fuelTypes)
+                    {
+                        fuelVMs.Add(MappingConfig.FuelToBusinessEntity(fuelType));
+                    }
+                    return fuelVMs;
+                }
+                return new List<FuelVM>();
+            }
+        }
+
+        public List<GearboxVM> GetGearboxTypes()
+        {
+            using (var db = new Lead2OrderGenerateDbEntities())
+            {
+                List<l2g_tbl_Gearbox> gearboxTypes = db.l2g_tbl_Gearbox.ToList();
+                if (gearboxTypes.Count > 0)
+                {
+                    List<GearboxVM> gearboxVMs = new List<GearboxVM>();
+                    foreach (var gearBoxType in gearboxTypes)
+                    {
+                        gearboxVMs.Add(MappingConfig.GearboxToBusinessEntity(gearBoxType));
+                    }
+                    return gearboxVMs;
+                }
+                return new List<GearboxVM>();
+            }
+        }
     }
 }
