@@ -26,9 +26,9 @@ namespace l2g.BL
                 BrandCount = brands.Count,
                 Brands = brands,
                 FuelTypeCount = fuelTypes.Count,
-                fuelTypes = fuelTypes,
+                FuelTypes = fuelTypes,
                 GearBoxTypeCount = gearBoxTypes.Count,
-                gearBoxTypes = gearBoxTypes
+                GearBoxTypes = gearBoxTypes
             };
             return response;
         }

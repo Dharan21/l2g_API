@@ -13,8 +13,8 @@ namespace l2g.Entities.BusinessEntities
         public int BrandCount { get; set; }
         public List<BrandVM> Brands { get; set; }
         public int FuelTypeCount { get; set; }
-        public List<FuelVM> fuelTypes { get; set; }
+        public List<FuelVM> FuelTypes { get; set; }
         public int GearBoxTypeCount { get; set; }
-        public List<GearboxVM> gearBoxTypes { get; set; }
+        public List<GearboxVM> GearBoxTypes { get; set; }
     }
 }

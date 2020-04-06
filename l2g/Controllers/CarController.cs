@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace l2g.Controllers
 {
+    [EnableCors("*","*","*")]
     public class CarController : ApiController
     {
         public IHttpActionResult GetCars()
