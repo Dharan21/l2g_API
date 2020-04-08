@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthDL.cs" />
     <Compile Include="CarDL.cs" />
     <Compile Include="Mapping\MappingConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
