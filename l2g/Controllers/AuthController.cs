@@ -1,6 +1,5 @@
 ﻿using l2g.BL;
 using l2g.Entities.BusinessEntities;
-using l2g.Entities.Enum;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
