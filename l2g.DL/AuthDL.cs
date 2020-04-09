@@ -14,10 +14,42 @@ namespace l2g.DL
         Lead2OrderGenerateDbEntities db = new Lead2OrderGenerateDbEntities();
         public UserVM ValidateUser(string username, string password)
         {
-            return MappingConfig.UserToBusinessEntity(db.l2g_tbl_User.FirstOrDefault(user =>
-            user.Username.Equals(username, StringComparison.OrdinalIgnoreCase)
-            && user.Password == password));
+            l2g_tbl_User user = db.l2g_tbl_User.FirstOrDefault(u =>
+            u.Username.Equals(username, StringComparison.OrdinalIgnoreCase)
+            && u.Password == password);
+            if(user == null)
+            {
+                return null;
+            }
+            return MappingConfig.UserToBusinessEntity(user);
         }
+
+        public bool CheckEmailExists(string email)
+        {
+            return db.l2g_tbl_User.Any(user => user.Email == email);
+        }
+
+        public bool CheckUsernameExists(string username)
+        {
+            return db.l2g_tbl_User.Any(user => user.Username == username); 
+        }
+
+        public bool RegisterUser(UserVM userVM)
+        {
+            l2g_tbl_User user = MappingConfig.UserToDataEntity(userVM);
+            user.CreatedDate = DateTime.Now;
+            try
+            {
+                db.l2g_tbl_User.Add(user);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void Dispose()
         {
             db.Dispose();

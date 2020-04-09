@@ -10,7 +10,6 @@ using System.Web.Http.Cors;
 
 namespace l2g.Controllers
 {
-    //[EnableCors("*","*","*")]
     [Authorize]
     public class CarController : ApiController
     {

@@ -1,7 +1,9 @@
 ﻿using l2g.BL;
+using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -26,7 +28,7 @@ namespace l2g.Models
             }
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Username));
-            identity.AddClaim(new Claim("Email", user.Email));
+            //identity.AddClaim(new Claim("Email", user.Email));
             context.Validated(identity);
         }
     }

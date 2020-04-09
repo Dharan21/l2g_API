@@ -62,6 +62,7 @@
     <Compile Include="BusinessEntities\UserDetailsVM.cs" />
     <Compile Include="BusinessEntities\UserEmploymentDetailsVM.cs" />
     <Compile Include="BusinessEntities\UserVM.cs" />
+    <Compile Include="BusinessEntities\ErrorResponseVM.cs" />
     <Compile Include="DataEntities\l2g.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -144,5 +145,6 @@
       <LastGenOutput>l2g.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
