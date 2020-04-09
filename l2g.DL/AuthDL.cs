@@ -50,6 +50,17 @@ namespace l2g.DL
             return true;
         }
 
+        public List<UserVM> GetUser()
+        {
+            List<l2g_tbl_User> users = db.l2g_tbl_User.ToList();
+            List<UserVM> userVMs = new List<UserVM>();
+            foreach (var user in users)
+            {
+                userVMs.Add(MappingConfig.UserToBusinessEntity(user));
+            }
+            return userVMs; //returns all users in the user table
+        }
+
         public void Dispose()
         {
             db.Dispose();
