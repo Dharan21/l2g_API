@@ -27,9 +27,9 @@ namespace l2g.Controllers
                 return BadRequest(JsonConvert.SerializeObject(response.errors));
             return Ok();
         }
+        [HttpGet]
         public async Task<IHttpActionResult> GetPassword(string email)
         {
-            //string email = "bhavya0598@gmail.com";
             AuthBL authBL = new AuthBL();
             await authBL.SendEmail(email);
             return Ok();

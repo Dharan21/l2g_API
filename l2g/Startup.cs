@@ -22,7 +22,7 @@ namespace l2g
             OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,
-                //The Path For generating the Toekn
+                //The Path For generating the Token
                 TokenEndpointPath = new PathString("/token"),
                 //Setting the Token Expired Time (24 hours)
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),

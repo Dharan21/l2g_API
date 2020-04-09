@@ -97,16 +97,15 @@ namespace l2g.BL
         public async Task SendEmail(string email)
         {
             AuthDL authDL = new AuthDL();
-            var users = authDL.GetUser();
-
-            if (users.Where(s => s.Email == email).Any())
+            bool isEmailExist = authDL.CheckEmailExists(email);
+            if (isEmailExist)
             {
                 //send password in the mail
                 var message = new MailMessage();
                 message.To.Add(email);
                 message.From = new MailAddress("Bhavya Shah <bhavya0598@gmail.com>");
                 message.Subject = "Email Verification";
-                message.Body = "Your Password: " + users.Where(s => s.Email == email).First().Password;
+                message.Body = "Your Password: " + authDL.GetPassword(email);
                 message.IsBodyHtml = true;
                 using (var smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
@@ -122,6 +121,9 @@ namespace l2g.BL
                         Console.WriteLine(ex);
                     }
                 }
+            }
+            else {
+                Console.WriteLine("Email doesnt exist!");
             }
         }
     }
