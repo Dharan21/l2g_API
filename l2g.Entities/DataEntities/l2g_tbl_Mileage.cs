@@ -20,7 +20,6 @@ namespace l2g.Entities.DataEntities
         {
             this.l2g_tbl_Quote = new HashSet<l2g_tbl_Quote>();
         }
-    
         [Key]
         public int MileageId { get; set; }
         public int Kilometer { get; set; }

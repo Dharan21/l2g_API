@@ -20,7 +20,6 @@ namespace l2g.Entities.DataEntities
         {
             this.l2g_tbl_Car = new HashSet<l2g_tbl_Car>();
         }
-    
         [Key]
         public int GearboxId { get; set; }
         public string GearboxType { get; set; }
