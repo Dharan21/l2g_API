@@ -40,7 +40,7 @@ namespace l2g.BL
                 {
                     Error error = new Error()
                     { 
-                        message = "Username Exists",
+                        message = "Username Exists!",
                         property = "Username",
                     };
                     errorRes.isValid = false;
@@ -94,9 +94,10 @@ namespace l2g.BL
             }
             return errorRes;
         }
-        public async Task SendEmail(string email)
+        public async Task<ErrorResponseVM> SendEmail(string email)
         {
             AuthDL authDL = new AuthDL();
+            ErrorResponseVM errorRes = new ErrorResponseVM();
             bool isEmailExist = authDL.CheckEmailExists(email);
             if (isEmailExist)
             {
@@ -118,13 +119,23 @@ namespace l2g.BL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        errorRes.isInternalServerError = true;
                     }
                 }
+                errorRes.isValid = true;
             }
             else {
-                Console.WriteLine("Email doesnt exist!");
+                Error error = new Error()
+                {
+                    message = "Email doesn't exist!",
+                    property = "Email"
+                };
+                errorRes.isValid = false;
+                errorRes.errors.Add(error);
+
+                //Console.WriteLine("Email doesnt exist!");
             }
+            return errorRes;
         }
     }
 }

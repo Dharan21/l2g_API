@@ -23,7 +23,7 @@ namespace l2g.Models
             var user = authBL.ValidateUser(context.UserName, context.Password);
             if (user == null)
             {
-                context.SetError("invalid_grant", "Provided username and password is incorrect");
+                context.SetError("invalid_grant", "Username or Password is invalid!");
                 return;
             }
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);

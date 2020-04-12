@@ -27,12 +27,19 @@ namespace l2g.Controllers
                 return BadRequest(JsonConvert.SerializeObject(response.errors));
             return Ok();
         }
+
         [HttpGet]
         public async Task<IHttpActionResult> GetPassword(string email)
         {
             AuthBL authBL = new AuthBL();
-            await authBL.SendEmail(email);
-            return Ok();
+            ErrorResponseVM respose = new ErrorResponseVM();
+            respose = await authBL.SendEmail(email);
+            if (respose.isInternalServerError)
+                return InternalServerError();
+            if (!respose.isValid)
+                return BadRequest(JsonConvert.SerializeObject(respose.errors));
+            else
+                return Ok();
         }
     }
 }
