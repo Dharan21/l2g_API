@@ -17,7 +17,9 @@ namespace l2g.BL
             var brands = carDL.GetBrands();
             var fuelTypes = carDL.GetFuelTypes();
             var gearBoxTypes = carDL.GetGearboxTypes();
-            if (cars == null && brands == null && fuelTypes == null && gearBoxTypes == null)
+            var mileages = carDL.GetMileages();
+            var paybackTimes = carDL.GetPaybackTimes();
+            if (cars == null && brands == null && fuelTypes == null && gearBoxTypes == null && mileages == null && paybackTimes == null)
                 return null;
             GetResponse response = new GetResponse()
             {
@@ -28,7 +30,11 @@ namespace l2g.BL
                 FuelTypeCount = fuelTypes.Count,
                 FuelTypes = fuelTypes,
                 GearBoxTypeCount = gearBoxTypes.Count,
-                GearBoxTypes = gearBoxTypes
+                GearBoxTypes = gearBoxTypes,
+                MileageCount = mileages.Count,
+                Mileages = mileages,
+                PaybackTimeCount = paybackTimes.Count,
+                PaybackTimes = paybackTimes
             };
             return response;
         }

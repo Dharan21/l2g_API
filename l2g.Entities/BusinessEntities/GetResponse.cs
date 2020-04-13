@@ -16,5 +16,9 @@ namespace l2g.Entities.BusinessEntities
         public List<FuelVM> FuelTypes { get; set; }
         public int GearBoxTypeCount { get; set; }
         public List<GearboxVM> GearBoxTypes { get; set; }
+        public int MileageCount { get; set; }
+        public List<MileageVM> Mileages { get; set; }
+        public int PaybackTimeCount { get; set; }
+        public List<PaybackTimeVM> PaybackTimes { get; set; }
     }
 }

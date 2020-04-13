@@ -82,5 +82,41 @@ namespace l2g.DL
                 return new List<GearboxVM>();
             }
         }
+
+        public List<MileageVM> GetMileages()
+        {
+            using(var db = new Lead2OrderGenerateDbEntities())
+            {
+                List<l2g_tbl_Mileage> mileages = db.l2g_tbl_Mileage.ToList();
+                if(mileages.Count > 0)
+                {
+                    List<MileageVM> mileageVMs = new List<MileageVM>();
+                    foreach (var mileage in mileages)
+                    {
+                        mileageVMs.Add(MappingConfig.MileageToBusinessEntity(mileage));
+                    }
+                    return mileageVMs;
+                }
+            }
+            return new List<MileageVM>();
+        }
+
+        public List<PaybackTimeVM> GetPaybackTimes()
+        {
+            using (var db = new Lead2OrderGenerateDbEntities())
+            {
+                List<l2g_tbl_PaybackTime> paybackTimes = db.l2g_tbl_PaybackTime.ToList();
+                if (paybackTimes.Count > 0)
+                {
+                    List<PaybackTimeVM> paybackTimeVMs = new List<PaybackTimeVM>();
+                    foreach (var paybackTime in paybackTimes)
+                    {
+                        paybackTimeVMs.Add(MappingConfig.paybackTimeToBusinessEntity(paybackTime));
+                    }
+                    return paybackTimeVMs;
+                }
+            }
+            return new List<PaybackTimeVM>();
+        }
     }
 }
