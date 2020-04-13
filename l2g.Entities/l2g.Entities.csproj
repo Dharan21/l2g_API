@@ -57,6 +57,8 @@
     <Compile Include="BusinessEntities\CarVM.cs" />
     <Compile Include="BusinessEntities\FuelVM.cs" />
     <Compile Include="BusinessEntities\GearboxVM.cs" />
+    <Compile Include="BusinessEntities\MileageVM.cs" />
+    <Compile Include="BusinessEntities\PaybackTimeVM.cs" />
     <Compile Include="BusinessEntities\QuoteVM.cs" />
     <Compile Include="BusinessEntities\UserBankDetailsVM.cs" />
     <Compile Include="BusinessEntities\UserDetailsVM.cs" />

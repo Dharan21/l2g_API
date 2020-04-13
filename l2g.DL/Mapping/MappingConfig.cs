@@ -199,5 +199,25 @@ namespace l2g.DL.Mapping
             };
             return user;
         }
+
+        public static MileageVM MileageToBusinessEntity(l2g_tbl_Mileage mileage)
+        {
+            var mileageVM = new MileageVM()
+            {
+                MileageId = mileage.MileageId,
+                Kilometer = mileage.Kilometer
+            };
+            return mileageVM;
+        }
+
+        public static PaybackTimeVM paybackTimeToBusinessEntity(l2g_tbl_PaybackTime paybackTime)
+        {
+            var paybackTimeVM = new PaybackTimeVM()
+            {
+                MonthId = paybackTime.MonthId,
+                Months = paybackTime.Months
+            };
+            return paybackTimeVM;
+        }
     }
 }
