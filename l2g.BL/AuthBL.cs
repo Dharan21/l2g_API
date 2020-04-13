@@ -105,8 +105,8 @@ namespace l2g.BL
                 var message = new MailMessage();
                 message.To.Add(email);
                 message.From = new MailAddress("Bhavya Shah <bhavya0598@gmail.com>");
-                message.Subject = "Email Verification";
-                message.Body = "Your Password: " + authDL.GetPassword(email);
+                message.Subject = "Forgot Password?";
+                message.Body = "Your Username: " + authDL.GetUsername(email) + "Your Password: " + authDL.GetPassword(email);
                 message.IsBodyHtml = true;
                 using (var smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
