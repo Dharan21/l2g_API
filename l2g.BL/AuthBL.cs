@@ -6,136 +6,82 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace l2g.BL
 {
-    public class AuthBL
+    public class AuthBL: IDisposable
     {
+        AuthDL authDL = new AuthDL();
         public UserVM ValidateUser(string username, string password)
         {
-            AuthDL authDL = new AuthDL();
             return authDL.ValidateUser(username, password);
         }
 
-        public ErrorResponseVM Register(UserVM userVM)
+        public ErrorResponseVM CheckUsernameOrEmailExists(UserVM userVM)
         {
-            AuthDL authDL = new AuthDL();
             ErrorResponseVM errorRes = new ErrorResponseVM();
-
-            if (String.IsNullOrEmpty(userVM.Username))
+            bool isUsernameExists = authDL.CheckUsernameExists(userVM.Username);
+            if (isUsernameExists)
             {
                 Error error = new Error()
                 {
-                    message = "Username is Required!",
-                    property = "Username"
+                    ErrorMessage = "Username Exists!",
+                    Property = "Username",
                 };
-                errorRes.isValid = false;
-                errorRes.errors.Add(error);
+                errorRes.Errors.Add(error);
             }
-            else
-            {
-                bool isUsernameExists = authDL.CheckUsernameExists(userVM.Username);
-                if (isUsernameExists)
-                {
-                    Error error = new Error()
-                    { 
-                        message = "Username Exists!",
-                        property = "Username",
-                    };
-                    errorRes.isValid = false;
-                    errorRes.errors.Add(error);
-                }
-            }
-            if (String.IsNullOrEmpty(userVM.Email))
+            bool isEmailExists = authDL.CheckEmailExists(userVM.Email);
+            if (isEmailExists)
             {
                 Error error = new Error()
                 {
-                    message = "Email is Required!",
-                    property = "Email"
+                    ErrorMessage = "Email Exists!",
+                    Property = "Email"
                 };
-                errorRes.isValid = false;
-                errorRes.errors.Add(error);
-            }
-            else
-            {
-                bool isEmailExists = authDL.CheckEmailExists(userVM.Email);
-                if (isEmailExists)
-                {
-                    Error error = new Error()
-                    {
-                        message = "Email Exists!",
-                        property = "Email"
-                    };
-                    errorRes.isValid = false;
-                    errorRes.errors.Add(error);
-                }
-            }
-            if (String.IsNullOrEmpty(userVM.Password)) {
-                Error error = new Error()
-                {
-                    message = "Password is Required!",
-                    property = "Password"
-                };
-                errorRes.isValid = false;
-                errorRes.errors.Add(error);
-            }
-            if(errorRes.errors.Count == 0)
-            {
-                bool isRegistred = authDL.RegisterUser(userVM);
-                if(!isRegistred)
-                {
-                    errorRes.isInternalServerError = true;
-                }
-                else
-                {
-                    errorRes.isSuccess = true;
-                }
+                errorRes.Errors.Add(error);
             }
             return errorRes;
         }
-        public async Task<ErrorResponseVM> SendEmail(string email)
+        public bool CheckEmailExists(string email)
         {
-            AuthDL authDL = new AuthDL();
-            ErrorResponseVM errorRes = new ErrorResponseVM();
-            bool isEmailExist = authDL.CheckEmailExists(email);
-            if (isEmailExist)
-            {
-                //send password in the mail
-                var message = new MailMessage();
-                message.To.Add(email);
-                message.From = new MailAddress("Bhavya Shah <bhavya0598@gmail.com>");
-                message.Subject = "Email Verification";
-                message.Body = "Your Password: " + authDL.GetPassword(email);
-                message.IsBodyHtml = true;
-                using (var smtp = new SmtpClient("smtp.gmail.com", 587))
-                {
-                    smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new NetworkCredential("bhavya0598@gmail.com", "lead2ordergenerate");
-                    smtp.EnableSsl = true;
-                    try
-                    {
-                        await smtp.SendMailAsync(message);
-                    }
-                    catch (Exception ex)
-                    {
-                        errorRes.isInternalServerError = true;
-                    }
-                }
-                errorRes.isValid = true;
-            }
-            else {
-                Error error = new Error()
-                {
-                    message = "Email doesn't exist!",
-                    property = "Email"
-                };
-                errorRes.isValid = false;
-                errorRes.errors.Add(error);
+            return authDL.CheckEmailExists(email);
+        }
 
-                //Console.WriteLine("Email doesnt exist!");
+        public bool Register(UserVM userVM)
+        {
+            return authDL.RegisterUser(userVM);
+        }
+
+        public async Task<bool> SendEmail(string email)
+        {
+            //send password in the mail
+            var message = new MailMessage();
+            message.To.Add(email);
+            message.From = new MailAddress("Bhavya Shah <bhavya0598@gmail.com>");
+            message.Subject = "Check Your Password Here";
+            message.Body = "Your Password: " + authDL.GetPassword(email);
+            message.IsBodyHtml = true;
+            using (var smtp = new SmtpClient("smtp.gmail.com", 587))
+            {
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential("bhavya0598@gmail.com", "lead2ordergenerate");
+                smtp.EnableSsl = true;
+                try
+                {
+                    await smtp.SendMailAsync(message);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-            return errorRes;
+            return true;
+        }
+        public void Dispose()
+        {
+            authDL.Dispose();
         }
     }
 }

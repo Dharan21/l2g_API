@@ -120,6 +120,9 @@
       <DependentUpon>l2g.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationEntities\CustomDataAnnotation.cs" />
+    <Compile Include="ValidationEntities\EntityValidationResult.cs" />
+    <Compile Include="ValidationEntities\EntityValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

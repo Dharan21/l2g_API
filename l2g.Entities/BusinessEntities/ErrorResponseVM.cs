@@ -8,14 +8,12 @@ namespace l2g.Entities.BusinessEntities
 {
     public class Error
     {
-        public string message { get; set; }
-        public string property { get; set; }
+        public string ErrorMessage { get; set; }
+        public string Property { get; set; }
     }
     public class ErrorResponseVM
     {
-        public List<Error> errors { get; set; } = new List<Error>();
-        public bool isValid { get; set; }
-        public bool isSuccess { get; set; }
-        public bool isInternalServerError { get; set; }
+        public List<Error> Errors { get; set; } = new List<Error>();
+        public bool IsValid { get { return Errors.Count == 0; } }
     }
 }
