@@ -50,19 +50,14 @@ namespace l2g.DL
             return true;
         }
 
-        public string GetPassword(string email)
-        {
-            return db.l2g_tbl_User.Where(s => s.Email == email).FirstOrDefault().Password;
-        }
-
-        public string GetUsername(string email)
-        {
-            return db.l2g_tbl_User.Where(s => s.Email == email).FirstOrDefault().Username;
+        public string GetPassword(string email) {
+            return db.l2g_tbl_User.Where(s => s.Email == email).FirstOrDefault().Password;    
         }
 
         public void Dispose()
         {
             db.Dispose();
         }
+
     }
 }

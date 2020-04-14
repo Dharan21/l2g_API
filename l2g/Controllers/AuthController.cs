@@ -1,5 +1,6 @@
 ﻿using l2g.BL;
 using l2g.Entities.BusinessEntities;
+using l2g.Entities.ValidationEntities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,29 +18,45 @@ namespace l2g.Controllers
         [HttpPost]
         public IHttpActionResult Register(UserVM userVM)
         {
-            AuthBL authBL = new AuthBL();
-            ErrorResponseVM response = authBL.Register(userVM);
-            if (response.isInternalServerError)
-                return InternalServerError();
-            if (response.isSuccess)
-                return Ok();
-            if (!response.isValid)
-                return BadRequest(JsonConvert.SerializeObject(response.errors));
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                AuthBL authBL = new AuthBL();
+                ErrorResponseVM errorResponse = authBL.CheckUsernameOrEmailExists(userVM);
+                if (errorResponse.IsValid)
+                {
+                    var isRegistered = authBL.Register(userVM);
+                    if(isRegistered)
+                        return Ok();
+                    else
+                        return InternalServerError();
+                }
+                else
+                    return BadRequest(JsonConvert.SerializeObject(errorResponse.Errors));
+            }
+            else
+            {
+                var validationResult = CustomDataAnnotation.ValidateEntity<UserVM>(userVM);
+                return BadRequest(JsonConvert.SerializeObject(validationResult.ValidationErrors));
+            }
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> GetPassword(string email)
         {
             AuthBL authBL = new AuthBL();
-            ErrorResponseVM respose = new ErrorResponseVM();
-            respose = await authBL.SendEmail(email);
-            if (respose.isInternalServerError)
-                return InternalServerError();
-            if (!respose.isValid)
-                return BadRequest(JsonConvert.SerializeObject(respose.errors));
+            bool isExists = authBL.CheckEmailExists(email);
+            if (isExists)
+            {
+                var isSent = await authBL.SendEmail(email);
+                if (isSent)
+                    return Ok();
+                else
+                    return InternalServerError();
+            }
             else
-                return Ok();
+                return BadRequest(JsonConvert.SerializeObject(new { ErrorMessage = "Email Doesn't registred!"}));
+            
+                
         }
     }
 }
