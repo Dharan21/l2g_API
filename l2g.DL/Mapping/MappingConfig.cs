@@ -159,22 +159,15 @@ namespace l2g.DL.Mapping
             return user;
         }
 
-        public static UserEmploymentDetailsVM UserBankDetailsToBusinessEntity(l2g_tbl_UserEmployeementDetails user)
+        public static UserBankDetailsVM UserBankDetailsToBusinessEntity(l2g_tbl_UserBankDetails user)
         {
-            var userVM = new UserEmploymentDetailsVM()
+            var userVM = new UserBankDetailsVM()
             {
                 UserId = user.UserId,
-                Company = user.Company,
-                Salary = user.Salary,
-                CreditScore = user.CreditScore,
-                EmployeeStatusId = user.EmployeeStatusId, 
-                ContractId = user.ContractId
+                AccountNo = user.AccountNo,
+                AccountHolderName = user.AccountHolderName,
+                AccountType = user.AccountType
             };
-            using (var db = new Lead2OrderGenerateDbEntities())
-            {
-                userVM.EmployeeStatusType = db.l2g_tbl_EmployeeStatus.Find(user.EmployeeStatusId).EmployeeStatusType;
-                userVM.ContractType = db.l2g_tbl_Contract.Find(user.ContractId).ContractType;
-            }
             return userVM;
         }
         public static UserVM UserToBusinessEntity(l2g_tbl_User user)
