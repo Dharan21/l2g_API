@@ -133,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CarController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -157,6 +158,10 @@
     <ProjectReference Include="..\l2g.BL\l2g.BL.csproj">
       <Project>{65bb17a6-f090-4f64-9e6f-53a547242bb1}</Project>
       <Name>l2g.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\l2g.DL\l2g.DL.csproj">
+      <Project>{B670899B-3780-425A-BBB2-0B16B763F84A}</Project>
+      <Name>l2g.DL</Name>
     </ProjectReference>
     <ProjectReference Include="..\l2g.Entities\l2g.Entities.csproj">
       <Project>{378b8015-3598-462d-a786-7baa051e5efc}</Project>
