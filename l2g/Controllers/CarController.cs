@@ -10,7 +10,7 @@ using System.Web.Http.Cors;
 
 namespace l2g.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CarController : ApiController
     {
         public IHttpActionResult GetCars()

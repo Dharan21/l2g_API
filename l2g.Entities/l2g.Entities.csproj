@@ -57,6 +57,7 @@
     <Compile Include="BusinessEntities\CarVM.cs" />
     <Compile Include="BusinessEntities\FuelVM.cs" />
     <Compile Include="BusinessEntities\GearboxVM.cs" />
+    <Compile Include="BusinessEntities\LoginVM.cs" />
     <Compile Include="BusinessEntities\MileageVM.cs" />
     <Compile Include="BusinessEntities\PaybackTimeVM.cs" />
     <Compile Include="BusinessEntities\QuoteVM.cs" />
@@ -123,6 +124,8 @@
     <Compile Include="ValidationEntities\CustomDataAnnotation.cs" />
     <Compile Include="ValidationEntities\EntityValidationResult.cs" />
     <Compile Include="ValidationEntities\EntityValidator.cs" />
+    <Compile Include="ValidationEntities\ErrorRes.cs" />
+    <Compile Include="ValidationEntities\TokenRes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

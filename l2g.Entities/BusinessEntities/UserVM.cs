@@ -18,7 +18,11 @@ namespace l2g.Entities.BusinessEntities
         [Required(ErrorMessage = "Email is required!"), RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Provide valid Email!")]
         public string Email { get; set; }
         
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required!"), RegularExpression(@"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,16}$", ErrorMessage = "Passwords must contain 6-16 characters with uppercase letters, lowercase letters and at least one number!")]
         public string Password { get; set; }
+        
+        [Compare("Password", ErrorMessage = "Passwod and Confirm Password do not match!")]
+        public string ConfirmPassword { get; set; }
     }
 }
