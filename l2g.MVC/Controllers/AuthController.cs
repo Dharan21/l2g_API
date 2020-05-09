@@ -82,11 +82,13 @@ namespace l2g.MVC.Controllers
                     {
                         var result = response.Content.ReadAsStringAsync().Result;
                         var obj = JsonConvert.DeserializeObject<TokenRes>(result);
+                        
                         HttpCookie cookie = new HttpCookie("token");
                         cookie.Value = obj.access_token;
-                        cookie.Expires = new DateTime().AddSeconds(obj.expires_in);
+                        cookie.Expires = DateTime.Now.AddSeconds(obj.expires_in);
                         Response.Cookies.Add(cookie);
 
+                        return RedirectToAction("Home", "Car");
                     }
                     else
                     {
