@@ -96,5 +96,12 @@ namespace l2g.MVC.Controllers
             }
             return View();
         }
+
+        [Route("forgot-password")]
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
     }
 }
