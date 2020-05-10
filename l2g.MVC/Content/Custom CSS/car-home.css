@@ -1,0 +1,8 @@
+﻿@media (min-width: 900px) {
+    .justify-center {
+        justify-content: center;
+    }
+}
+.nav-link:hover {
+    color: #3282b8 !important;
+}

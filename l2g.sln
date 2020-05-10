@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l2g.WebAPI", "l2g\l2g.WebAPI.csproj", "{7656DB70-8C89-46F5-BB73-551EDF53ED15}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l2g.BL", "l2g.BL\l2g.BL.csproj", "{65BB17A6-F090-4F64-9E6F-53A547242BB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l2g.DL", "l2g.DL\l2g.DL.csproj", "{B670899B-3780-425A-BBB2-0B16B763F84A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l2g.MVC", "l2g.MVC\l2g.MVC.csproj", "{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B670899B-3780-425A-BBB2-0B16B763F84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B670899B-3780-425A-BBB2-0B16B763F84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B670899B-3780-425A-BBB2-0B16B763F84A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

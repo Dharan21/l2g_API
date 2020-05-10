@@ -1,0 +1,425 @@
+﻿@model l2g.Entities.BusinessEntities.GetResponse
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+    <link href="~/Content/Custom CSS/steps.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/dropdown-filter.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/car-home.css" rel="stylesheet" />
+    <style>
+        .content-header {
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid animated fadeIn fast shadow-lg" style="background-color: #1b262c;">
+        <div class="container">
+            <div class="row align-items-center" style="height: 12vh">
+                <div class="col-4">
+                    <img src="~/Content/Images/jpg/car-logo.jpg" alt="logo" width="120" style="filter:invert(1)" />
+                </div>
+                <div class="col-8">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" style="cursor: pointer;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="height: 85vh;padding: 0;">
+        <div class="row" style="margin-right: 0;margin-left: 0;">
+            <div class="col-md-12" style="padding:0;">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- steps start -->
+                            <div class="container">
+                                <h3>The steps to get a car: </h3>
+                                <section class="application-progress">
+                                    <div class="overlay">
+                                        <div class="overlay-inner">
+                                            <ul>
+                                                <li class="click">
+                                                    <div>
+                                                        <div class="step done">1</div>
+                                                        <label class="done">Select Vehicle</label>
+                                                    </div>
+                                                </li>
+                                                <li class="click">
+                                                    <div>
+                                                        <div class="step">2</div>
+                                                        <label>Select Mileage and Payback Time</label>
+                                                    </div>
+                                                </li>
+                                                <li class="click">
+                                                    <div>
+                                                        <div class="step">3</div>
+                                                        <label>Add Personal Details</label>
+                                                    </div>
+                                                </li>
+                                                <li class="click">
+                                                    <div>
+                                                        <div class="step">4</div>
+                                                        <label>Add Employment Details</label>
+                                                    </div>
+                                                </li>
+                                                <li class="click">
+                                                    <div>
+                                                        <div class="step">5</div>
+                                                        <label>Add Bank Details</label>
+                                                    </div>
+                                                </li>
+                                                <li class="click">
+                                                    <div>
+                                                        <div class="step">6</div>
+                                                        <label>Generate Quote</label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="marker-container">
+                                        <div class="done-marker" style="margin-left: 8%; width: 0%;"></div>
+                                        <div class="todo-marker" style="margin-right: 8%; width: 84%;"></div>
+                                    </div>
+                                </section>
+                            </div>
+                            <!-- steps end -->
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" style="padding: 0;">
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <div class="mb-0">
+                                    <div class="content-header" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Select your car
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+
+                                    <form method="post">
+                                        <div style="padding-bottom: 200px;">
+                                            <div class="row justify-content-center">
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- Brand dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Brand
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            @foreach (var brand in Model.Brands)
+                                                            {
+                                                                <div class="dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="brand @brand.BrandName" value="@brand.BrandName">
+                                                                        <span class="cb-text">@brand.BrandName</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <!-- Brand dropdown end  -->
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- Gearbox dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuGearbox" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Gearbox
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuGearbox">
+                                                            @foreach (var gearbox in Model.GearBoxTypes)
+                                                            {
+                                                                <div class="dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="gearbox @gearbox.GearboxType" value="@gearbox.GearboxType">
+                                                                        <span class="cb-text">@gearbox.GearboxType</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <!-- Gearbox dropdown end  -->
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- fuel dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuFuel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select FuelType
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuFuel">
+                                                            @foreach (var fuel in Model.FuelTypes)
+                                                            {
+                                                                <div class="dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="fuel @fuel.FuelType" value="@fuel.FuelType">
+                                                                        <span class="cb-text">@fuel.FuelType</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <!-- fuel dropdown end  -->
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- price dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuPrice" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Price Range
+                                                        </button>
+                                                        <div class="dropdown-menu" id="priceDropdwn" aria-labelledby="dropdownMenuPrice">
+                                                            <!-- price ranges goes here -->
+                                                        </div>
+                                                    </div>
+                                                    <!-- price dropdown end  -->
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- Model dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuModel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Model
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuModel">
+                                                            @foreach (var car in Model.Cars)
+                                                            {
+                                                                <div class="model-item dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="model @car.Model" value="@car.Model">
+                                                                        <span class="cb-text">@car.Model</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <!-- Model dropdown end  -->
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-lg-9 offset-lg-1">
+                                                    <button class="btn btn-primary" style="font-size: 14px;">Search</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Custom/calculateLease.js"></script>
+    @*<script src="~/Scripts/Custom/car-home.js"></script>*@
+    <script>
+
+        var obj = @Html.Raw(Json.Encode(Model));
+        var cars = obj.Cars;
+        var brands = obj.Brands;
+        var fuelTypes = obj.FuelTypes;
+        var gearboxTypes = obj.GearBoxTypes;
+        var priceRanges = {
+            0: {
+                min: 400,
+                max: 499
+            },
+            1: {
+                min: 500,
+                max: 599
+            },
+            2: {
+                min: 600,
+                max: 699
+            }
+        };
+
+        var selectedModelList = [];
+        var selectedFuelList = [];
+        var selectedBrandList = [];
+        var selectedGearboxList = [];
+        var selectedPriceRange = [];
+
+        function inBrands(id) {
+            let inBrand = false;
+            let i = 0;
+            for (var brand of brands) {
+                if (brand.BrandName == id) {
+                    inBrand = true;
+                    break;
+                }
+                i++;
+            }
+            return inBrand ? i : -1;
+        }
+
+        function inFuelTypes(id) {
+            let inFuel = false;
+            let i = 0;
+            for (var fuel of fuelTypes) {
+                if (fuel.FuelType == id) {
+                    inFuel = true;
+                    break;
+                }
+                i++;
+            }
+            return inFuel ? i : -1;
+        }
+
+        function inGearboxTypes(id) {
+            let inGearbox = false;
+            let i = 0;
+            for (var gearbox of gearboxTypes) {
+                if (gearbox.GearboxType == id) {
+                    inGearbox = true;
+                    break;
+                }
+                i++;
+            }
+            return inGearbox ? i : -1;
+        }
+
+        function inCarModel(model) {
+            let inModel = false;
+            let i = 0;
+            for (var carModel in cars) {
+                if (carModel.Model == model) {
+                    inModel = true;
+                    break;
+                }
+                i++;
+            }
+            return inModel ? i : -1;
+        }
+
+        $(document).ready(function () {
+
+            $('.dropdown-menu').click(function (e) {
+                e.stopPropagation();
+            });
+
+            $.each(priceRanges, function (index, item) {
+                str = `<div class="dropdown-item">
+                            <label>
+                                <input type="checkbox" name="range ` + index + `" value="` + index + `">
+                                <span class="cb-text">` + item.min + `-` + item.max + `</span>
+                            </label>
+                        </div>`;
+                $('#priceDropdwn').append(str);
+            });
+
+            $("input[type=checkbox]").change(function (e) {
+
+                var value = e.target.value;
+                var brandIndex = inBrands(value);
+                var fuelIndex = inFuelTypes(value);
+                var gearboxIndex = inGearboxTypes(value);
+                var isModel = false;
+                //console.log(value);
+                if (e.target.checked) {
+                    if (brandIndex != -1) {
+                        selectedBrandList.push(value);
+                    } else if (fuelIndex != -1) {
+                        selectedFuelList.push(value);
+                    } else if (gearboxIndex != -1) {
+                        selectedGearboxList.push(value);
+                    } else if (Object.keys(priceRanges).includes(value)) {
+                        selectedPriceRange.push(value);
+                    } else {
+                        isModel = true;
+                        selectedModelList.push(value);
+                    }
+                } else {
+                    if (!e.target.checked) {
+
+                        if (selectedBrandList.includes(value)) {
+                            var index = selectedBrandList.indexOf(value);
+                            selectedBrandList.splice(index, 1);
+                        } else if (selectedFuelList.includes(value)) {
+                            var index = selectedFuelList.indexOf(value);
+                            selectedFuelList.splice(index, 1);
+                        } else if (selectedGearboxList.includes(value)) {
+                            var index = selectedGearboxList.indexOf(value);
+                            selectedGearboxList.splice(index, 1);
+                        } else if (selectedPriceRange.includes(value)) {
+                            var index = selectedPriceRange.indexOf(value);
+                            selectedPriceRange.splice(index, 1);
+                        } else {
+                            isModel = true;
+                            var index = selectedModelList.indexOf(value);
+                            selectedModelList.splice(index, 1);
+                        }
+                    }
+                }
+                //console.log(selectedCarList);
+                //console.log(selectedFuelList);
+                if (!isModel) {
+                    $('.model-item').filter(function (index) {
+                        var brand = cars[index].Brand.BrandName;
+                        var fuel = cars[index].Fuel.FuelType;
+                        var gearbox = cars[index].Gearbox.GearboxType;
+
+                        var brandCheck = selectedBrandList.length > 0 ? selectedBrandList.includes(brand) : true;
+                        var fuelCheck = selectedFuelList.length > 0 ? selectedFuelList.includes(fuel) : true;
+                        var gearboxCheck = selectedGearboxList.length > 0 ? selectedGearboxList.includes(gearbox) : true;
+
+                        var rangeCheck = false;
+                        if (selectedPriceRange.length > 0) {
+                            var price = calculateLease(cars[index].Price);
+                            for (var index of selectedPriceRange) {
+
+                                var min = priceRanges[index].min;
+                                var max = priceRanges[index].max;
+                                if (price >= min && price <= max) rangeCheck = true;
+                            }
+                        } else {
+                            rangeCheck = true;
+                        }
+                        var r = brandCheck && fuelCheck && gearboxCheck && rangeCheck;
+                        if (r) {
+                            $(this).removeClass('d-none');
+                        } else {
+                            $(this).addClass('d-none');
+                        }
+                        if (selectedBrandList.length == 0 && selectedFuelList.length == 0 && selectedGearboxList.length == 0 && selectedPriceRange.length == 0) {
+                            $(this).removeClass('d-none');
+                        }
+                    });
+                } else {
+                    console.log(selectedModelList);
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
