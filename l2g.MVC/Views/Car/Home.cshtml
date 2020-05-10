@@ -33,7 +33,7 @@
                 <div class="col-8">
                     <ul class="nav justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link text-white">Hello, User</a>
+                            <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" style="cursor: pointer;">Logout</a>
@@ -122,108 +122,110 @@
                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                 <div class="card-body">
 
-                                    <div style="padding-bottom: 200px;">
-                                        <div class="row justify-content-center">
-                                            <div class="col-12 col-md-6 col-lg-2">
-                                                <!-- Brand dropdown start  -->
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select Brand
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        @foreach (var brand in Model.Brands)
-                                                        {
-                                                            <div class="dropdown-item">
-                                                                <label>
-                                                                    <input type="checkbox" name="itemList" value="@brand.BrandName">
-                                                                    <span class="cb-text">@brand.BrandName</span>
-                                                                </label>
-                                                            </div>
-                                                        }
+                                    <form method="post">
+                                        <div style="padding-bottom: 200px;">
+                                            <div class="row justify-content-center">
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- Brand dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Brand
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            @foreach (var brand in Model.Brands)
+                                                            {
+                                                                <div class="dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="brand @brand.BrandName" value="@brand.BrandName">
+                                                                        <span class="cb-text">@brand.BrandName</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
                                                     </div>
+                                                    <!-- Brand dropdown end  -->
                                                 </div>
-                                                <!-- Brand dropdown end  -->
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- Gearbox dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuGearbox" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Gearbox
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuGearbox">
+                                                            @foreach (var gearbox in Model.GearBoxTypes)
+                                                            {
+                                                                <div class="dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="gearbox @gearbox.GearboxType" value="@gearbox.GearboxType">
+                                                                        <span class="cb-text">@gearbox.GearboxType</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <!-- Gearbox dropdown end  -->
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- fuel dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuFuel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select FuelType
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuFuel">
+                                                            @foreach (var fuel in Model.FuelTypes)
+                                                            {
+                                                                <div class="dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="fuel @fuel.FuelType" value="@fuel.FuelType">
+                                                                        <span class="cb-text">@fuel.FuelType</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <!-- fuel dropdown end  -->
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- price dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuPrice" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Price Range
+                                                        </button>
+                                                        <div class="dropdown-menu" id="priceDropdwn" aria-labelledby="dropdownMenuPrice">
+                                                            <!-- price ranges goes here -->
+                                                        </div>
+                                                    </div>
+                                                    <!-- price dropdown end  -->
+                                                </div>
+                                                <div class="col-12 col-md-6 col-lg-2">
+                                                    <!-- Model dropdown start  -->
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuModel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Select Model
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuModel">
+                                                            @foreach (var car in Model.Cars)
+                                                            {
+                                                                <div class="model-item dropdown-item">
+                                                                    <label>
+                                                                        <input type="checkbox" name="model @car.Model" value="@car.Model">
+                                                                        <span class="cb-text">@car.Model</span>
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <!-- Model dropdown end  -->
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-md-6 col-lg-2">
-                                                <!-- Gearbox dropdown start  -->
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuGearbox" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select Gearbox
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuGearbox">
-                                                        @foreach (var gearbox in Model.GearBoxTypes)
-                                                        {
-                                                            <div class="dropdown-item">
-                                                                <label>
-                                                                    <input type="checkbox" name="itemList" value="@gearbox.GearboxType">
-                                                                    <span class="cb-text">@gearbox.GearboxType</span>
-                                                                </label>
-                                                            </div>
-                                                        }
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-12 col-lg-9 offset-lg-1">
+                                                    <button class="btn btn-primary" style="font-size: 14px;">Search</button>
                                                 </div>
-                                                <!-- Gearbox dropdown end  -->
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-2">
-                                                <!-- fuel dropdown start  -->
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuFuel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select FuelType
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuFuel">
-                                                        @foreach (var fuel in Model.FuelTypes)
-                                                        {
-                                                            <div class="dropdown-item">
-                                                                <label>
-                                                                    <input type="checkbox" name="itemList" value="@fuel.FuelType">
-                                                                    <span class="cb-text">@fuel.FuelType</span>
-                                                                </label>
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <!-- fuel dropdown end  -->
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-2">
-                                                <!-- price dropdown start  -->
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuPrice" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select Price Range
-                                                    </button>
-                                                    <div class="dropdown-menu" id="priceDropdwn" aria-labelledby="dropdownMenuPrice">
-                                                        <!-- price ranges goes here -->
-                                                    </div>
-                                                </div>
-                                                <!-- price dropdown end  -->
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-2">
-                                                <!-- Model dropdown start  -->
-                                                <div class="dropdown">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuModel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Select Model
-                                                    </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuModel">
-                                                        @foreach (var car in Model.Cars)
-                                                        {
-                                                            <div class="model-item dropdown-item">
-                                                                <label>
-                                                                    <input type="checkbox" name="itemList" value="@car.Model">
-                                                                    <span class="cb-text">@car.Model</span>
-                                                                </label>
-                                                            </div>
-                                                        }
-                                                    </div>
-                                                </div>
-                                                <!-- Model dropdown end  -->
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-12 col-lg-9 offset-lg-1">
-                                                <a class="btn btn-primary" style="font-size: 14px;" [routerLink]="['/car', 'search']">Search</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -306,6 +308,19 @@
             return inGearbox ? i : -1;
         }
 
+        function inCarModel(model) {
+            let inModel = false;
+            let i = 0;
+            for (var carModel in cars) {
+                if (carModel.Model == model) {
+                    inModel = true;
+                    break;
+                }
+                i++;
+            }
+            return inModel ? i : -1;
+        }
+
         $(document).ready(function () {
 
             $('.dropdown-menu').click(function (e) {
@@ -315,7 +330,7 @@
             $.each(priceRanges, function (index, item) {
                 str = `<div class="dropdown-item">
                             <label>
-                                <input type="checkbox" name="itemList" value="` + index + `">
+                                <input type="checkbox" name="range ` + index + `" value="` + index + `">
                                 <span class="cb-text">` + item.min + `-` + item.max + `</span>
                             </label>
                         </div>`;
@@ -328,77 +343,80 @@
                 var brandIndex = inBrands(value);
                 var fuelIndex = inFuelTypes(value);
                 var gearboxIndex = inGearboxTypes(value);
+                var isModel = false;
                 //console.log(value);
                 if (e.target.checked) {
-                    debugger
                     if (brandIndex != -1) {
                         selectedBrandList.push(value);
-                    }
-                    else if (fuelIndex != -1) {
+                    } else if (fuelIndex != -1) {
                         selectedFuelList.push(value);
-                    }
-                    else if (gearboxIndex != -1) {
+                    } else if (gearboxIndex != -1) {
                         selectedGearboxList.push(value);
-                    }
-                    else if (Object.keys(priceRanges).includes(value)) {
+                    } else if (Object.keys(priceRanges).includes(value)) {
                         selectedPriceRange.push(value);
+                    } else {
+                        isModel = true;
+                        selectedModelList.push(value);
                     }
-                }
-                else {
+                } else {
                     if (!e.target.checked) {
 
                         if (selectedBrandList.includes(value)) {
                             var index = selectedBrandList.indexOf(value);
                             selectedBrandList.splice(index, 1);
-                        }
-                        else if (selectedFuelList.includes(value)) {
+                        } else if (selectedFuelList.includes(value)) {
                             var index = selectedFuelList.indexOf(value);
                             selectedFuelList.splice(index, 1);
-                        }
-                        else if (selectedGearboxList.includes(value)) {
+                        } else if (selectedGearboxList.includes(value)) {
                             var index = selectedGearboxList.indexOf(value);
                             selectedGearboxList.splice(index, 1);
-                        }
-                        else if (selectedPriceRange.includes(value)) {
+                        } else if (selectedPriceRange.includes(value)) {
                             var index = selectedPriceRange.indexOf(value);
                             selectedPriceRange.splice(index, 1);
+                        } else {
+                            isModel = true;
+                            var index = selectedModelList.indexOf(value);
+                            selectedModelList.splice(index, 1);
                         }
                     }
                 }
                 //console.log(selectedCarList);
                 //console.log(selectedFuelList);
-                $('.model-item').filter(function (index) {
-                    var brand = cars[index].Brand.BrandName;
-                    var fuel = cars[index].Fuel.FuelType;
-                    var gearbox = cars[index].Gearbox.GearboxType;
+                if (!isModel) {
+                    $('.model-item').filter(function (index) {
+                        var brand = cars[index].Brand.BrandName;
+                        var fuel = cars[index].Fuel.FuelType;
+                        var gearbox = cars[index].Gearbox.GearboxType;
 
-                    var brandCheck = selectedBrandList.length > 0 ? selectedBrandList.includes(brand) : true;
-                    var fuelCheck = selectedFuelList.length > 0 ? selectedFuelList.includes(fuel) : true;
-                    var gearboxCheck = selectedGearboxList.length > 0 ? selectedGearboxList.includes(gearbox) : true;
+                        var brandCheck = selectedBrandList.length > 0 ? selectedBrandList.includes(brand) : true;
+                        var fuelCheck = selectedFuelList.length > 0 ? selectedFuelList.includes(fuel) : true;
+                        var gearboxCheck = selectedGearboxList.length > 0 ? selectedGearboxList.includes(gearbox) : true;
 
-                    var rangeCheck = false;
-                    if (selectedPriceRange.length > 0) {
-                        var price = calculateLease(cars[index].Price);
-                        for (var index of selectedPriceRange) {
+                        var rangeCheck = false;
+                        if (selectedPriceRange.length > 0) {
+                            var price = calculateLease(cars[index].Price);
+                            for (var index of selectedPriceRange) {
 
-                            var min = priceRanges[index].min;
-                            var max = priceRanges[index].max;
-                            if (price >= min && price <= max) rangeCheck = true;
+                                var min = priceRanges[index].min;
+                                var max = priceRanges[index].max;
+                                if (price >= min && price <= max) rangeCheck = true;
+                            }
+                        } else {
+                            rangeCheck = true;
                         }
-                    } else {
-                        rangeCheck = true;
-                    }
-                    var r = brandCheck && fuelCheck && gearboxCheck && rangeCheck;
-                    if (r) {
-                        $(this).removeClass('d-none');
-                    }
-                    else {
-                        $(this).addClass('d-none');
-                    }
-                    if (selectedBrandList.length == 0 && selectedFuelList.length == 0 && selectedGearboxList.length == 0 && selectedPriceRange.length == 0) {
-                        $(this).removeClass('d-none');
-                    }
-                });
+                        var r = brandCheck && fuelCheck && gearboxCheck && rangeCheck;
+                        if (r) {
+                            $(this).removeClass('d-none');
+                        } else {
+                            $(this).addClass('d-none');
+                        }
+                        if (selectedBrandList.length == 0 && selectedFuelList.length == 0 && selectedGearboxList.length == 0 && selectedPriceRange.length == 0) {
+                            $(this).removeClass('d-none');
+                        }
+                    });
+                } else {
+                    console.log(selectedModelList);
+                }
             });
         });
 

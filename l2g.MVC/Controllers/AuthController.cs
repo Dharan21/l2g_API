@@ -88,6 +88,11 @@ namespace l2g.MVC.Controllers
                         cookie.Expires = DateTime.Now.AddSeconds(obj.expires_in);
                         Response.Cookies.Add(cookie);
 
+                        cookie = new HttpCookie("username");
+                        cookie.Value = user.Username;
+                        cookie.Expires = DateTime.Now.AddSeconds(obj.expires_in);
+                        Response.Cookies.Add(cookie);
+
                         return RedirectToAction("Home", "Car");
                     }
                     else
