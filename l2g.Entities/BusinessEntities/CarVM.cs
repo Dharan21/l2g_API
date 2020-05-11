@@ -11,7 +11,7 @@ namespace l2g.Entities.BusinessEntities
     {
         [Key]
         public int CarId { get; set; }
-        public string Carname { get; set; }
+        //public string Carname { get; set; }
         public BrandVM Brand { get; set; }
         public FuelVM Fuel { get; set; }
         public GearboxVM Gearbox { get; set; }
