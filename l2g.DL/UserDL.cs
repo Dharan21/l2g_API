@@ -45,6 +45,67 @@ namespace l2g.DL
             return new UserBankDetailsVM();
         }
 
+        public int? GetContractId(string contractType)
+        {
+            return db.l2g_tbl_Contract.Where(x => x.ContractType == contractType)
+                .Select(x => x.ContractId).FirstOrDefault();
+        }
+
+        public int GetEmployeeStatusId(string employeeStatusType)
+        {
+            return db.l2g_tbl_EmployeeStatus.Where(x => x.EmployeeStatusType == employeeStatusType)
+                .Select(x=>x.EmployeeStatusId).First();
+        }
+
+        public bool AddUserEmployementDetails(UserEmploymentDetailsVM userVM) {
+            l2g_tbl_UserEmployeementDetails user = MappingConfig.UserEmploymentDetailsToDataEntity(userVM);
+            user.CreatedDate = DateTime.Now;
+            try
+            {
+                db.l2g_tbl_UserEmployeementDetails.Add(user);
+                db.SaveChanges();
+            }
+            catch (Exception) {
+                return false;
+            }
+            return true;
+        }
+
+        public UserEmploymentDetailsVM GetUserEmploymentDetails(int userId) 
+        {
+            l2g_tbl_UserEmployeementDetails user = db.l2g_tbl_UserEmployeementDetails.Where(x => x.UserId == userId).First();
+            if (user != null)
+            {
+                return MappingConfig.UserEmploymentDetailsToBusinessEntity(user);
+            }
+            return new UserEmploymentDetailsVM();
+        }
+
+        public bool AddUserDetails(UserDetailsVM userVM) {
+            l2g_tbl_UserDetails user = MappingConfig.UserDetailsToDataEntity(userVM);
+            user.CreatedDate = DateTime.Now;
+            try
+            {
+                db.l2g_tbl_UserDetails.Add(user);
+                db.SaveChanges();
+            }
+            catch (Exception) 
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public UserDetailsVM GetUserDetails(int userId)
+        {
+            l2g_tbl_UserDetails user = db.l2g_tbl_UserDetails.Where(x => x.UserId == userId).First();
+            if (user != null) 
+            {
+                return MappingConfig.UserDetailsToBusinessEntity(user);
+            }
+            return new UserDetailsVM();
+        }
+
         public void Dispose()
         {
             db.Dispose();

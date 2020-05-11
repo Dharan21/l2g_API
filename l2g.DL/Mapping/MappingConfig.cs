@@ -45,7 +45,7 @@ namespace l2g.DL.Mapping
             var carVM = new CarVM()
             {
                 CarId = car.CarId,
-                Carname = car.CarName,
+                //Carname = car.CarName,
                 Model = car.Model,
                 Color = car.Color,
                 Price = (float)car.Price,
@@ -78,7 +78,7 @@ namespace l2g.DL.Mapping
                 quoteVM.Lastname = user.Lastname;
 
                 var car = db.l2g_tbl_Car.Find(quote.CarId);
-                quoteVM.Carname = car.CarName;
+                //quoteVM.Carname = car.CarName;
                 quoteVM.Model = car.Model;
 
                 quoteVM.Kilometer = db.l2g_tbl_Mileage.Find(quote.MileageId).Kilometer;
@@ -98,6 +98,18 @@ namespace l2g.DL.Mapping
                 Price = quoteVM.Price
             };
             return quote;
+        }
+
+        public static UserBankDetailsVM UserBankDetailsToBusinessEntity(l2g_tbl_UserBankDetails user)
+        {
+            var userVM = new UserBankDetailsVM()
+            {
+                UserId = user.UserId,
+                AccountNo = user.AccountNo,
+                AccountHolderName = user.AccountHolderName,
+                AccountType = user.AccountType
+            };
+            return userVM;
         }
 
         public static l2g_tbl_UserBankDetails UserBankDetailsToDataEntity(UserBankDetailsVM userVM)
@@ -144,8 +156,20 @@ namespace l2g.DL.Mapping
             };
             return user;
         }
-
-        public static l2g_tbl_UserEmployeementDetails UserBankDetailsToDataEntity(UserEmploymentDetailsVM userVM)
+        public static UserEmploymentDetailsVM UserEmploymentDetailsToBusinessEntity(l2g_tbl_UserEmployeementDetails user) 
+        {
+            var userVM = new UserEmploymentDetailsVM()
+            {
+                UserId = user.UserId,
+                Company = user.Company,
+                Salary = user.Salary,
+                CreditScore = user.CreditScore,
+                EmployeeStatusId = user.EmployeeStatusId,
+                ContractId = user.ContractId,
+            };
+            return userVM;
+        }
+        public static l2g_tbl_UserEmployeementDetails UserEmploymentDetailsToDataEntity(UserEmploymentDetailsVM userVM)
         {
             var user = new l2g_tbl_UserEmployeementDetails()
             {
@@ -159,17 +183,6 @@ namespace l2g.DL.Mapping
             return user;
         }
 
-        public static UserBankDetailsVM UserBankDetailsToBusinessEntity(l2g_tbl_UserBankDetails user)
-        {
-            var userVM = new UserBankDetailsVM()
-            {
-                UserId = user.UserId,
-                AccountNo = user.AccountNo,
-                AccountHolderName = user.AccountHolderName,
-                AccountType = user.AccountType
-            };
-            return userVM;
-        }
         public static UserVM UserToBusinessEntity(l2g_tbl_User user)
         {
             var userVM = new UserVM()

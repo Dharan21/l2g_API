@@ -14,11 +14,6 @@ namespace l2g.BL
     {
         UserDL userDL = new UserDL();
 
-        public void Dispose()
-        {
-            userDL.Dispose();
-        }
-
         public bool AddBankDetails(UserBankDetailsVM userVM)
         {
             string username = HttpContext.Current.User.Identity.Name;
@@ -31,6 +26,37 @@ namespace l2g.BL
             string username = HttpContext.Current.User.Identity.Name;
             int userId = userDL.GetUserId(username);
             return userDL.GetBankDetails(userId);
+        }
+        public bool AddUserEmploymentDetails(UserEmploymentDetailsVM userVM) 
+        {
+            string username = HttpContext.Current.User.Identity.Name;
+            userVM.UserId = userDL.GetUserId(username);
+            userVM.EmployeeStatusId = userDL.GetEmployeeStatusId(userVM.EmployeeStatusType);
+            userVM.ContractId = userDL.GetContractId(userVM.ContractType);
+            return userDL.AddUserEmployementDetails(userVM);
+        }
+        public UserEmploymentDetailsVM GetUserEmploymentDetails()
+        {
+            string username = HttpContext.Current.User.Identity.Name;
+            int userId = userDL.GetUserId(username);
+            return userDL.GetUserEmploymentDetails(userId);
+        }
+        public bool AddUserDetails(UserDetailsVM userVM)
+        {
+            string username = HttpContext.Current.User.Identity.Name;
+            userVM.UserId = userDL.GetUserId(username);
+            return userDL.AddUserDetails(userVM);
+        }
+        public UserDetailsVM GetUserDetails()
+        {
+            string username = HttpContext.Current.User.Identity.Name;
+            int userId = userDL.GetUserId(username);
+            return userDL.GetUserDetails(userId);
+        }
+
+        public void Dispose()
+        {
+            userDL.Dispose();
         }
     }
 }
