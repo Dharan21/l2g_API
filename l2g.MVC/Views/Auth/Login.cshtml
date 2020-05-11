@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css" rel="stylesheet" />
     <link href="~/Content/Custom CSS/login.css" rel="stylesheet" />
     <title>Login</title>
 </head>
@@ -17,7 +18,7 @@
     <div class="container-fluid animated fadeIn">
         <div class="row">
             <div class="col-md-6 col-lg-8 leftside">
-                <video loop muted preload="metadata" (canplay)="videoPlayer()" style="height: 100vh;">
+                <video autoplay loop muted preload="metadata" onplay="videoPlayer()" style="height: 100vh;">
                     <source src="~/Content/Videos/Video2.webm" type="video/webm" />
                 </video>
             </div>
@@ -37,29 +38,23 @@
                 <div class="row mx-2">
                     <div class="col-12">
                         <h2><strong>Login</strong></h2>
-                        <p>or&nbsp;<a>create an account</a></p>
+                        <p>or&nbsp;<a href="/Auth/Register">create an account</a></p>
                     </div>
                     <div class="col-12">
                         <form method="post">
                             <div class="form-group position-relative">
                                 @Html.TextBoxFor(model => model.Username, null, new { @class = "form-control", @placeholder = "Username", autocomplete = "current-username" })
-                                @*<i class="fa fa-exclamation-circle position-absolute" style="right:7px; top:7px; color:red"></i>*@
                             </div>
                             <div class="form-group position-relative">
                                 @Html.PasswordFor(model => model.Password, new { @class = "form-control position-relative", @placeholder = "Password", @autocomplete = "current-password" })
-                              @*  <i class="fa fa-exclamation-circle position-absolute" style="right:7px; top:7px; color:red"></i>*@
                             </div>
                             <div class="form-group">
-                                <small>
-                                    <ul class="text-danger p-0 m-0" style="list-style: none;">
-                                        <li>
-                                            @Html.ValidationMessageFor(model => model.Username)
-                                        </li>
-                                        <li>
-                                            @Html.ValidationMessageFor(model => model.Password)
-                                        </li>
-                                    </ul>
-                                </small>
+                                <p class="text-danger m-0" style="font-size: 12px">
+                                    @Html.ValidationMessageFor(model=>model.Username)
+                                    </p>
+                                <p class="text-danger m-0" style="font-size: 12px">
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </p>
                             </div>
                             <div class="form-group">
                                 <small class="text-danger">
@@ -70,7 +65,7 @@
                                 </small>
                             </div>
                             <div class="from-group">
-                                <input type="submit" value="Login" class="btn btn-block text-white">
+                                <input type="submit" value="Login" id="btn" class="btn btn-block text-white">
                             </div>
                             <div class="form-group mt-1">
                                 <a href="/Auth/Forgotpassword">Forgot your password?</a>
@@ -81,10 +76,20 @@
             </div>
         </div>
     </div>
-    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/popper.min.js"></script>
+    @*<script src="~/Scripts/popper.min.js"></script>*@
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        function videoPlayer()
+        {
+            this.playVideo = document.querySelector('video');
+            if (this.playVideo.pause) {
+                this.playVideo.muted = true; // important
+                this.playVideo.play();
+            }
+        }
+    </script>
 </body>
 </html>

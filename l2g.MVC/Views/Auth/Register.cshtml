@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css" rel="stylesheet" />
     <link href="~/Content/Custom CSS/register.css" rel="stylesheet" />
     <title>Register</title>
 </head>
@@ -38,48 +39,39 @@
                     <div class="col-12">
                         <form method="post">
                             <div class="form-group position-relative">
-                                @Html.TextBoxFor(model => model.Username, null, new { @class = "form-control", @placeholder="Username", autocomplete="current-username" })
-                                @*<i class="fa fa-exclamation-circle position-absolute" style="right:7px; top:7px; color:red"></i>*@
+                                @Html.TextBoxFor(model => model.Username, null, new { @class = "form-control", @placeholder = "Username", autocomplete = "current-username" })
                             </div>
                             <div class="form-group position-relative">
-                                @Html.TextBoxFor(model => model.Email, null, new { @class="form-control", @placeholder="Email", autocomplete="current-email" })
-                                @*<i class="fa fa-exclamation-circle position-absolute" style="right:7px; top:7px; color:red"></i>*@
+                                @Html.TextBoxFor(model => model.Email, null, new { @class = "form-control", @placeholder = "Email", autocomplete = "current-email" })
                             </div>
                             <div class="form-group position-relative">
-                                @Html.PasswordFor(model => model.Password, new {@class="form-control position-relative", @placeholder="Password", @autocomplete="current-password" })
-                                @*<i class="fa fa-exclamation-circle position-absolute" style="right:7px; top:7px; color:red"></i>*@
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control position-relative", @placeholder = "Password", @autocomplete = "current-password" })
                             </div>
                             <div class="form-group position-relative">
-                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class="form-control position-relative", @placeholder="Confirm Password", @autocomplete="current-confirmPassword" })
-                                @*<i class="fa fa-exclamation-circle position-absolute" style="right:7px; top:7px; color:red"></i>*@
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control position-relative", @placeholder = "Confirm Password", @autocomplete = "current-confirmPassword" })
+                           </div>
+                            <div class="form-group">
+                                <ul class="text-danger p-0 m-0" style="list-style: none;">
+                                        <li>
+                                            <small>@Html.ValidationMessageFor(model => model.Username)</small>  
+                                        </li>
+                                        <li>
+                                            <small>@Html.ValidationMessageFor(model => model.Email)</small> 
+                                        </li>
+                                        <li>
+                                            <small>@Html.ValidationMessageFor(model => model.Password)</small> 
+                                        </li>
+                                        <li>
+                                            <small>@Html.ValidationMessageFor(model => model.ConfirmPassword)</small> 
+                                        </li>
+                               </ul>
                             </div>
                             <div class="form-group">
                                 <ul class="text-danger p-0 m-0" style="list-style: none;">
-                                    <small>
-                                        <li>
-                                            @Html.ValidationMessageFor(model => model.Username)
-                                        </li>  
-                                        <li>
-                                            @Html.ValidationMessageFor(model => model.Email)
-                                        </li>
-                                        <li>
-                                            @Html.ValidationMessageFor(model => model.Password)
-                                        </li>
-                                        <li>
-                                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
-                                        </li>
-                                    </small>
-                                </ul>
-                            </div>
-                            <div class="form-group">
-                                <ul class="text-danger p-0 m-0" style="list-style: none;">
-                                    <small>
-       
-                                        @foreach (var error in (Error[])ViewData["Errors"])
-                                        {
-                                            <li>@error.ErrorMessage</li>
-                                        }
-                                    </small>
+                                    @foreach (var error in (Error[])ViewData["Errors"])
+                                    {
+                                        <li><small>@error.ErrorMessage</small></li>
+                                    }
                                 </ul>
                             </div>
                             <div class="from-group">
@@ -90,7 +82,7 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-8 rightside">
-                <video loop muted preload="metadata" (canplay)="videoPlayer()" style="height: 100vh">
+                <video autoplay loop muted preload="metadata" onplay="videoPlayer()" style="height: 100vh">
                     <source src="~/Content/Videos/Video1.webm" type="video/webm" />
                 </video>
             </div>
@@ -99,7 +91,16 @@
     <script src="~/Scripts/jquery-3.0.0.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/popper.min.js"></script>
+    @*<script src="~/Scripts/popper.min.js"></script>*@
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        function videoPlayer() {
+            this.playVideo = document.querySelector('video');
+            if (this.playVideo.pause) {
+                this.playVideo.muted = true; // important
+                this.playVideo.play();
+            }
+        }
+    </script>
 </body>
 </html>

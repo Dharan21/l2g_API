@@ -1,11 +1,4 @@
-﻿$background-car-1: url("../../../../assets/images/jpg/car-1.jpg")
-$background-car-2: url("../../../../assets/images/jpg/car-2.jpg")
-$background-car-3: url("../../../../assets/images/jpg/car-3.jpg")
-$background-car-4: url("../../../../assets/images/jpg/car-5.jpg")
-$background-color: #1b262c !important
-$hover-color: #3282b8 !important
-
-a:hover {
+﻿a:hover {
     color: #3282b8 !important;
     transition: all .3s ease;
 }
@@ -125,15 +118,4 @@ a:hover {
     .alignContent {
         justify-content: flex-start !important;
     }
-}
-
-/*Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) and (max-width: 1199.98px) {
-
-}
-
-
-/*Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 2560px) {
-
 }
