@@ -20,30 +20,34 @@ namespace l2g.MVC.Controllers
         [CheckToken]
         public ActionResult Home()
         {
-            string token = HttpContext.Request.Cookies.Get("token").Value;
-            using (var client = new HttpClient())
+            GetResponse data = (GetResponse)TempData.Peek("Data");
+            if (data == null)
             {
-                client.BaseAddress = new Uri("http://localhost:52778/api/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Add("Authorization", "bearer "+ token);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.ConnectionClose = true;
-                var response = client.GetAsync("car");
-                var result = response.Result;
-                if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                string token = HttpContext.Request.Cookies.Get("token").Value;
+                using (var client = new HttpClient())
                 {
-                    var objString = result.Content.ReadAsStringAsync().Result;
-                    var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
-                    ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
-                    TempData["Data"] = obj;
-                    return View(obj);
-                }
-                else
-                {
-                    var errorString = result.Content.ReadAsStringAsync().Result;
+                    client.BaseAddress = new Uri("http://localhost:52778/api/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.ConnectionClose = true;
+                    var response = client.GetAsync("car");
+                    var result = response.Result;
+                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var objString = result.Content.ReadAsStringAsync().Result;
+                        var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
+                        ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+                        TempData["Data"] = obj;
+                        return View(obj);
+                    }
+                    else
+                    {
+                        var errorString = result.Content.ReadAsStringAsync().Result;
+                    }
                 }
             }
-            return View();
+            return View(data);
         }
 
         [Route("Home")]
@@ -113,7 +117,7 @@ namespace l2g.MVC.Controllers
             ViewData["SelectedFuelTypes"] = TempData["SelectedFuelTypes"];
             ViewData["SelectedGearboxTypes"] = TempData["SelectedGearboxTypes"];
             ViewData["SelectedPriceRangeIndexes"] = TempData["SelectedPriceRangeIndexes"];
-            GetResponse data = TempData["Data"] as GetResponse;
+            GetResponse data = (GetResponse)TempData.Peek("Data");
             if (data == null)
             {
                 string token = HttpContext.Request.Cookies.Get("token").Value;
@@ -130,6 +134,7 @@ namespace l2g.MVC.Controllers
                     {
                         var objString = result.Content.ReadAsStringAsync().Result;
                         var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
+                        TempData["Data"] = obj;
                         ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
                         return View(obj);
                     }
@@ -140,6 +145,62 @@ namespace l2g.MVC.Controllers
                 }
             }
             return View(data);
-        } 
+        }
+
+        [HttpGet]
+        [Route("SelectMileageAndPaybackTime")]
+        [CheckToken]
+        public ActionResult SelectMileageAndPaybackTime(int? id)
+        {
+            id = id ?? 1;
+            GetResponse data = TempData.Peek("Data") as GetResponse;
+            CarVM car = new CarVM();
+            if (data == null)
+            {
+                string token = HttpContext.Request.Cookies.Get("token").Value;
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:52778/api/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.ConnectionClose = true;
+                    var response = client.GetAsync("car");
+                    var result = response.Result;
+                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        var objString = result.Content.ReadAsStringAsync().Result;
+                        var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
+                        TempData["Data"] = obj;
+                        ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+                        car = obj.Cars.AsQueryable().Where(x => x.CarId == id).First();
+                        ViewData["Mileages"] = obj.Mileages;
+                        ViewData["PaybackTimes"] = obj.PaybackTimes;
+                    }
+                    else
+                    {
+                        var errorString = result.Content.ReadAsStringAsync().Result;
+                    }
+                }
+            }
+            else
+            {
+                ViewData["Mileages"] = data.Mileages;
+                ViewData["PaybackTimes"] = data.PaybackTimes;
+                car = data.Cars.AsQueryable().Where(x => x.CarId == id).First();
+            }
+            ViewData["Car"] = car;
+            return View();
+        }
+
+        [HttpPost]
+        [Route("SelectMileageAndPaybackTime")]
+        [CheckToken]
+        public ActionResult SelectMileageAndPaybackTime(GetQuote quote)
+        {
+            TempData["Quote"] = quote;
+            // return RedirectToAction personal details page
+            return View();
+        }
     }
 }

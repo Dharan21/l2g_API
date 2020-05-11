@@ -1,0 +1,271 @@
+﻿@using l2g.Entities.BusinessEntities
+@model l2g.Entities.BusinessEntities.GetQuote
+@{
+    Layout = null;
+    CarVM car = ViewData["Car"] as CarVM;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+    <link href="~/Content/Custom CSS/steps.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/selectMileageAndPaybacktime.css" rel="stylesheet" />
+    <style>
+        .content-header {
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            border: none;
+        }
+    </style>
+    <title>SelectMileageAndPaybackTime</title>
+</head>
+<body>
+
+    <div class="container-fluid animated fadeIn fast shadow-lg" style="background-color: #1b262c;">
+        <div class="container">
+            <div class="row align-items-center" style="height: 12vh">
+                <div class="col-4">
+                    <img src="~/Content/Images/jpg/car-logo.jpg" alt="logo" width="120" style="filter:invert(1)" />
+                </div>
+                <div class="col-8">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" style="cursor: pointer;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid" style="height: 85vh;padding: 0;">
+        <div class="row" style="margin-right: 0;margin-left: 0;">
+            <div class="col-md-12" style="padding:0;">
+
+                <section class="quote-detail" style="padding-top: 50px;">
+                    <form method="post">
+                        <input type="hidden" name="CarId" value="@car.CarId" />
+                        <div class="row" style="margin-right: 0;margin-left: 0;">
+                            <div class="quote-detail-info container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2>Personalize your order</h2>
+                                        <h3>@car.Model (@car.Brand.BrandName)</h3>
+                                        @*<p>name</p>*@
+                                        <ul>
+                                            <li>Subscription: €<span class="leasePrice">LeasePrice</span> /month</li>
+                                            <li>Payback Time: <span class="pbTime">paybackTimeValue</span> months</li>
+                                            <li>Annual Mileage: <span class="kms">mileageValue</span> km</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row content-center">
+                                    <div class="img-container">
+                                        @{string imagePath = "/Content/Images/cars/" + car.CarId + ".jpg"; }
+                                        <img src="@imagePath" alt="@car.Model" style="width: 100%;">
+                                    </div>
+                                </div>
+                                <!-- steps start -->
+                                <div class="container">
+                                    <h3>The steps to get a car: </h3>
+                                    <section class="application-progress">
+                                        <div class="overlay">
+                                            <div class="overlay-inner">
+                                                <ul>
+                                                    <li class="click">
+                                                        <div>
+                                                            <div class="step">1</div>
+                                                            <label>Select Vehicle</label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="click">
+                                                        <div>
+                                                            <div class="step done">2</div>
+                                                            <label class="done">Select Mileage and Payback Time</label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="click">
+                                                        <div>
+                                                            <div class="step">3</div>
+                                                            <label>Add Personal Details</label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="click">
+                                                        <div>
+                                                            <div class="step">4</div>
+                                                            <label>Add Employment Details</label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="click">
+                                                        <div>
+                                                            <div class="step">5</div>
+                                                            <label>Add Bank Details</label>
+                                                        </div>
+                                                    </li>
+                                                    <li class="click">
+                                                        <div>
+                                                            <div class="step">6</div>
+                                                            <label>Generate Quote</label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="marker-container">
+                                            <div class="done-marker" style="margin-left: 8%; width: 0%;"></div>
+                                            <div class="todo-marker" style="margin-right: 8%; width: 84%;"></div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <!-- steps end -->
+                            </div>
+                            <div class="container-fluid" style="padding: 0;">
+
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <div class="mb-0">
+                                                <div class="content-header" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                    Select Mileage & Payback Time
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body">
+
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-12 sub-section">
+                                                            <div class="sub-section-heading">My Price:</div>
+                                                            <input id="iPrice" type="hidden" name="Price" value="" />
+                                                            <div class="sub-section-content">€<span class="leasePrice">LeasePrice</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 sub-section">
+                                                            <div class="sub-section-heading">Payback Time(in months)</div>
+                                                            <input id="iMonth" type="hidden" name="MonthId" value="" />
+                                                            <div id="pt-slider" class="sub-section-content">
+                                                                Slider
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12 sub-section">
+                                                            <div class="sub-section-heading">Mileage</div>
+                                                            <input id="iMileage" type="hidden" name="MileageId" value="" />
+                                                            <div id="m-slider" class="sub-section-content">
+                                                                Slider
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button class="btn btn-quote">Next Step</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Custom/calculateLease.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <script>
+        var mileage = @Html.Raw(Json.Encode(ViewData["Mileages"]));
+        var paybackTime = @Html.Raw(Json.Encode(ViewData["PaybackTimes"]));
+        var price = @car.Price;
+        var months = [];
+        var kms = [];
+        
+        for (var km of mileage) {
+            kms.push(km.Kilometer);
+        }
+        for (var month of paybackTime) {
+            months.push(month.Months);
+        }
+        var currentMonth = months[0];
+        var currentMileage = kms[0];
+
+        function getCurrentMonthId() {
+            for (var month of paybackTime) {
+                if (month.Months == currentMonth) {
+                    return month.MonthId;
+                }
+            }
+        }
+
+        function getCurrentMileageId() {
+            for (var km of mileage) {
+                if (km.Kilometer == currentMileage) {
+                    return km.MileageId;
+                }
+            }
+        }
+
+        $(document).ready(function () {
+
+            var lease = calculateLease(price, currentMileage, currentMonth);
+            $('.leasePrice').html(lease);
+            $('#iPrice').val(lease);
+            console.log($('#iPrice').val());
+            $('.pbTime').html(currentMonth);
+            $('#iMonth').val(getCurrentMonthId());
+            $('.kms').html(currentMileage);
+            $('#iMileage').val(getCurrentMileageId());
+ 
+            $("#pt-slider").ionRangeSlider({
+                skin: 'round', //flat, big, modern, round, sharp, square for different type of design
+                grid: true,
+                values: months,
+                onChange: function (data) {
+                    currentMonth = data.from_value;
+                    var lease = calculateLease(price, currentMileage, currentMonth);
+                    $('.pbTime').html(currentMonth);
+                    $('#iMonth').val(getCurrentMonthId());
+                    $('.leasePrice').html(lease);
+                    $('#iPrice').val(lease);
+                },
+            });
+            $("#m-slider").ionRangeSlider({
+                skin: 'round', //flat, big, modern, round, sharp, square for different type of design
+                grid: true,
+                values: kms,
+                onChange: function (data) {
+                    currentMileage = data.from_value;
+                    var lease = calculateLease(price, currentMileage, currentMonth);
+                    $('.kms').html(currentMileage);
+                    $('#iMileage').val(getCurrentMileageId());
+                    $('.leasePrice').html(lease);
+                    $('#iPrice').val(lease);
+                },
+            });
+        });
+    </script>
+</body>
+</html>

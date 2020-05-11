@@ -106,6 +106,7 @@
     <Content Include="Content\Custom CSS\filterbar.css" />
     <Content Include="Content\Custom CSS\home.css" />
     <Content Include="Content\Custom CSS\login.css" />
+    <Content Include="Content\Custom CSS\selectMileageAndPaybacktime.css" />
     <Content Include="Content\Custom CSS\steps.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -267,6 +268,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Car\Home.cshtml" />
     <Content Include="Views\Car\CarList.cshtml" />
+    <Content Include="Views\Car\SelectMileageAndPaybackTime.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

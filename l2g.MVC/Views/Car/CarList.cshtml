@@ -198,9 +198,10 @@
                                 @foreach (var car in Model.Cars)
                                 {
                                     string imagePath = "../Content/Images/cars/" + car.CarId + ".jpg";
+                                    string href = "/Car/SelectMileageAndPaybackTime?id=" + car.CarId;
                                     <div style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3 car-item">
-                                        <a class="card text-decoration-none" href="#">
-                                            <img class="card-img-top" src="@imagePath" alt="@car.Carname" style="height: 250px;">
+                                        <a class="card text-decoration-none" href="@href">
+                                            <img class="card-img-top" src="@imagePath" alt="@car.Model" style="height: 250px;">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-7 d-flex align-items-center" style="padding: 0px 5px;">
