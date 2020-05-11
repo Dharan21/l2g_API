@@ -11,6 +11,13 @@ namespace l2g.DL
 {
     public class CarDL
     {
+        public bool CarExists(int carId)
+        {
+            using (var db = new Lead2OrderGenerateDbEntities())
+            {
+                return db.l2g_tbl_Car.Any(x => x.CarId == carId);
+            }
+        }
         public List<CarVM> GetCars()
         {
             using (var db = new Lead2OrderGenerateDbEntities())

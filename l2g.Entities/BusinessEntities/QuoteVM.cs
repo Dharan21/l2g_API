@@ -17,7 +17,7 @@ namespace l2g.Entities.BusinessEntities
         public int CarId { get; set; }
         //public string Carname { get; set; }
         public string Model { get; set; }
-        public int Price { get; set; }
+        public float Price { get; set; }
         public int MileageId { get; set; }
         public int MonthId { get; set; }
         public int Kilometer { get; set; }

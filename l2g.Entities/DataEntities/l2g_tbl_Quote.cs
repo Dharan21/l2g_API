@@ -21,7 +21,7 @@ namespace l2g.Entities.DataEntities
         public int CarId { get; set; }
         public int MileageId { get; set; }
         public int MonthId { get; set; }
-        public int Price { get; set; }
+        public float Price { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
     

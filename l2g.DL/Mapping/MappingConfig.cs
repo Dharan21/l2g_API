@@ -88,16 +88,28 @@ namespace l2g.DL.Mapping
             return quoteVM; 
         }
 
-        public static l2g_tbl_Quote QuoteToDataEntity(QuoteVM quoteVM) {
-            var quote = new l2g_tbl_Quote() {
-                QuoteId = quoteVM.QuoteId,
-                UserId = quoteVM.UserId,
-                CarId = quoteVM.CarId,
-                MileageId = quoteVM.MileageId,
-                MonthId = quoteVM.MonthId,
-                Price = quoteVM.Price
+        //public static l2g_tbl_Quote QuoteToDataEntity(QuoteVM quoteVM) {
+        //    var quote = new l2g_tbl_Quote() {
+        //        QuoteId = quoteVM.QuoteId,
+        //        UserId = quoteVM.UserId,
+        //        CarId = quoteVM.CarId,
+        //        MileageId = quoteVM.MileageId,
+        //        MonthId = quoteVM.MonthId,
+        //        Price = quoteVM.Price
+        //    };
+        //    return quote;
+        //}
+
+        public static l2g_tbl_Quote GetQuoteToDataEntity(GetQuote quote)
+        {
+            l2g_tbl_Quote quoteEntity = new l2g_tbl_Quote()
+            {
+                CarId = quote.CarId,
+                MileageId = quote.MileageId,
+                MonthId = quote.MonthId,
+                Price = quote.Price
             };
-            return quote;
+            return quoteEntity;
         }
 
         public static UserBankDetailsVM UserBankDetailsToBusinessEntity(l2g_tbl_UserBankDetails user)
