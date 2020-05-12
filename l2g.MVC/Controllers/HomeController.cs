@@ -9,7 +9,6 @@ namespace l2g.MVC.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        [Route("Home")]
         [HttpGet]
         public ActionResult Index()
         {

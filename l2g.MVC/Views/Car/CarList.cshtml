@@ -42,7 +42,7 @@
                             <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
                         </li>
                         <li class="nav-item">
-                            @Html.ActionLink("Logout", "Login", "Auth", null, new { @class = "nav-link text-white" })
+                            @Html.ActionLink("Logout", "Logout", "Auth", null, new { @class = "nav-link text-white" })
                         </li>
                     </ul>
                 </div>
@@ -198,7 +198,7 @@
                                 @foreach (var car in Model.Cars)
                                 {
                                     string imagePath = "../Content/Images/cars/" + car.CarId + ".jpg";
-                                    string href = "/Car/SelectMileageAndPaybackTime?id=" + car.CarId;
+                                    string href = "/Car/Select-Mileage-And-PaybackTime?id=" + car.CarId;
                                     <div style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3 car-item">
                                         <a class="card text-decoration-none" href="@href">
                                             <img class="card-img-top" src="@imagePath" alt="@car.Model" style="height: 250px;">

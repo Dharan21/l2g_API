@@ -47,6 +47,7 @@ namespace l2g.MVC.Controllers
                     }
                 }
             }
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View(data);
         }
 
@@ -109,7 +110,7 @@ namespace l2g.MVC.Controllers
 
         [HttpGet]
         [CheckToken]
-        [Route("car-list")]
+        [Route("List")]
         public ActionResult CarList()
         {
             ViewData["SelectedModels"] = TempData["SelectedModels"]; 
@@ -144,11 +145,12 @@ namespace l2g.MVC.Controllers
                     }
                 }
             }
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View(data);
         }
 
         [HttpGet]
-        [Route("SelectMileageAndPaybackTime")]
+        [Route("Select-Mileage-And-PaybackTime")]
         [CheckToken]
         public ActionResult SelectMileageAndPaybackTime(int? id)
         {
@@ -189,12 +191,13 @@ namespace l2g.MVC.Controllers
                 ViewData["PaybackTimes"] = data.PaybackTimes;
                 car = data.Cars.AsQueryable().Where(x => x.CarId == id).First();
             }
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             ViewData["Car"] = car;
             return View();
         }
 
         [HttpPost]
-        [Route("SelectMileageAndPaybackTime")]
+        [Route("Select-Mileage-And-PaybackTime")]
         [CheckToken]
         public ActionResult SelectMileageAndPaybackTime(GetQuote quote)
         {

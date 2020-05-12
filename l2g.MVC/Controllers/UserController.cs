@@ -1,4 +1,5 @@
 ﻿using l2g.Entities.BusinessEntities;
+using l2g.MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,20 @@ using System.Web.Mvc;
 
 namespace l2g.MVC.Controllers
 {
+    [CheckToken]
+    [RoutePrefix("User")]
     public class UserController : Controller
     {
-        // GET: UserDetails
+        [HttpGet]
+        [Route("Personal-Details")]
         public ActionResult UserPersonalDetails()
         {
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();
         }
 
         [HttpPost]
+        [Route("Personal-Details")]
         public ActionResult UserPersonalDetails(UserDetailsVM userVM)
         {
 
@@ -26,15 +32,20 @@ namespace l2g.MVC.Controllers
                 TempData["UserPersonalData"] = userVM;
                 return RedirectToAction("UserEmploymentDetails");
             }
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();
         }
 
+        [HttpGet]
+        [Route("Employment-Details")]
         public ActionResult UserEmploymentDetails()
         {
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();
         }
 
         [HttpPost]
+        [Route("Employment-Details")]
         public ActionResult UserEmploymentDetails(UserEmploymentDetailsVM userVM)
         {
             // get userID
@@ -47,15 +58,20 @@ namespace l2g.MVC.Controllers
                 TempData["UserEmploymentData"] = userVM;
                 return RedirectToAction("UserBankDetails");
             }
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();
         }
 
+        [HttpGet]
+        [Route("Bank-Details")]
         public ActionResult UserBankDetails() 
         {
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();
         }
 
         [HttpPost]
+        [Route("Bank-Details")]
         public ActionResult UserBankDetails(UserBankDetailsVM userVM) 
         {
             //get userID
@@ -65,6 +81,7 @@ namespace l2g.MVC.Controllers
                 TempData["UserBankData"] = userVM;
                 //return RedirectToAction("Index", "Quote");          
             }
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();
         }
     }

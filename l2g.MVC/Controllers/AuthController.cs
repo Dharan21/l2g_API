@@ -13,11 +13,11 @@ using System.Web.Mvc;
 
 namespace l2g.MVC.Controllers
 {
-    [RoutePrefix("auth")]
+    [RoutePrefix("Auth")]
     public class AuthController : Controller
     {
         // GET: Default
-        [Route("sign-up")]
+        [Route("Sign-Up")]
         [HttpGet]
         public ActionResult Register()
         {
@@ -25,7 +25,7 @@ namespace l2g.MVC.Controllers
             return View();
         }
 
-        [Route("sign-up")]
+        [Route("Sign-Up")]
         [HttpPost]
         public async Task<ActionResult> Register(UserVM user)
         {
@@ -39,7 +39,7 @@ namespace l2g.MVC.Controllers
                     HttpResponseMessage response = await client.PostAsync("api/auth", c);
                     if (response.IsSuccessStatusCode)
                     {
-                        return RedirectToAction("login");
+                        return RedirectToAction("Login");
                     }
                     else
                     {
@@ -53,14 +53,14 @@ namespace l2g.MVC.Controllers
             return View();
         }
 
-        [Route("login")]
+        [Route("Login")]
         [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
 
-        [Route("login")]
+        [Route("Login")]
         [HttpPost]
         public async Task<ActionResult> Login(LoginVM user)
         {
@@ -104,11 +104,21 @@ namespace l2g.MVC.Controllers
             return View();
         }
 
-        [Route("forgot-password")]
+        [Route("Forgot-Password")]
         [HttpGet]
         public ActionResult ForgotPassword()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Route("Logout")]
+        public ActionResult Logout()
+        {
+            HttpCookie cookie = HttpContext.Request.Cookies.Get("token");
+            cookie.Expires = DateTime.Now.AddDays(-1);
+            HttpContext.Response.Cookies.Add(cookie);
+            return RedirectToAction("Login");
         }
     }
 }

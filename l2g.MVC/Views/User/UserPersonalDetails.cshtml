@@ -10,9 +10,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
     <link href="~/Content/Custom CSS/steps.css" rel="stylesheet" />
-
     <title>Personal Details</title>
 </head>
 <body>
@@ -29,7 +27,7 @@
                             <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
                         </li>
                         <li class="nav-item">
-                            @Html.ActionLink("Logout", "Login", "Auth", null, new { @class = "nav-link text-white" })
+                            @Html.ActionLink("Logout", "Logout", "Auth", null, new { @class = "nav-link text-white" })
                         </li>
                     </ul>
                 </div>
@@ -52,14 +50,14 @@
                         </li>
                         <li class="click">
                             <div>
-                                <div class="step done">2</div>
-                                <label class="done">Select Mileage and Payback Time</label>
+                                <div class="step">2</div>
+                                <label>Select Mileage and Payback Time</label>
                             </div>
                         </li>
                         <li class="click">
                             <div>
-                                <div class="step">3</div>
-                                <label>Add Personal Details</label>
+                                <div class="step done">3</div>
+                                <label class="done">Add Personal Details</label>
                             </div>
                         </li>
                         <li class="click">
@@ -194,8 +192,8 @@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 
 
 </body>
