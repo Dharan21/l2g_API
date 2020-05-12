@@ -1,0 +1,191 @@
+﻿@model l2g.Entities.BusinessEntities.UserEmploymentDetailsVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+    <link href="~/Content/Custom CSS/steps.css" rel="stylesheet" />
+
+    <title>Employment Details</title>
+</head>
+<body>
+
+    <div class="container-fluid animated fadeIn fast shadow-lg" style="background-color: #1b262c;">
+        <div class="container">
+            <div class="row align-items-center" style="height: 12vh">
+                <div class="col-4">
+                    <img src="~/Content/Images/jpg/car-logo.jpg" alt="logo" width="120" style="filter:invert(1)" />
+                </div>
+                <div class="col-8">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Logout", "Login", "Auth", null, new { @class = "nav-link text-white" })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- steps start -->
+    <div class="container">
+        <h3>The steps to get a car: </h3>
+        <section class="application-progress">
+            <div class="overlay">
+                <div class="overlay-inner">
+                    <ul>
+                        <li class="click">
+                            <div>
+                                <div class="step">1</div>
+                                <label>Select Vehicle</label>
+                            </div>
+                        </li>
+                        <li class="click">
+                            <div>
+                                <div class="step done">2</div>
+                                <label class="done">Select Mileage and Payback Time</label>
+                            </div>
+                        </li>
+                        <li class="click">
+                            <div>
+                                <div class="step">3</div>
+                                <label>Add Personal Details</label>
+                            </div>
+                        </li>
+                        <li class="click">
+                            <div>
+                                <div class="step">4</div>
+                                <label>Add Employment Details</label>
+                            </div>
+                        </li>
+                        <li class="click">
+                            <div>
+                                <div class="step">5</div>
+                                <label>Add Bank Details</label>
+                            </div>
+                        </li>
+                        <li class="click">
+                            <div>
+                                <div class="step">6</div>
+                                <label>Generate Quote</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="marker-container">
+                <div class="done-marker" style="margin-left: 8%; width: 0%;"></div>
+                <div class="todo-marker" style="margin-right: 8%; width: 84%;"></div>
+            </div>
+        </section>
+    </div>
+    <!-- steps end -->
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <h4>Employment Details</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Company, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CreditScore, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.CreditScore, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CreditScore, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @*<div class="form-group">
+                                @Html.LabelFor(model => model.EmployeeStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.EmployeeStatusId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.EmployeeStatusId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EmployeeStatusType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.EmployeeStatusType, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.EmployeeStatusType, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            @*<div class="form-group">
+                                @Html.LabelFor(model => model.ContractId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ContractId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ContractId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ContractType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ContractType, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ContractType, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Submit" class="btn btn-secondary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+
+</body>
+</html>

@@ -198,7 +198,12 @@ namespace l2g.MVC.Controllers
         [CheckToken]
         public ActionResult SelectMileageAndPaybackTime(GetQuote quote)
         {
-            TempData["Quote"] = quote;
+            if (quote !=null)
+            {
+                TempData["Quote"] = quote;
+                return RedirectToAction("UserPersonalDetails", "User");
+            }
+            
             // return RedirectToAction personal details page
             return View();
         }
