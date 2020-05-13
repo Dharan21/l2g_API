@@ -35,11 +35,39 @@ namespace l2g.Controllers
             {
                 using (var userBL = new UserBL())
                 {
-                    bool isSuccess = userBL.AddOrUpdateUserBankDetails(userVM);
-                    if (isSuccess)
-                        return Ok();
+                    bool isExists = userBL.CheckBankDetailsExists();
+                    if (!isExists)
+                    {
+                        ErrorResponseVM errors = userBL.CheckAccountNoExists(userVM);
+                        if (errors.IsValid)
+                        {
+                            bool isSuccess = userBL.AddBankDetails(userVM);
+                            if (isSuccess)
+                                return Ok();
+                            else
+                                return InternalServerError();
+                        }
+                        else
+                        {
+                            return BadRequest(JsonConvert.SerializeObject(errors.Errors));
+                        }
+                    }
                     else
-                        return InternalServerError();
+                    {
+                        ErrorResponseVM errors = userBL.CheckAccountNoExistsONUpdate(userVM);
+                        if (errors.IsValid)
+                        {
+                            bool isSuccess = userBL.UpdateBankDetails(userVM);
+                            if (isSuccess)
+                                return Ok();
+                            else
+                                return InternalServerError();
+                        }
+                        else
+                        {
+                            return BadRequest(JsonConvert.SerializeObject(errors.Errors));
+                        }
+                    }
                 }
             }
             else
