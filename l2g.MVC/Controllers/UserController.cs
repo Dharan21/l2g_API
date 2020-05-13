@@ -78,22 +78,79 @@ namespace l2g.MVC.Controllers
         public ActionResult UserEmploymentDetails()
         {
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+            string token = HttpContext.Request.Cookies.Get("token").Value;
+            if (TempData.Peek("EmploymentDropdowns") == null)
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:52778/user/");
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.ConnectionClose = true;
+                    var response = client.GetAsync("getEmploymentDropdowns");
+                    var result = response.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var objString = result.Content.ReadAsStringAsync().Result;
+                        var obj = JsonConvert.DeserializeObject<EmploymentDropdowns>(objString);
+                        TempData["EmploymentDropdowns"] = obj;
+                    }
+                }
+            }
+            ViewBag.Contracts = new SelectList((TempData.Peek("EmploymentDropdowns") as EmploymentDropdowns).Contracts, "ContractId", "ContractType");
+            ViewBag.EmployeeStatues = new SelectList((TempData.Peek("EmploymentDropdowns") as EmploymentDropdowns).Statuses, "EmployeeStatusId", "EmployeeStatusType");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:52778/user/");
+                client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.ConnectionClose = true;
+                var response = client.GetAsync("getEmploymentDetails");
+                var result = response.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var objString = result.Content.ReadAsStringAsync().Result;
+                    var obj = JsonConvert.DeserializeObject<UserEmploymentDetailsVM>(objString);
+                    GetUserEmploymentDetails user = new GetUserEmploymentDetails()
+                    {
+                        Company = obj.Company,
+                        ContractId = obj.ContractId,
+                        CreditScore = obj.CreditScore,
+                        EmployeeStatusId = obj.EmployeeStatusId,
+                        Salary = obj.Salary
+                    };
+                    return View(user);
+                }
+            }
+
             return View();
         }
 
         [HttpPost]
         [Route("Employment-Details")]
-        public ActionResult UserEmploymentDetails(UserEmploymentDetailsVM userVM)
+        public async System.Threading.Tasks.Task<ActionResult> UserEmploymentDetailsAsync(GetUserEmploymentDetails userVM)
         {
-            // get userID
-            //userVM.UserId = 11;
-            //from employees status type get id of status type
-            //from employee contract type get id of contract type
-
-            if (userVM != null)
+            if (ModelState.IsValid)
             {
-                TempData["UserEmploymentData"] = userVM;
-                return RedirectToAction("UserBankDetails");
+                string token = HttpContext.Request.Cookies.Get("token").Value;
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:52778/user/");
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                    var content = JsonConvert.SerializeObject(userVM);
+                    HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync("addEmploymentDetails", c);
+                    if (response.IsSuccessStatusCode)
+                        return RedirectToAction("UserBankDetails");
+                    else
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                        else
+                            ViewData["Error"] = "Unknown Error Occured!";
+                        return View();
+                    }
+                }
             }
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();

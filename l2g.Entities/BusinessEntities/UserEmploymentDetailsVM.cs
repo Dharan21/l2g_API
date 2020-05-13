@@ -12,9 +12,9 @@ namespace l2g.Entities.BusinessEntities
         public string Company { get; set; }
         public int Salary { get; set; }
         public int CreditScore { get; set; }
-        public Nullable<int> EmployeeStatusId { get; set; }
+        public int EmployeeStatusId { get; set; }
         public string EmployeeStatusType { get; set; }
-        public Nullable<int> ContractId { get; set; }
+        public int ContractId { get; set; }
         public string ContractType { get; set; }
     }
 }
