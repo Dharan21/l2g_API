@@ -45,6 +45,26 @@ namespace l2g.DL
             return new UserBankDetailsVM();
         }
 
+        public bool UpdateUserEmploymentDetails(GetUserEmploymentDetails userVM)
+        {
+            //l2g_tbl_UserEmployeementDetails user = MappingConfig.GetUserEmploymentDetailsToDataEntity(userVM);
+            try
+            {
+                l2g_tbl_UserEmployeementDetails userEntity = db.l2g_tbl_UserEmployeementDetails.Where(x => x.UserId == userVM.UserId).First();
+                userEntity.Company = userVM.Company;
+                userEntity.ContractId = userVM.ContractId;
+                userEntity.CreditScore = userVM.CreditScore;
+                userEntity.EmployeeStatusId = userVM.EmployeeStatusId;
+                userEntity.Salary = userVM.Salary;
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public int? GetContractId(string contractType)
         {
             return db.l2g_tbl_Contract.Where(x => x.ContractType == contractType)
@@ -57,8 +77,8 @@ namespace l2g.DL
                 .Select(x=>x.EmployeeStatusId).First();
         }
 
-        public bool AddUserEmployementDetails(UserEmploymentDetailsVM userVM) {
-            l2g_tbl_UserEmployeementDetails user = MappingConfig.UserEmploymentDetailsToDataEntity(userVM);
+        public bool AddUserEmployementDetails(GetUserEmploymentDetails userVM) {
+            l2g_tbl_UserEmployeementDetails user = MappingConfig.GetUserEmploymentDetailsToDataEntity(userVM);
             user.CreatedDate = DateTime.Now;
             try
             {
@@ -73,12 +93,38 @@ namespace l2g.DL
 
         public UserEmploymentDetailsVM GetUserEmploymentDetails(int userId) 
         {
-            l2g_tbl_UserEmployeementDetails user = db.l2g_tbl_UserEmployeementDetails.Where(x => x.UserId == userId).First();
-            if (user != null)
+            try
             {
+                l2g_tbl_UserEmployeementDetails user = db.l2g_tbl_UserEmployeementDetails.Where(x => x.UserId == userId).First();
                 return MappingConfig.UserEmploymentDetailsToBusinessEntity(user);
             }
-            return new UserEmploymentDetailsVM();
+            catch(Exception)
+            {
+                return new UserEmploymentDetailsVM();
+            }
+            
+        }
+
+        public List<Contract> GetAllContracts()
+        {
+            List<l2g_tbl_Contract> contractEntities = db.l2g_tbl_Contract.ToList();
+            List<Contract> contracts = new List<Contract>();
+            foreach (l2g_tbl_Contract contract in contractEntities)
+            {
+                contracts.Add(MappingConfig.ContractToBusinessEntity(contract));
+            }
+            return contracts;
+        }
+
+        public List<EmploymentStatus> GetAllEmployeeStatues()
+        {
+            List<l2g_tbl_EmployeeStatus> statusEntities = db.l2g_tbl_EmployeeStatus.ToList();
+            List<EmploymentStatus> statuses = new List<EmploymentStatus>();
+            foreach(l2g_tbl_EmployeeStatus status in statusEntities)
+            {
+                statuses.Add(MappingConfig.EmployeeStatusToBusinessEntity(status));
+            }
+            return statuses;
         }
 
         public bool AddUserDetails(UserDetailsVM userVM) {
@@ -96,14 +142,40 @@ namespace l2g.DL
             return true;
         }
 
+        public bool UpdateUserDetail(UserDetailsVM userVM)
+        {
+            l2g_tbl_UserDetails user = MappingConfig.UserDetailsToDataEntity(userVM);
+            try
+            {
+                l2g_tbl_UserDetails userEntity = db.l2g_tbl_UserDetails.Where(x => x.UserId == user.UserId).First();
+                userEntity.Firstname = user.Firstname;
+                userEntity.Lastname = user.Lastname;
+                userEntity.DOB = user.DOB;
+                userEntity.Contact = user.Contact;
+                userEntity.HouseNo = user.HouseNo;
+                userEntity.Street = user.Street;
+                userEntity.PIN = user.PIN;
+                userEntity.Town = user.Town;
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public UserDetailsVM GetUserDetails(int userId)
         {
-            l2g_tbl_UserDetails user = db.l2g_tbl_UserDetails.Where(x => x.UserId == userId).First();
-            if (user != null) 
+            try
             {
+                l2g_tbl_UserDetails user = db.l2g_tbl_UserDetails.Where(x => x.UserId == userId).First();
                 return MappingConfig.UserDetailsToBusinessEntity(user);
             }
-            return new UserDetailsVM();
+            catch (Exception)
+            {
+                return new UserDetailsVM();
+            } 
         }
 
         public void Dispose()

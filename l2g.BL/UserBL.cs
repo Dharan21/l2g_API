@@ -27,12 +27,15 @@ namespace l2g.BL
             int userId = userDL.GetUserId(username);
             return userDL.GetBankDetails(userId);
         }
-        public bool AddUserEmploymentDetails(UserEmploymentDetailsVM userVM) 
+        public bool AddOrUpdateUserEmploymentDetails(GetUserEmploymentDetails userVM) 
         {
             string username = HttpContext.Current.User.Identity.Name;
             userVM.UserId = userDL.GetUserId(username);
-            userVM.EmployeeStatusId = userDL.GetEmployeeStatusId(userVM.EmployeeStatusType);
-            userVM.ContractId = userDL.GetContractId(userVM.ContractType);
+            UserEmploymentDetailsVM user = userDL.GetUserEmploymentDetails(userVM.UserId);
+            if (user.UserId > 0)
+            {
+                return userDL.UpdateUserEmploymentDetails(userVM);
+            }
             return userDL.AddUserEmployementDetails(userVM);
         }
         public UserEmploymentDetailsVM GetUserEmploymentDetails()
@@ -41,10 +44,15 @@ namespace l2g.BL
             int userId = userDL.GetUserId(username);
             return userDL.GetUserEmploymentDetails(userId);
         }
-        public bool AddUserDetails(UserDetailsVM userVM)
+        public bool AddOrUpdateUserDetails(UserDetailsVM userVM)
         {
             string username = HttpContext.Current.User.Identity.Name;
             userVM.UserId = userDL.GetUserId(username);
+            UserDetailsVM userDetailsVM = userDL.GetUserDetails(userVM.UserId);
+            if (userDetailsVM.UserId > 0)
+            {
+                return userDL.UpdateUserDetail(userVM);
+            }
             return userDL.AddUserDetails(userVM);
         }
         public UserDetailsVM GetUserDetails()
@@ -54,9 +62,18 @@ namespace l2g.BL
             return userDL.GetUserDetails(userId);
         }
 
+        public EmploymentDropdowns getEmploymenttDropdown()
+        {
+            List<EmploymentStatus> statuses = userDL.GetAllEmployeeStatues();
+            List<Contract> contracts = userDL.GetAllContracts();
+            return new EmploymentDropdowns() { Statuses = statuses, Contracts = contracts };
+        }
+
         public void Dispose()
         {
             userDL.Dispose();
         }
+
+       
     }
 }

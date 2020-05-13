@@ -61,6 +61,20 @@ namespace l2g.DL.Mapping
             return carVM;
         }
 
+        public static l2g_tbl_UserEmployeementDetails GetUserEmploymentDetailsToDataEntity(GetUserEmploymentDetails userVM)
+        {
+            l2g_tbl_UserEmployeementDetails user = new l2g_tbl_UserEmployeementDetails()
+            {
+                UserId = userVM.UserId,
+                Company = userVM.Company,
+                Salary = userVM.Salary,
+                CreditScore = userVM.CreditScore,
+                EmployeeStatusId = userVM.EmployeeStatusId,
+                ContractId = userVM.ContractId
+            };
+            return user;
+        }
+
         public static QuoteVM QuoteToBusinessEntity(l2g_tbl_Quote quote) {
             var quoteVM = new QuoteVM() {
                 QuoteId = quote.QuoteId,
@@ -86,6 +100,26 @@ namespace l2g.DL.Mapping
             }
 
             return quoteVM; 
+        }
+
+        public static EmploymentStatus EmployeeStatusToBusinessEntity(l2g_tbl_EmployeeStatus status)
+        {
+            EmploymentStatus statusVM = new EmploymentStatus() 
+            {
+                EmployeeStatusId = status.EmployeeStatusId,
+                EmployeeStatusType = status.EmployeeStatusType
+            };
+            return statusVM;
+        }
+
+        public static Contract ContractToBusinessEntity(l2g_tbl_Contract contract)
+        {
+            Contract contractVM = new Contract()
+            {
+                ContractId = contract.ContractId,
+                ContractType = contract.ContractType
+            };
+            return contractVM;
         }
 
         //public static l2g_tbl_Quote QuoteToDataEntity(QuoteVM quoteVM) {
@@ -176,8 +210,8 @@ namespace l2g.DL.Mapping
                 Company = user.Company,
                 Salary = user.Salary,
                 CreditScore = user.CreditScore,
-                EmployeeStatusId = user.EmployeeStatusId,
-                ContractId = user.ContractId,
+                EmployeeStatusId = user.EmployeeStatusId ?? 4,
+                ContractId = user.ContractId ?? 2,
             };
             return userVM;
         }

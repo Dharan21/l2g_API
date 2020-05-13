@@ -53,11 +53,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessEntities\BrandVM.cs" />
+    <Compile Include="BusinessEntities\EmploymentDropdowns.cs" />
     <Compile Include="BusinessEntities\GetQuote.cs" />
     <Compile Include="BusinessEntities\GetResponse.cs" />
     <Compile Include="BusinessEntities\CarVM.cs" />
     <Compile Include="BusinessEntities\FuelVM.cs" />
     <Compile Include="BusinessEntities\GearboxVM.cs" />
+    <Compile Include="BusinessEntities\GetUserEmploymentDetails.cs" />
     <Compile Include="BusinessEntities\LoginVM.cs" />
     <Compile Include="BusinessEntities\MileageVM.cs" />
     <Compile Include="BusinessEntities\PaybackTimeVM.cs" />

@@ -62,14 +62,14 @@ namespace l2g.Controllers
 
         [Route("addEmploymentDetails")]
         [HttpPost]
-        public IHttpActionResult AddEmploymentDetails(UserEmploymentDetailsVM userVM)
+        public IHttpActionResult AddEmploymentDetails(GetUserEmploymentDetails userVM)
         {
             if (ModelState.IsValid)
             {
                 using (var userBL = new UserBL())
                 {
-                    bool isAdded = userBL.AddUserEmploymentDetails(userVM);
-                    if (isAdded)
+                    bool isSuccess = userBL.AddOrUpdateUserEmploymentDetails(userVM);
+                    if (isSuccess)
                         return Ok();
                     else
                         return InternalServerError();
@@ -77,7 +77,7 @@ namespace l2g.Controllers
             }
             else
             {
-                var validationResult = CustomDataAnnotation.ValidateEntity<UserEmploymentDetailsVM>(userVM);
+                var validationResult = CustomDataAnnotation.ValidateEntity<GetUserEmploymentDetails>(userVM);
                 return BadRequest(JsonConvert.SerializeObject(validationResult.ValidationErrors));
             }
         }
@@ -101,8 +101,8 @@ namespace l2g.Controllers
             {
                 using (var userBL = new UserBL())
                 {
-                    bool isAdded = userBL.AddUserDetails(userVM);
-                    if (isAdded)
+                    bool isSuccess = userBL.AddOrUpdateUserDetails(userVM);
+                    if (isSuccess)
                         return Ok();
                     else
                         return InternalServerError();
@@ -112,6 +112,17 @@ namespace l2g.Controllers
             {
                 var validationResult = CustomDataAnnotation.ValidateEntity<UserDetailsVM>(userVM);
                 return BadRequest(JsonConvert.SerializeObject(validationResult.ValidationErrors));
+            }
+        }
+
+        [HttpGet]
+        [Route("getEmploymentDropdowns")]
+        public IHttpActionResult GetEmploymentDropdown()
+        {
+            using (var userBL = new UserBL())
+            {
+                EmploymentDropdowns response = userBL.getEmploymenttDropdown();
+                return Ok(response);
             }
         }
     }
