@@ -1,8 +1,12 @@
 ﻿using l2g.Entities.BusinessEntities;
 using l2g.MVC.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,22 +21,55 @@ namespace l2g.MVC.Controllers
         public ActionResult UserPersonalDetails()
         {
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+            string token = HttpContext.Request.Cookies.Get("token").Value;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:52778/user/");
+                client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.ConnectionClose = true;
+                var response = client.GetAsync("getUserDetails");
+                var result = response.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var objString = result.Content.ReadAsStringAsync().Result;
+                    var obj = JsonConvert.DeserializeObject<UserDetailsVM>(objString);
+                    return View(obj);
+                }
+            }
             return View();
         }
 
         [HttpPost]
         [Route("Personal-Details")]
-        public ActionResult UserPersonalDetails(UserDetailsVM userVM)
+        public async System.Threading.Tasks.Task<ActionResult> UserPersonalDetails(UserDetailsVM userVM)
         {
-
-            //get userID
-            //userVM.UserId = 11;
-                if (userVM != null)
-                {
-                    TempData["UserPersonalData"] = userVM;
-                    return RedirectToAction("UserEmploymentDetails");
-                }
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+            if (ModelState.IsValid)
+            {
+                string token = HttpContext.Request.Cookies.Get("token").Value;
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:52778/");
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                    var content = JsonConvert.SerializeObject(userVM);
+                    HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync("user/addUserDetails", c);
+                    if (response.IsSuccessStatusCode)
+                        return RedirectToAction("UserEmploymentDetails");
+                    else
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                        else
+                            ViewData["Error"] = "Unknown Error Occured!";
+                        return View();
+                    }
+                        
+                    
+                }
+                
+            }
             return View();
         }
 

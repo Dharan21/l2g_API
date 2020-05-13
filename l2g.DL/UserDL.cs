@@ -96,14 +96,33 @@ namespace l2g.DL
             return true;
         }
 
+        public bool UpdateUserDetail(UserDetailsVM userVM)
+        {
+            l2g_tbl_UserDetails user = MappingConfig.UserDetailsToDataEntity(userVM);
+            try
+            {
+                l2g_tbl_UserDetails userEntity = db.l2g_tbl_UserDetails.Where(x => x.UserId == user.UserId).First();
+                userEntity = user;
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public UserDetailsVM GetUserDetails(int userId)
         {
-            l2g_tbl_UserDetails user = db.l2g_tbl_UserDetails.Where(x => x.UserId == userId).First();
-            if (user != null) 
+            try
             {
+                l2g_tbl_UserDetails user = db.l2g_tbl_UserDetails.Where(x => x.UserId == userId).First();
                 return MappingConfig.UserDetailsToBusinessEntity(user);
             }
-            return new UserDetailsVM();
+            catch (Exception)
+            {
+                return new UserDetailsVM();
+            } 
         }
 
         public void Dispose()

@@ -41,10 +41,15 @@ namespace l2g.BL
             int userId = userDL.GetUserId(username);
             return userDL.GetUserEmploymentDetails(userId);
         }
-        public bool AddUserDetails(UserDetailsVM userVM)
+        public bool AddOrUpdateUserDetails(UserDetailsVM userVM)
         {
             string username = HttpContext.Current.User.Identity.Name;
             userVM.UserId = userDL.GetUserId(username);
+            UserDetailsVM userDetailsVM = userDL.GetUserDetails(userVM.UserId);
+            if (userDetailsVM.UserId > 0)
+            {
+                return userDL.UpdateUserDetail(userVM);
+            }
             return userDL.AddUserDetails(userVM);
         }
         public UserDetailsVM GetUserDetails()

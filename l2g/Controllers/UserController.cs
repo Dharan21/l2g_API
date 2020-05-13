@@ -101,8 +101,8 @@ namespace l2g.Controllers
             {
                 using (var userBL = new UserBL())
                 {
-                    bool isAdded = userBL.AddUserDetails(userVM);
-                    if (isAdded)
+                    bool isSuccess = userBL.AddOrUpdateUserDetails(userVM);
+                    if (isSuccess)
                         return Ok();
                     else
                         return InternalServerError();
