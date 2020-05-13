@@ -64,9 +64,7 @@ namespace l2g.MVC.Controllers
                         else
                             ViewData["Error"] = "Unknown Error Occured!";
                         return View();
-                    }
-                        
-                    
+                    }          
                 }
                 
             }
@@ -122,7 +120,6 @@ namespace l2g.MVC.Controllers
                     return View(user);
                 }
             }
-
             return View();
         }
 
@@ -161,21 +158,53 @@ namespace l2g.MVC.Controllers
         public ActionResult UserBankDetails() 
         {
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+            string token = HttpContext.Request.Cookies.Get("token").Value;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:52778/user/");
+                client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.ConnectionClose = true;
+                var response = client.GetAsync("getBankDetails");
+                var result = response.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var objString = result.Content.ReadAsStringAsync().Result;
+                    var obj = JsonConvert.DeserializeObject<UserBankDetailsVM>(objString);
+                    return View(obj);
+                }
+            }
             return View();
         }
-
+    
         [HttpPost]
         [Route("Bank-Details")]
-        public ActionResult UserBankDetails(UserBankDetailsVM userVM) 
+        public async System.Threading.Tasks.Task<ActionResult> UserBankDetails(GetUserBankDetails userVM) 
         {
-            //get userID
-            //userVM.UserId = 11;
-            if (userVM != null)
-            {
-                TempData["UserBankData"] = userVM;
-                //return RedirectToAction("Index", "Quote");
-            }
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+            if (ModelState.IsValid)
+            {
+                string token = HttpContext.Request.Cookies.Get("token").Value;
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://localhost:52778/");
+                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
+                    var content = JsonConvert.SerializeObject(userVM);
+                    HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await client.PostAsync("user/addBankDetails", c);
+                    if (response.IsSuccessStatusCode)
+                        return RedirectToAction("Index","Quote");
+                    else
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                        else
+                            ViewData["Error"] = "Unknown Error Occured!";
+                        return View();
+                    }
+                }
+
+            }
             return View();
         }
     }

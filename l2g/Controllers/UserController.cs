@@ -29,14 +29,14 @@ namespace l2g.Controllers
 
         [Route("addBankDetails")]
         [HttpPost]
-        public IHttpActionResult AddBankDetails(UserBankDetailsVM userVM)
-        {
-            if(ModelState.IsValid)
+        public IHttpActionResult AddBankDetails(GetUserBankDetails userVM)
+        {   
+            if (ModelState.IsValid)
             {
                 using (var userBL = new UserBL())
                 {
-                    bool isAdded = userBL.AddBankDetails(userVM);
-                    if (isAdded)
+                    bool isSuccess = userBL.AddOrUpdateUserBankDetails(userVM);
+                    if (isSuccess)
                         return Ok();
                     else
                         return InternalServerError();
@@ -44,9 +44,9 @@ namespace l2g.Controllers
             }
             else
             {
-                var validationResult = CustomDataAnnotation.ValidateEntity<UserBankDetailsVM>(userVM);
+                var validationResult = CustomDataAnnotation.ValidateEntity<GetUserBankDetails>(userVM);
                 return BadRequest(JsonConvert.SerializeObject(validationResult.ValidationErrors));
-            }      
+            }
         }
 
         [Route("getEmploymentDetails")]

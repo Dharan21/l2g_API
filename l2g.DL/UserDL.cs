@@ -65,6 +65,53 @@ namespace l2g.DL
             return true;
         }
 
+        public bool AddUserBankDetails(GetUserBankDetails userVM)
+        {
+            l2g_tbl_UserBankDetails user = MappingConfig.GetUserBankDetailsToDataEntity(userVM);
+            user.CreatedDate = DateTime.Now;
+            try
+            {
+                db.l2g_tbl_UserBankDetails.Add(user);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateUserBankDetails(GetUserBankDetails userVM)
+        {
+            try
+            {
+                l2g_tbl_UserBankDetails userEntity = db.l2g_tbl_UserBankDetails.Where(x => x.UserId == userVM.UserId).First();
+                userEntity.AccountNo = userVM.AccountNo;
+                userEntity.AccountHolderName = userVM.AccountHolderName;
+                userEntity.AccountType = userVM.AccountType;
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public UserBankDetailsVM GetUserBankDetails(int userId)
+        {
+            try
+            {
+                l2g_tbl_UserBankDetails user = db.l2g_tbl_UserBankDetails.Where(x => x.UserId == userId).First();
+                return MappingConfig.UserBankDetailsToBusinessEntity(user);
+            }
+            catch (Exception)
+            {
+                return new UserBankDetailsVM();
+            }
+
+        }
+
         public int? GetContractId(string contractType)
         {
             return db.l2g_tbl_Contract.Where(x => x.ContractType == contractType)

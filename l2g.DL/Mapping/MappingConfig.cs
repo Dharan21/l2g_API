@@ -75,6 +75,18 @@ namespace l2g.DL.Mapping
             return user;
         }
 
+        public static l2g_tbl_UserBankDetails GetUserBankDetailsToDataEntity(GetUserBankDetails userVM)
+        {
+            l2g_tbl_UserBankDetails user = new l2g_tbl_UserBankDetails()
+            {
+                UserId = userVM.UserId,
+                AccountNo = userVM.AccountNo,
+                AccountHolderName = userVM.AccountHolderName,
+                AccountType = userVM.AccountType                
+            };
+            return user;
+        }
+
         public static QuoteVM QuoteToBusinessEntity(l2g_tbl_Quote quote) {
             var quoteVM = new QuoteVM() {
                 QuoteId = quote.QuoteId,

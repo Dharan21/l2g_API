@@ -38,6 +38,19 @@ namespace l2g.BL
             }
             return userDL.AddUserEmployementDetails(userVM);
         }
+
+        public bool AddOrUpdateUserBankDetails(GetUserBankDetails userVM)
+        {
+            string username = HttpContext.Current.User.Identity.Name;
+            userVM.UserId = userDL.GetUserId(username);
+            UserBankDetailsVM user = userDL.GetUserBankDetails(userVM.UserId);
+            if (user.UserId > 0)
+            {
+                return userDL.UpdateUserBankDetails(userVM);
+            }
+            return userDL.AddUserBankDetails(userVM);
+        }
+
         public UserEmploymentDetailsVM GetUserEmploymentDetails()
         {
             string username = HttpContext.Current.User.Identity.Name;
