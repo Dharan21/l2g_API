@@ -260,6 +260,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -280,6 +281,7 @@
     <Content Include="Views\User\UserPersonalDetails.cshtml" />
     <Content Include="Views\User\UserEmploymentDetails.cshtml" />
     <Content Include="Views\User\UserBankDetails.cshtml" />
+    <Content Include="Views\Quote\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

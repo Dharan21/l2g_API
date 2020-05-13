@@ -27,11 +27,11 @@ namespace l2g.MVC.Controllers
 
             //get userID
             //userVM.UserId = 11;
-            if (userVM != null)
-            {
-                TempData["UserPersonalData"] = userVM;
-                return RedirectToAction("UserEmploymentDetails");
-            }
+                if (userVM != null)
+                {
+                    TempData["UserPersonalData"] = userVM;
+                    return RedirectToAction("UserEmploymentDetails");
+                }
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();
         }
@@ -50,7 +50,7 @@ namespace l2g.MVC.Controllers
         {
             // get userID
             //userVM.UserId = 11;
-            //from employees tatus type get id of status type
+            //from employees status type get id of status type
             //from employee contract type get id of contract type
 
             if (userVM != null)
@@ -79,7 +79,7 @@ namespace l2g.MVC.Controllers
             if (userVM != null)
             {
                 TempData["UserBankData"] = userVM;
-                //return RedirectToAction("Index", "Quote");          
+                //return RedirectToAction("Index", "Quote");
             }
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View();

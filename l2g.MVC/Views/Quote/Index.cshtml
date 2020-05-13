@@ -1,0 +1,106 @@
+﻿@model l2g.Entities.BusinessEntities.QuoteVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <h4>QuoteVM</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Firstname)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Lastname)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.UserId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.UserId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CarId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CarId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Model)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MileageId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MileageId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.MonthId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.MonthId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Kilometer)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Kilometer)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Months)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Months)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.QuoteId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
