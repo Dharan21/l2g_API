@@ -14,7 +14,7 @@ namespace l2g.BL
     {
         UserDL userDL = new UserDL();
 
-        public bool AddBankDetails(UserBankDetailsVM userVM)
+        public bool AddBankDetails(GetUserBankDetails userVM)
         {
             string username = HttpContext.Current.User.Identity.Name;
             userVM.UserId = userDL.GetUserId(username);
@@ -39,17 +39,66 @@ namespace l2g.BL
             return userDL.AddUserEmployementDetails(userVM);
         }
 
-        public bool AddOrUpdateUserBankDetails(GetUserBankDetails userVM)
+        public ErrorResponseVM CheckAccountNoExists(GetUserBankDetails userVM)
+        {
+            bool isExists = userDL.CheckAccountNoExists(userVM.AccountNo);
+            ErrorResponseVM error = new ErrorResponseVM();
+            if (isExists)
+            {
+                Error err = new Error()
+                {
+                    ErrorMessage = "Account No Already Exists!",
+                    Property = "AccountNo"
+                };
+                error.Errors.Add(err);
+            }
+            return error;
+        }
+
+        public ErrorResponseVM CheckAccountNoExistsONUpdate(GetUserBankDetails userVM)
+        {
+            string username = HttpContext.Current.User.Identity.Name;
+            int userId = userDL.GetUserId(username);
+            bool isExists = userDL.CheckAccountNoExists(userId, userVM.AccountNo);
+            ErrorResponseVM error = new ErrorResponseVM();
+            if (isExists)
+            {
+                Error err = new Error()
+                {
+                    ErrorMessage = "Account No Already Exists!",
+                    Property = "AccountNo"
+                };
+                error.Errors.Add(err);
+            }
+            return error;
+        }
+
+        public bool UpdateBankDetails(GetUserBankDetails userVM)
         {
             string username = HttpContext.Current.User.Identity.Name;
             userVM.UserId = userDL.GetUserId(username);
-            UserBankDetailsVM user = userDL.GetUserBankDetails(userVM.UserId);
-            if (user.UserId > 0)
-            {
-                return userDL.UpdateUserBankDetails(userVM);
-            }
-            return userDL.AddUserBankDetails(userVM);
+            return userDL.UpdateUserBankDetails(userVM);
         }
+
+        public bool CheckBankDetailsExists()
+        {
+            string username = HttpContext.Current.User.Identity.Name;
+            int userId = userDL.GetUserId(username);
+            UserBankDetailsVM user = userDL.GetUserBankDetails(userId);
+            return user.UserId > 0;
+        }
+
+        //public bool AddOrUpdateUserBankDetails(GetUserBankDetails userVM)
+        //{
+        //    string username = HttpContext.Current.User.Identity.Name;
+        //    userVM.UserId = userDL.GetUserId(username);
+        //    UserBankDetailsVM user = userDL.GetUserBankDetails(userVM.UserId);
+        //    if (user.UserId > 0)
+        //    {
+        //        return userDL.UpdateUserBankDetails(userVM);
+        //    }
+        //    return userDL.AddUserBankDetails(userVM);
+        //}
 
         public UserEmploymentDetailsVM GetUserEmploymentDetails()
         {

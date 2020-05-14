@@ -1,4 +1,5 @@
 ﻿using l2g.Entities.BusinessEntities;
+using l2g.Entities.ValidationEntities;
 using l2g.MVC.Models;
 using Newtonsoft.Json;
 using System;
@@ -158,6 +159,7 @@ namespace l2g.MVC.Controllers
         public ActionResult UserBankDetails() 
         {
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
+            ViewData["Errors"] = new Error[0];
             string token = HttpContext.Request.Cookies.Get("token").Value;
             using (var client = new HttpClient())
             {
@@ -171,7 +173,13 @@ namespace l2g.MVC.Controllers
                 {
                     var objString = result.Content.ReadAsStringAsync().Result;
                     var obj = JsonConvert.DeserializeObject<UserBankDetailsVM>(objString);
-                    return View(obj);
+                    GetUserBankDetails user = new GetUserBankDetails() 
+                    {
+                        AccountHolderName = obj.AccountHolderName,
+                        AccountNo = obj.AccountNo,
+                        AccountType = obj.AccountType
+                    };
+                    return View(user);
                 }
             }
             return View();
@@ -187,17 +195,23 @@ namespace l2g.MVC.Controllers
                 string token = HttpContext.Request.Cookies.Get("token").Value;
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("http://localhost:52778/");
+                    client.BaseAddress = new Uri("http://localhost:52778/user/");
                     client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
                     var content = JsonConvert.SerializeObject(userVM);
                     HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync("user/addBankDetails", c);
+                    HttpResponseMessage response = await client.PostAsync("addBankDetails", c);
                     if (response.IsSuccessStatusCode)
                         return RedirectToAction("QuoteDetails", "Quote");
                     else
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                             ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                        else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                        {
+                            var errorString = response.Content.ReadAsStringAsync().Result;
+                            var error = JsonConvert.DeserializeObject<ErrorRes>(errorString);
+                            ViewData["Errors"] = JsonConvert.DeserializeObject<Error[]>(error.Message);
+                        }
                         else
                             ViewData["Error"] = "Unknown Error Occured!";
                         return View();

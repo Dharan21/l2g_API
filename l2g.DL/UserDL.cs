@@ -19,9 +19,9 @@ namespace l2g.DL
             return id;
         }
 
-        public bool AddBankDeatils(UserBankDetailsVM userVM)
+        public bool AddBankDeatils(GetUserBankDetails userVM)
         {
-            l2g_tbl_UserBankDetails user = MappingConfig.UserBankDetailsToDataEntity(userVM);
+            l2g_tbl_UserBankDetails user = MappingConfig.GetUserBankDetailsToDataEntity(userVM);
             user.CreatedDate = DateTime.Now;
             try
             {
@@ -37,12 +37,16 @@ namespace l2g.DL
 
         public UserBankDetailsVM GetBankDetails(int userId)
         {
-            l2g_tbl_UserBankDetails user = db.l2g_tbl_UserBankDetails.Where(x => x.UserId == userId).First();
-            if(user != null)
+            try
             {
+                l2g_tbl_UserBankDetails user = db.l2g_tbl_UserBankDetails.Where(x => x.UserId == userId).First();
                 return MappingConfig.UserBankDetailsToBusinessEntity(user);
             }
-            return new UserBankDetailsVM();
+            catch(Exception)
+            {
+                return new UserBankDetailsVM();
+            }
+            
         }
 
         public bool UpdateUserEmploymentDetails(GetUserEmploymentDetails userVM)
@@ -63,6 +67,16 @@ namespace l2g.DL
                 return false;
             }
             return true;
+        }
+
+        public bool CheckAccountNoExists(int userId, string accountNo)
+        {
+            return db.l2g_tbl_UserBankDetails.Any(x => x.UserId != userId && x.AccountNo == accountNo);
+        }
+
+        public bool CheckAccountNoExists(string accountNo)
+        {
+            return db.l2g_tbl_UserBankDetails.Any(x => x.AccountNo == accountNo);
         }
 
         public bool AddUserBankDetails(GetUserBankDetails userVM)
