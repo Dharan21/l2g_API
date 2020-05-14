@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace l2g.BL
 {
@@ -55,6 +56,18 @@ namespace l2g.BL
             }
             return errors;
         }
+
+        public GetQuoteDetails GetQuoteDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        //public bool SaveQuoteDetails(GetQuoteDetails quote)
+        //{
+        //    string username = HttpContext.Current.User.Identity.Name;
+
+        //    throw new NotImplementedException();
+        //}
 
         public bool AddQuote(GetQuote quote, string username)
         {

@@ -50,11 +50,11 @@ namespace l2g.MVC.Controllers
                 string token = HttpContext.Request.Cookies.Get("token").Value;
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("http://localhost:52778/");
+                    client.BaseAddress = new Uri("http://localhost:52778/user/");
                     client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
                     var content = JsonConvert.SerializeObject(userVM);
                     HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync("user/addUserDetails", c);
+                    HttpResponseMessage response = await client.PostAsync("addUserDetails", c);
                     if (response.IsSuccessStatusCode)
                         return RedirectToAction("UserEmploymentDetails");
                     else
@@ -193,7 +193,7 @@ namespace l2g.MVC.Controllers
                     HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
                     HttpResponseMessage response = await client.PostAsync("user/addBankDetails", c);
                     if (response.IsSuccessStatusCode)
-                        return RedirectToAction("Index","Quote");
+                        return RedirectToAction("QuoteDetails", "Quote");
                     else
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)

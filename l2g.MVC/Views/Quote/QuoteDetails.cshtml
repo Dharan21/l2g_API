@@ -1,0 +1,161 @@
+﻿@model l2g.Entities.BusinessEntities.GetQuoteDetails
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>QuoteDetails</title>
+</head>
+<body>
+    <div>
+        <h4>GetQuoteDetails</h4>
+        <hr />
+        <dl class="dl-horizontal">
+    
+    @* Personal Details *@
+            <dt>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Firstname)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Lastname)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.DOB)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.DOB)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Contact)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Contact)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.HouseNo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.HouseNo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Street)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Street)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PIN)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PIN)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Town)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Town)
+            </dd>
+
+    @* Employment Details *@
+            <dt>
+                @Html.DisplayNameFor(model => model.Company)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Company)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Salary)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Salary)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CreditScore)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CreditScore)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EmployeeStatusId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EmployeeStatusId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.ContractId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.ContractId)
+            </dd>
+
+    @* Bank Details *@
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountNo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AccountNo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountHolderName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AccountHolderName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountType)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AccountType)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")*@
+    </p>
+
+    <button class="btn btn-secondary"> Generate Quote </button>
+
+</body>
+</html>

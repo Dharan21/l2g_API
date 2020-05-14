@@ -281,7 +281,7 @@
     <Content Include="Views\User\UserPersonalDetails.cshtml" />
     <Content Include="Views\User\UserEmploymentDetails.cshtml" />
     <Content Include="Views\User\UserBankDetails.cshtml" />
-    <Content Include="Views\Quote\Index.cshtml" />
+    <Content Include="Views\Quote\QuoteDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -55,6 +55,7 @@
     <Compile Include="BusinessEntities\BrandVM.cs" />
     <Compile Include="BusinessEntities\EmploymentDropdowns.cs" />
     <Compile Include="BusinessEntities\GetQuote.cs" />
+    <Compile Include="BusinessEntities\GetQuoteDetails.cs" />
     <Compile Include="BusinessEntities\GetResponse.cs" />
     <Compile Include="BusinessEntities\CarVM.cs" />
     <Compile Include="BusinessEntities\FuelVM.cs" />
