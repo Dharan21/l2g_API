@@ -225,6 +225,11 @@ namespace l2g.DL.Mapping
                 EmployeeStatusId = user.EmployeeStatusId ?? 4,
                 ContractId = user.ContractId ?? 2,
             };
+            using (var db = new Lead2OrderGenerateDbEntities())
+            {
+                userVM.ContractType = db.l2g_tbl_Contract.Find(userVM.ContractId).ContractType;
+                userVM.EmployeeStatusType = db.l2g_tbl_EmployeeStatus.Find(userVM.EmployeeStatusId).EmployeeStatusType;
+            }
             return userVM;
         }
         public static l2g_tbl_UserEmployeementDetails UserEmploymentDetailsToDataEntity(UserEmploymentDetailsVM userVM)

@@ -1,4 +1,4 @@
-﻿@model l2g.Entities.BusinessEntities.GetQuoteDetails
+﻿@model l2g.Entities.BusinessEntities.ConfirmQuote
 
 @{
     Layout = null;
@@ -9,153 +9,63 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <title>QuoteDetails</title>
 </head>
 <body>
     <div>
-        <h4>GetQuoteDetails</h4>
-        <hr />
-        <dl class="dl-horizontal">
-    
-    @* Personal Details *@
-            <dt>
-                @Html.DisplayNameFor(model => model.Firstname)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Firstname)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Lastname)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Lastname)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DOB)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DOB)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Contact)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Contact)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.HouseNo)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.HouseNo)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Street)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Street)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.PIN)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.PIN)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Town)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Town)
-            </dd>
+        <!-- just for testing model -->
+        <button type="button" class="btn btn-primary" onclick="showModel()">
+            Show Model
+        </button>
 
-    @* Employment Details *@
-            <dt>
-                @Html.DisplayNameFor(model => model.Company)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Company)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Salary)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Salary)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.CreditScore)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreditScore)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EmployeeStatusId)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EmployeeStatusId)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ContractId)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ContractId)
-            </dd>
+        <button type="button" class="btn btn-primary" onclick="saveQuote()">
+            Save Quote
+        </button>
 
-    @* Bank Details *@
-            <dt>
-                @Html.DisplayNameFor(model => model.AccountNo)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.AccountNo)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.AccountHolderName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.AccountHolderName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.AccountType)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.AccountType)
-            </dd>
-    
-        </dl>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                    </div>
+                    <div class="modal-body">
+                        Quote Generated
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary" href="/Quote/Temp">Go To Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <p>
-        @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        @Html.ActionLink("Back to List", "Index")*@
-    </p>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        function showModel() {
+            $('#exampleModal').modal('show');
+        }
 
-    <button class="btn btn-secondary"> Generate Quote </button>
-
+        function saveQuote() {
+            debugger
+            var quote = @Html.Raw(Json.Encode(ViewData["quote"]));
+            var token = '@ViewData["token"]';
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:52778/quote/save',
+                headers: { 'Authorization': 'bearer ' + token },
+                data: quote,
+                success: function (response) {
+                    showModel();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

@@ -61,7 +61,7 @@ namespace l2g.MVC.Controllers
                     else
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                            return RedirectToAction("Login", "Auth");
                         else
                             ViewData["Error"] = "Unknown Error Occured!";
                         return View();
@@ -143,7 +143,7 @@ namespace l2g.MVC.Controllers
                     else
                     {
                         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                            return RedirectToAction("Login", "Auth");
                         else
                             ViewData["Error"] = "Unknown Error Occured!";
                         return View();

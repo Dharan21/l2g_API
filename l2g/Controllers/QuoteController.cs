@@ -43,35 +43,5 @@ namespace l2g.Controllers
                 return BadRequest(JsonConvert.SerializeObject(validationResult.ValidationErrors));
             }
         }
-
-        [HttpGet]
-        [Route("getQuoteDetails")]
-        public IHttpActionResult GetQuoteDetails() 
-        {
-            QuoteBL quoteBL = new QuoteBL();
-            var response = quoteBL.GetQuoteDetails();
-            return Ok(response);
-        }
-
-        //[HttpPost]
-        //[Route("SaveQuoteDetails")]
-        //public IHttpActionResult SaveQuoteDetails(GetQuoteDetails quoteVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        QuoteBL quoteBL = new QuoteBL();
-                
-        //            bool isSuccess = quoteBL.SaveQuoteDetails(quoteVM);
-        //            if (isSuccess)
-        //                return Ok();
-        //            else
-        //                return InternalServerError();
-        //    }
-        //    else
-        //    {
-        //        var validationResult = CustomDataAnnotation.ValidateEntity<GetQuoteDetails>(quoteVM);
-        //        return BadRequest(JsonConvert.SerializeObject(validationResult.ValidationErrors));
-        //    }
-        //}
     }
 }

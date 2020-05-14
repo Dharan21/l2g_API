@@ -20,6 +20,7 @@ namespace l2g.MVC.Controllers
         [CheckToken]
         public ActionResult Home()
         {
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             GetResponse data = (GetResponse)TempData.Peek("Data");
             if (data == null)
             {
@@ -37,17 +38,19 @@ namespace l2g.MVC.Controllers
                     {
                         var objString = result.Content.ReadAsStringAsync().Result;
                         var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
-                        ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
                         TempData["Data"] = obj;
                         return View(obj);
                     }
                     else
                     {
-                        var errorString = result.Content.ReadAsStringAsync().Result;
+                        if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                        else
+                            ViewData["Error"] = "Unknown Error Occured!";
+                        return View();
                     }
                 }
             }
-            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View(data);
         }
 
@@ -118,6 +121,7 @@ namespace l2g.MVC.Controllers
             ViewData["SelectedFuelTypes"] = TempData["SelectedFuelTypes"];
             ViewData["SelectedGearboxTypes"] = TempData["SelectedGearboxTypes"];
             ViewData["SelectedPriceRangeIndexes"] = TempData["SelectedPriceRangeIndexes"];
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             GetResponse data = (GetResponse)TempData.Peek("Data");
             if (data == null)
             {
@@ -136,16 +140,18 @@ namespace l2g.MVC.Controllers
                         var objString = result.Content.ReadAsStringAsync().Result;
                         var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
                         TempData["Data"] = obj;
-                        ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
                         return View(obj);
                     }
                     else
                     {
-                        var errorString = result.Content.ReadAsStringAsync().Result;
+                        if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                        else
+                            ViewData["Error"] = "Unknown Error Occured!";
+                        return View();
                     }
                 }
             }
-            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             return View(data);
         }
 
@@ -155,6 +161,7 @@ namespace l2g.MVC.Controllers
         public ActionResult SelectMileageAndPaybackTime(int? id)
         {
             id = id ?? 1;
+            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             GetResponse data = TempData.Peek("Data") as GetResponse;
             CarVM car = new CarVM();
             if (data == null)
@@ -174,14 +181,17 @@ namespace l2g.MVC.Controllers
                         var objString = result.Content.ReadAsStringAsync().Result;
                         var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
                         TempData["Data"] = obj;
-                        ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
                         car = obj.Cars.AsQueryable().Where(x => x.CarId == id).First();
                         ViewData["Mileages"] = obj.Mileages;
                         ViewData["PaybackTimes"] = obj.PaybackTimes;
                     }
                     else
                     {
-                        var errorString = result.Content.ReadAsStringAsync().Result;
+                        if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
+                        else
+                            ViewData["Error"] = "Unknown Error Occured!";
+                        return View();
                     }
                 }
             }
@@ -191,7 +201,6 @@ namespace l2g.MVC.Controllers
                 ViewData["PaybackTimes"] = data.PaybackTimes;
                 car = data.Cars.AsQueryable().Where(x => x.CarId == id).First();
             }
-            ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             ViewData["Car"] = car;
             return View();
         }

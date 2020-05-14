@@ -16,6 +16,18 @@ namespace l2g.Controllers
     [Authorize]
     public class UserController : ApiController
     {
+
+        [HttpGet]
+        [Route("getAll")]
+        public IHttpActionResult GetAll()
+        {
+            using (var userBL = new UserBL())
+            {
+                UserDetailsFullVM user = userBL.GetAllDetails();
+                return Ok(user);
+            }
+        }
+
         [Route("getBankDetails")]
         [HttpGet]
         public IHttpActionResult GetBankDetails()

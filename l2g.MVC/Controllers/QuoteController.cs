@@ -23,52 +23,44 @@ namespace l2g.MVC.Controllers
         {
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             string token = HttpContext.Request.Cookies.Get("token").Value;
+            if (TempData.Peek("Quote") == null || TempData.Peek("Data") == null)
+            {
+                return RedirectToAction("Home", "Car");
+            }
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://localhost:52778/quote/");
+                client.BaseAddress = new Uri("http://localhost:52778/user/");
                 client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.ConnectionClose = true;
-                var response = client.GetAsync("getQuoteDetails");
+                var response = client.GetAsync("getAll");
                 var result = response.Result;
                 if (result.IsSuccessStatusCode)
                 {
                     var objString = result.Content.ReadAsStringAsync().Result;
-                    var obj = JsonConvert.DeserializeObject<UserDetailsVM>(objString);
-                    return View(obj);
+                    var obj = JsonConvert.DeserializeObject<UserDetailsFullVM>(objString);
+                    GetQuote quote = (GetQuote)TempData.Peek("Quote");
+                    GetResponse allData = (GetResponse)TempData.Peek("Data");
+                    ConfirmQuote confirmQuoteDetails = new ConfirmQuote();
+                    confirmQuoteDetails.User = obj;
+                    confirmQuoteDetails.Car = allData.Cars.AsQueryable().Where(x => x.CarId == quote.CarId).First();
+                    confirmQuoteDetails.Mileage = allData.Mileages.AsQueryable().Where(x => x.MileageId == quote.MileageId).First();
+                    confirmQuoteDetails.PaybackTime = allData.PaybackTimes.AsQueryable().Where(x => x.MonthId == quote.MonthId).First();
+                    confirmQuoteDetails.Price = quote.Price;
+                    ViewData["quote"] = quote;
+                    ViewData["token"] = token;
+                    return View(confirmQuoteDetails);
                 }
             }
             return View();
         }
 
-        //[HttpPost]
-        //[Route("Details")]
-        //public async System.Threading.Tasks.Task<ActionResult> QuoteDetails(GetQuoteDetails quoteVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        string token = HttpContext.Request.Cookies.Get("token").Value;
-        //        using (var client = new HttpClient())
-        //        {
-        //            client.BaseAddress = new Uri("http://localhost:52778/quote/");
-        //            client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
-        //            var content = JsonConvert.SerializeObject(quoteVM);
-        //            HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
-        //            HttpResponseMessage response = await client.PostAsync("SaveQuoteDetails", c);
-        //            if (response.IsSuccessStatusCode) { }
-        //            //return RedirectToAction("UserBankDetails");
-        //            else
-        //            {
-        //                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-        //                    ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
-        //                else
-        //                    ViewData["Error"] = "Unknown Error Occured!";
-        //                return View();
-        //            }
-        //        }
-        //    }
-        //    ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
-        //    return View();
-        //}
+        [HttpGet]
+        [Route("Temp")]
+        public ActionResult DestroyTempData()
+        {
+            _ = TempData["Quote"];
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

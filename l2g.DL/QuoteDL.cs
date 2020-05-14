@@ -31,9 +31,5 @@ namespace l2g.DL
             }
         }
 
-        public GetQuoteDetails GetQuoteDetails(int userId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

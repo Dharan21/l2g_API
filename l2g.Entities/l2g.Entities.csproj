@@ -53,9 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessEntities\BrandVM.cs" />
+    <Compile Include="BusinessEntities\ConfirmQuote.cs" />
     <Compile Include="BusinessEntities\EmploymentDropdowns.cs" />
     <Compile Include="BusinessEntities\GetQuote.cs" />
-    <Compile Include="BusinessEntities\GetQuoteDetails.cs" />
     <Compile Include="BusinessEntities\GetResponse.cs" />
     <Compile Include="BusinessEntities\CarVM.cs" />
     <Compile Include="BusinessEntities\FuelVM.cs" />
@@ -67,6 +67,7 @@
     <Compile Include="BusinessEntities\PaybackTimeVM.cs" />
     <Compile Include="BusinessEntities\QuoteVM.cs" />
     <Compile Include="BusinessEntities\UserBankDetailsVM.cs" />
+    <Compile Include="BusinessEntities\UserDetailsFullVM.cs" />
     <Compile Include="BusinessEntities\UserDetailsVM.cs" />
     <Compile Include="BusinessEntities\UserEmploymentDetailsVM.cs" />
     <Compile Include="BusinessEntities\UserVM.cs" />
