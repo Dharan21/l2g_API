@@ -113,77 +113,22 @@
                             <!-- Filter bar start -->
                             <h4 class="mt-2">Brand</h4>
                             <!-- Brand list start -->
-                            <div style="display: flex; flex-wrap: wrap">
-                                @foreach (var brand in Model.Brands)
-                                {
-                                <div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
-                                    @if (ViewData["SelectedBrands"] != null && (ViewData["SelectedBrands"] as List<string>
-                                        ).IndexOf(brand.BrandName) != -1)
-                                    {
-                                        <label class="btn btn-secondary checkbox-label active">
-                                            <input type="checkbox" checked name="brand @brand.BrandName" value="@brand.BrandName" autocomplete="off"> @brand.BrandName
-                                        </label>
-                                    }
-                                    else
-                                    {
-                                        <label class="btn btn-secondary checkbox-label">
-                                            <input type="checkbox" name="brand @brand.BrandName" value="@brand.BrandName" autocomplete="off"> @brand.BrandName
-                                        </label>
-                                    }
-                                </div>
-                                }
-                            </div>
+                            <div id="brands" style="display: flex; flex-wrap: wrap"></div>
                             <!-- Brand list end -->
                             <br>
                             <h4 class="mt-2">Fuel</h4>
                             <!-- Fuel list start -->
-                            <div style="display: flex; flex-wrap: wrap">
-                                @foreach (var fuel in Model.FuelTypes)
-                                {
-                                <div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
-                                    @if (ViewData["SelectedFuelTypes"] != null && (ViewData["SelectedFuelTypes"] as List<string>).IndexOf(fuel.FuelType) != -1)
-                                    {
-                                        <label class="btn btn-secondary active checkbox-label">
-                                            <input type="checkbox" checked name="fuel @fuel.FuelType" value="@fuel.FuelType" autocomplete="off"> @fuel.FuelType
-                                        </label>
-                                    }
-                                    else
-                                    {
-                                        <label class="btn btn-secondary checkbox-label">
-                                            <input type="checkbox" name="fuel @fuel.FuelType" value="@fuel.FuelType" autocomplete="off"> @fuel.FuelType
-                                        </label>
-                                    }
-                                </div>
-                                }
-                            </div>
+                            <div id="fuels" style="display: flex; flex-wrap: wrap"></div>
                             <!-- Fuel list end -->
                             <br>
                             <h4 class="mt-2">Gearbox</h4>
                             <!-- Gearbox list start -->
-                            <div style="display: flex; flex-wrap: wrap">
-                                @foreach (var gearbox in Model.GearBoxTypes)
-                                {
-                                <div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
-                                    @if (ViewData["SelectedGearboxTypes"] != null && (ViewData["SelectedGearboxTypes"] as List<string>).IndexOf(gearbox.GearboxType) != -1)
-                                    {
-                                        <label class="btn btn-secondary active checkbox-label">
-                                            <input type="checkbox" checked name="gearbox @gearbox.GearboxType" value="@gearbox.GearboxType" autocomplete="off"> @gearbox.GearboxType
-                                        </label>
-                                    }
-                                    else
-                                    {
-                                        <label class="btn btn-secondary checkbox-label">
-                                            <input type="checkbox" name="gearbox @gearbox.GearboxType" value="@gearbox.GearboxType" autocomplete="off"> @gearbox.GearboxType
-                                        </label>
-                                    }
-                                </div>
-                                }
-                            </div>
+                            <div id="gearboxes" style="display: flex; flex-wrap: wrap"></div>
                             <!-- Gearbox list start -->
                             <br>
                             <h4 class="mt-2">Price</h4>
                             <div id="priceRangeList" style="display: flex; flex-wrap: wrap">
-                               <!-- Price Ranges goes here -->
+                                <!-- Price Ranges goes here -->
                             </div>
                             <br>
                             <button class="btn btn-primary btn-lg rounded-0 my-5" style="background-color: #0f4c75;" onclick="onResetFilter()">
@@ -191,47 +136,47 @@
                             </button>
                             <!-- Filter bar start -->
                         </div>
-                        <div class="col-12 col-md-8 col-lg-9">
-                            @*<app-car-list></app-car-list>*@
-                            <div class="row justify-content-center">
-                                @*<app-car-item style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3" *ngFor="let car of filteredCars"></app-car-item>*@
-                                @foreach (var car in Model.Cars)
-                                {
-                                    string imagePath = "../Content/Images/cars/" + car.CarId + ".jpg";
-                                    string href = "/Car/Select-Mileage-And-PaybackTime?id=" + car.CarId;
-                                    <div style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3 car-item">
-                                        <a class="card text-decoration-none" href="@href">
-                                            <img class="card-img-top" src="@imagePath" alt="@car.Model" style="height: 250px;">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-7 d-flex align-items-center" style="padding: 0px 5px;">
-                                                        <p class="card-title p-0 m-0 font-weight-bold">@car.Brand.BrandName&nbsp;@car.Model</p>
+                            <div class="col-12 col-md-8 col-lg-9">
+                                @*<app-car-list></app-car-list>*@
+                                <div class="row justify-content-center">
+                                    @*<app-car-item style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3" *ngFor="let car of filteredCars"></app-car-item>*@
+                                    @foreach (var car in Model.Cars)
+                                    {
+                                        string imagePath = "../Content/Images/cars/" + car.CarId + ".jpg";
+                                        string href = "/Car/Select-Mileage-And-PaybackTime?id=" + car.CarId;
+                                        <div style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3 car-item">
+                                            <a class="card text-decoration-none" href="@href">
+                                                <img class="card-img-top" src="@imagePath" alt="@car.Model" style="height: 250px;">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-7 d-flex align-items-center" style="padding: 0px 5px;">
+                                                            <p class="card-title p-0 m-0 font-weight-bold">@car.Brand.BrandName&nbsp;@car.Model</p>
+                                                        </div>
+                                                        <div class="col-5">
+                                                            <p class="card-title text-white text-center p-2 m-0 leasePrice" style="background-color: #00adb5;"></p>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-5">
-                                                        <p class="card-title text-white text-center p-2 m-0 leasePrice" style="background-color: #00adb5;"></p>
+                                                    <div class="row justify-content-around mt-3">
+                                                        <div class="col-3 px-1">
+                                                            <p class="font-smaller m-0">Fuel</p>
+                                                            <p class="font-weight-bold">@car.Fuel.FuelType</p>
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <p class="font-smaller m-0">Gearbox</p>
+                                                            <p class="font-weight-bold">@car.Gearbox.GearboxType</p>
+                                                        </div>
+                                                        <div class="col-5 px-1">
+                                                            <p class="font-smaller m-0">CO<sub>2</sub>&nbsp;Emission</p>
+                                                            <p class="font-weight-bold">@car.CO2Emission</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row justify-content-around mt-3">
-                                                    <div class="col-3 px-1">
-                                                        <p class="font-smaller m-0">Fuel</p>
-                                                        <p class="font-weight-bold">@car.Fuel.FuelType</p>
-                                                    </div>
-                                                    <div class="col-4 px-1">
-                                                        <p class="font-smaller m-0">Gearbox</p>
-                                                        <p class="font-weight-bold">@car.Gearbox.GearboxType</p>
-                                                    </div>
-                                                    <div class="col-5 px-1">
-                                                        <p class="font-smaller m-0">CO<sub>2</sub>&nbsp;Emission</p>
-                                                        <p class="font-weight-bold">@car.CO2Emission</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                }
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -278,6 +223,81 @@
         if (selectedPriceRange == null)
             selectedPriceRange = [];
 
+        var selectedData = {};
+        if (localStorage.getItem('selectedItems') != null) {
+            selectedData = JSON.parse(localStorage.getItem('selectedItems'));
+            selectedBrandList = selectedData.selectedBrandList;
+            selectedFuelList = selectedData.selectedFuelList;
+            selectedGearboxList = selectedData.selectedGearboxList;
+            selectedPriceRange = selectedData.selectedPriceRange;
+         } else {
+            selectedData.selectedBrandList = selectedBrandList;
+            selectedData.selectedFuelList = selectedFuelList;
+            selectedData.selectedGearboxList = selectedGearboxList;
+            selectedData.selectedPriceRange = selectedPriceRange;
+            localStorage.setItem('selectedItems', JSON.stringify(selectedData));
+        }
+
+        function initializeBrands(brands, selectedBrands) {
+            $.each(brands, function (index, item) {
+                let str = '';
+                if (selectedBrands != null && selectedBrands.includes(item.BrandName)) {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" checked name="brand `+ item.BrandName + `" value="` + item.BrandName + `" autocomplete="off"> ` + item.BrandName +`
+                                </label>
+                            </div>`;
+                } else {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" name="brand `+ item.BrandName + `" value="` + item.BrandName + `" autocomplete="off"> ` + item.BrandName +`
+                                </label>
+                            </div>`;
+                }
+                $('#brands').append(str);
+            });
+        }
+
+        function initializeFuels(fuels, selectedFuels) {
+            $.each(fuels, function (index, item) {
+                let str = '';
+                if (selectedFuels != null && selectedFuels.includes(item.FuelType)) {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" checked name="fuel `+ item.FuelType + `" value="` + item.FuelType + `" autocomplete="off"> ` + item.FuelType +`
+                                </label>
+                            </div>`;
+                } else {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" name="fuel `+ item.FuelType + `" value="` + item.FuelType + `" autocomplete="off"> ` + item.FuelType +`
+                                </label>
+                            </div>`;
+                }
+                $('#fuels').append(str);
+            });
+        }   
+
+        function initializeGearboxes(gearboxes, selectedGearboxes) {
+            $.each(gearboxes, function (index, item) {
+                let str = '';
+                if (selectedGearboxes != null && selectedGearboxes.includes(item.GearboxType)) {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" checked name="gearbox `+ item.GearboxType + `" value="` + item.GearboxType + `" autocomplete="off"> ` + item.GearboxType +`
+                                </label>
+                            </div>`;
+                } else {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" name="gearbox `+ item.GearboxType + `" value="` + item.GearboxType + `" autocomplete="off"> ` + item.GearboxType +`
+                                </label>
+                            </div>`;
+                }
+                $('#gearboxes').append(str);
+            });
+        }
+
         function onResetFilter() {
             $.each($('input[type=checkbox]'), function (index, obj) {
                 obj.checked = false;
@@ -296,6 +316,7 @@
             $('.car-item').filter(function (index) {
                 $(this).removeClass('d-none');
             });
+            localStorage.removeItem('selectedItems')
         }
 
         function inBrands(id) {
@@ -340,6 +361,10 @@
 
         $(document).ready(function () {
 
+            initializeBrands(obj.Brands, selectedBrandList);
+            initializeFuels(obj.FuelTypes, selectedFuelList);
+            initializeGearboxes(obj.GearBoxTypes, selectedGearboxList);
+  
             // adds price range list 
             $.each(priceRanges, function (index, item) {
                 let str = "";
@@ -397,7 +422,6 @@
                 });
             } else {
                 $('.car-item').filter(function (index) {
-                    debugger
                     if (selectedModelList.indexOf(cars[index].Model) != -1) {
                         //$(this).removeClass('d-none');
                     } else {
@@ -443,9 +467,16 @@
                         }
                     }
                 }
+                let selectedData = {};
+                selectedData.selectedBrandList = selectedBrandList;
+                selectedData.selectedFuelList = selectedFuelList;
+                selectedData.selectedGearboxList = selectedGearboxList;
+                selectedData.selectedPriceRange = selectedPriceRange;
+                localStorage.setItem('selectedItems', JSON.stringify(selectedData));
                 //console.log(selectedCarList);
                 //console.log(selectedFuelList);
                 $('.car-item').filter(function (index) {
+                    debugger
                     var brand = cars[index].Brand.BrandName;
                     var fuel = cars[index].Fuel.FuelType;
                     var gearbox = cars[index].Gearbox.GearboxType;

@@ -116,11 +116,11 @@ namespace l2g.MVC.Controllers
         [Route("List")]
         public ActionResult CarList()
         {
-            ViewData["SelectedModels"] = TempData["SelectedModels"]; 
-            ViewData["SelectedBrands"] = TempData["SelectedBrands"];
-            ViewData["SelectedFuelTypes"] = TempData["SelectedFuelTypes"];
-            ViewData["SelectedGearboxTypes"] = TempData["SelectedGearboxTypes"];
-            ViewData["SelectedPriceRangeIndexes"] = TempData["SelectedPriceRangeIndexes"];
+            ViewData["SelectedModels"] = TempData.Peek("SelectedModels"); 
+            ViewData["SelectedBrands"] = TempData.Peek("SelectedBrands");
+            ViewData["SelectedFuelTypes"] = TempData.Peek("SelectedFuelTypes");
+            ViewData["SelectedGearboxTypes"] = TempData.Peek("SelectedGearboxTypes");
+            ViewData["SelectedPriceRangeIndexes"] = TempData.Peek("SelectedPriceRangeIndexes");
             ViewData["Username"] = HttpContext.Request.Cookies.Get("username").Value;
             GetResponse data = (GetResponse)TempData.Peek("Data");
             if (data == null)
