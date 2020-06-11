@@ -1,4 +1,5 @@
 ﻿using l2g.BL;
+using l2g.BL.Interfaces;
 using l2g.Entities.BusinessEntities;
 using l2g.Entities.ValidationEntities;
 using Newtonsoft.Json;
@@ -15,16 +16,22 @@ namespace l2g.Controllers
 {
     public class AuthController : ApiController
     {
+        private IAuthBL _authBL;
+
+        public AuthController(IAuthBL authBL) 
+        {
+            _authBL = authBL;
+        }
+
         [HttpPost]
         public IHttpActionResult Register(UserVM userVM)
         {
             if (ModelState.IsValid)
             {
-                AuthBL authBL = new AuthBL();
-                ErrorResponseVM errorResponse = authBL.CheckUsernameOrEmailExists(userVM);
+                ErrorResponseVM errorResponse = _authBL.CheckUsernameOrEmailExists(userVM);
                 if (errorResponse.IsValid)
                 {
-                    var isRegistered = authBL.Register(userVM);
+                    var isRegistered = _authBL.Register(userVM);
                     if(isRegistered)
                         return Ok();
                     else
@@ -43,20 +50,17 @@ namespace l2g.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetPassword(string email)
         {
-            AuthBL authBL = new AuthBL();
-            bool isExists = authBL.CheckEmailExists(email);
+            bool isExists = _authBL.CheckEmailExists(email);
             if (isExists)
             {
-                var isSent = await authBL.SendEmail(email);
+                var isSent = await _authBL.SendEmail(email);
                 if (isSent)
                     return Ok();
                 else
                     return InternalServerError();
             }
             else
-                return BadRequest(JsonConvert.SerializeObject(new { ErrorMessage = "Email Doesn't registred!"}));
-            
-                
+                return BadRequest(JsonConvert.SerializeObject(new { ErrorMessage = "Email Doesn't registred!"}));     
         }
     }
 }

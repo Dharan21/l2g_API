@@ -1,4 +1,6 @@
-﻿using l2g.DL;
+﻿using l2g.BL.Interfaces;
+using l2g.DL;
+using l2g.DL.Interfaces;
 using l2g.Entities.BusinessEntities;
 using System;
 using System.Collections.Generic;
@@ -9,25 +11,26 @@ using System.Web;
 
 namespace l2g.BL
 {
-    public class QuoteBL
+    public class QuoteBL: IQuoteBL
     {
-        private readonly CarDL carDL;
-        private readonly MileageDL mileageDL;
-        private readonly PaybackTimeDL paybackTimeDL;
-        private readonly QuoteDL quoteDL;
-        private readonly UserDL userDL;
-        public QuoteBL()
+        private IQuoteDL _quoteDL;
+        private ICarDL _carDL;
+        private IUserDL _userDL;
+        private IMileageDL _mileageDL;
+        private IPaybackTimeDL _paybackTimeDL;
+        
+        public QuoteBL(IQuoteDL quoteDL, ICarDL carDL, IUserDL userDL, IMileageDL mileageDL, IPaybackTimeDL paybackTimeDL)
         {
-            carDL = new CarDL();
-            mileageDL = new MileageDL();
-            paybackTimeDL = new PaybackTimeDL();
-            quoteDL = new QuoteDL();
-            userDL = new UserDL();
+            _quoteDL = quoteDL;
+            _carDL = carDL;
+            _userDL = userDL;
+            _mileageDL = mileageDL;
+            _paybackTimeDL = paybackTimeDL;
         }
         public ErrorResponseVM ValidateGetQuote(GetQuote quote)
         {
             ErrorResponseVM errors = new ErrorResponseVM();
-            if (!carDL.CarExists(quote.CarId))
+            if (!_carDL.CarExists(quote.CarId))
             {
                 Error err = new Error() 
                 {
@@ -36,7 +39,7 @@ namespace l2g.BL
                 };
                 errors.Errors.Add(err);
             }
-            if (!mileageDL.CheckMileageExists(quote.MileageId))
+            if (!_mileageDL.CheckMileageExists(quote.MileageId))
             {
                 Error err = new Error()
                 {
@@ -45,7 +48,7 @@ namespace l2g.BL
                 };
                 errors.Errors.Add(err);
             }
-            if (!paybackTimeDL.CheckMonthsExists(quote.MonthId))
+            if (!_paybackTimeDL.CheckMonthsExists(quote.MonthId))
             {
                 Error err = new Error()
                 {
@@ -61,8 +64,8 @@ namespace l2g.BL
 
         public bool AddQuote(GetQuote quote, string username)
         {
-            int userId = userDL.GetUserId(username);
-            return quoteDL.AddQuote(quote, userId);
+            int userId = _userDL.GetUserId(username);
+            return _quoteDL.AddQuote(quote, userId);
         }
     }
 }

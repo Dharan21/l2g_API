@@ -1,4 +1,5 @@
-﻿using l2g.Entities.DataEntities;
+﻿using l2g.DL.Interfaces;
+using l2g.Entities.DataEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace l2g.DL
 {
-    public class PaybackTimeDL
+    public class PaybackTimeDL:IPaybackTimeDL
     {
         public bool CheckMonthsExists(int id)
         {
