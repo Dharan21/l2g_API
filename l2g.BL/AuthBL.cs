@@ -1,4 +1,6 @@
-﻿using l2g.DL;
+﻿using l2g.BL.Interfaces;
+using l2g.DL;
+using l2g.DL.Interfaces;
 using l2g.Entities.BusinessEntities;
 using System;
 using System.Collections.Generic;
@@ -11,18 +13,25 @@ using System.Threading.Tasks;
 
 namespace l2g.BL
 {
-    public class AuthBL: IDisposable
+    public class AuthBL:IDisposable
     {
-        AuthDL authDL = new AuthDL();
+        AuthDL _authDL = new AuthDL();
+        //private IAuthDL _authDL;
+        ////public AuthBL() { }
+        //public AuthBL(IAuthDL authDL)
+        //{
+        //    _authDL = authDL;
+        //}
+
         public UserVM ValidateUser(string username, string password)
         {
-            return authDL.ValidateUser(username, password);
+            return _authDL.ValidateUser(username, password);
         }
 
         public ErrorResponseVM CheckUsernameOrEmailExists(UserVM userVM)
         {
             ErrorResponseVM errorRes = new ErrorResponseVM();
-            bool isUsernameExists = authDL.CheckUsernameExists(userVM.Username);
+            bool isUsernameExists = _authDL.CheckUsernameExists(userVM.Username);
             if (isUsernameExists)
             {
                 Error error = new Error()
@@ -32,7 +41,7 @@ namespace l2g.BL
                 };
                 errorRes.Errors.Add(error);
             }
-            bool isEmailExists = authDL.CheckEmailExists(userVM.Email);
+            bool isEmailExists = _authDL.CheckEmailExists(userVM.Email);
             if (isEmailExists)
             {
                 Error error = new Error()
@@ -46,12 +55,12 @@ namespace l2g.BL
         }
         public bool CheckEmailExists(string email)
         {
-            return authDL.CheckEmailExists(email);
+            return _authDL.CheckEmailExists(email);
         }
 
         public bool Register(UserVM userVM)
         {
-            return authDL.RegisterUser(userVM);
+            return _authDL.RegisterUser(userVM);
         }
 
         public async Task<bool> SendEmail(string email)
@@ -61,7 +70,7 @@ namespace l2g.BL
             message.To.Add(email);
             message.From = new MailAddress("Bhavya Shah <bhavya0598@gmail.com>");
             message.Subject = "Check Your Password Here";
-            message.Body = "Your Password: " + authDL.GetPassword(email);
+            message.Body = "Your Password: " + _authDL.GetPassword(email);
             message.IsBodyHtml = true;
             using (var smtp = new SmtpClient("smtp.gmail.com", 587))
             {
@@ -81,7 +90,7 @@ namespace l2g.BL
         }
         public void Dispose()
         {
-            authDL.Dispose();
+            _authDL.Dispose();
         }
     }
 }

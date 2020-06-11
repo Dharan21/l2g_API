@@ -1,4 +1,6 @@
-﻿using l2g.DL;
+﻿using l2g.BL.Interfaces;
+using l2g.DL;
+using l2g.DL.Interfaces;
 using l2g.Entities.BusinessEntities;
 using System;
 using System.Collections.Generic;
@@ -8,17 +10,22 @@ using System.Threading.Tasks;
 
 namespace l2g.BL
 {
-    public class CarBL
+    public class CarBL: ICarBL
     {
+        private ICarDL _carDL;
+
+        public CarBL(ICarDL carDL)
+        {
+            _carDL = carDL;
+        }
         public GetResponse GetCars()
         {
-            CarDL carDL = new CarDL();
-            var cars = carDL.GetCars();
-            var brands = carDL.GetBrands();
-            var fuelTypes = carDL.GetFuelTypes();
-            var gearBoxTypes = carDL.GetGearboxTypes();
-            var mileages = carDL.GetMileages();
-            var paybackTimes = carDL.GetPaybackTimes();
+            var cars = _carDL.GetCars();
+            var brands = _carDL.GetBrands();
+            var fuelTypes = _carDL.GetFuelTypes();
+            var gearBoxTypes = _carDL.GetGearboxTypes();
+            var mileages = _carDL.GetMileages();
+            var paybackTimes = _carDL.GetPaybackTimes();
             if (cars == null && brands == null && fuelTypes == null && gearBoxTypes == null && mileages == null && paybackTimes == null)
                 return null;
             GetResponse response = new GetResponse()

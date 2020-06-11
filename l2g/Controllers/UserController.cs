@@ -1,4 +1,5 @@
 ﻿using l2g.BL;
+using l2g.BL.Interfaces;
 using l2g.Entities.BusinessEntities;
 using l2g.Entities.ValidationEntities;
 using Newtonsoft.Json;
@@ -16,27 +17,26 @@ namespace l2g.Controllers
     [Authorize]
     public class UserController : ApiController
     {
+        private IUserBL _userBL;
+        public UserController(IUserBL userBL)
+        {
+            _userBL = userBL;
+        }
 
         [HttpGet]
         [Route("getAll")]
         public IHttpActionResult GetAll()
         {
-            using (var userBL = new UserBL())
-            {
-                UserDetailsFullVM user = userBL.GetAllDetails();
+                UserDetailsFullVM user = _userBL.GetAllDetails();
                 return Ok(user);
-            }
         }
 
         [Route("getBankDetails")]
         [HttpGet]
         public IHttpActionResult GetBankDetails()
         {
-            using (var userBL = new UserBL())
-            {
-                UserBankDetailsVM userVM = userBL.GetBankDetails();
+                UserBankDetailsVM userVM = _userBL.GetBankDetails();
                 return Ok(userVM);
-            }
         }
 
         [Route("addBankDetails")]
@@ -45,40 +45,37 @@ namespace l2g.Controllers
         {   
             if (ModelState.IsValid)
             {
-                using (var userBL = new UserBL())
+                bool isExists = _userBL.CheckBankDetailsExists();
+                if (!isExists)
                 {
-                    bool isExists = userBL.CheckBankDetailsExists();
-                    if (!isExists)
+                    ErrorResponseVM errors = _userBL.CheckAccountNoExists(userVM);
+                    if (errors.IsValid)
                     {
-                        ErrorResponseVM errors = userBL.CheckAccountNoExists(userVM);
-                        if (errors.IsValid)
-                        {
-                            bool isSuccess = userBL.AddBankDetails(userVM);
-                            if (isSuccess)
-                                return Ok();
-                            else
-                                return InternalServerError();
-                        }
+                        bool isSuccess = _userBL.AddBankDetails(userVM);
+                        if (isSuccess)
+                            return Ok();
                         else
-                        {
-                            return BadRequest(JsonConvert.SerializeObject(errors.Errors));
-                        }
+                            return InternalServerError();
                     }
                     else
                     {
-                        ErrorResponseVM errors = userBL.CheckAccountNoExistsONUpdate(userVM);
-                        if (errors.IsValid)
-                        {
-                            bool isSuccess = userBL.UpdateBankDetails(userVM);
-                            if (isSuccess)
-                                return Ok();
-                            else
-                                return InternalServerError();
-                        }
+                        return BadRequest(JsonConvert.SerializeObject(errors.Errors));
+                    }
+                }
+                else
+                {
+                    ErrorResponseVM errors = _userBL.CheckAccountNoExistsONUpdate(userVM);
+                    if (errors.IsValid)
+                    {
+                        bool isSuccess = _userBL.UpdateBankDetails(userVM);
+                        if (isSuccess)
+                            return Ok();
                         else
-                        {
-                            return BadRequest(JsonConvert.SerializeObject(errors.Errors));
-                        }
+                            return InternalServerError();
+                    }
+                    else
+                    {
+                        return BadRequest(JsonConvert.SerializeObject(errors.Errors));
                     }
                 }
             }
@@ -92,12 +89,9 @@ namespace l2g.Controllers
         [Route("getEmploymentDetails")]
         [HttpGet]
         public IHttpActionResult GetEmploymentDetails()
-        {
-            using (var userBL = new UserBL())
-            {
-                UserEmploymentDetailsVM userVM = userBL.GetUserEmploymentDetails();
-                return Ok(userVM);
-            }
+        { 
+            UserEmploymentDetailsVM userVM = _userBL.GetUserEmploymentDetails();
+            return Ok(userVM);
         }
 
         [Route("addEmploymentDetails")]
@@ -106,14 +100,13 @@ namespace l2g.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var userBL = new UserBL())
-                {
-                    bool isSuccess = userBL.AddOrUpdateUserEmploymentDetails(userVM);
+                
+                    bool isSuccess = _userBL.AddOrUpdateUserEmploymentDetails(userVM);
                     if (isSuccess)
                         return Ok();
                     else
                         return InternalServerError();
-                }
+                
             }
             else
             {
@@ -126,11 +119,8 @@ namespace l2g.Controllers
         [HttpGet]
         public IHttpActionResult GetUserDetails()
         {
-            using (var userBL = new UserBL())
-            {
-                UserDetailsVM userVM = userBL.GetUserDetails();
+                UserDetailsVM userVM = _userBL.GetUserDetails();
                 return Ok(userVM);
-            }
         }
 
         [Route("addUserDetails")]
@@ -139,14 +129,11 @@ namespace l2g.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var userBL = new UserBL())
-                {
-                    bool isSuccess = userBL.AddOrUpdateUserDetails(userVM);
-                    if (isSuccess)
-                        return Ok();
-                    else
-                        return InternalServerError();
-                }
+                bool isSuccess = _userBL.AddOrUpdateUserDetails(userVM);
+                if (isSuccess)
+                    return Ok();
+                else
+                    return InternalServerError();
             }
             else
             {
@@ -154,16 +141,12 @@ namespace l2g.Controllers
                 return BadRequest(JsonConvert.SerializeObject(validationResult.ValidationErrors));
             }
         }
-
         [HttpGet]
         [Route("getEmploymentDropdowns")]
         public IHttpActionResult GetEmploymentDropdown()
         {
-            using (var userBL = new UserBL())
-            {
-                EmploymentDropdowns response = userBL.getEmploymenttDropdown();
-                return Ok(response);
-            }
+            EmploymentDropdowns response = _userBL.getEmploymenttDropdown();
+            return Ok(response);
         }
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using l2g.DL.Interfaces;
 using l2g.DL.Mapping;
 using l2g.Entities.BusinessEntities;
 using l2g.Entities.DataEntities;
 
 namespace l2g.DL
 {
-    public class QuoteDL
+    public class QuoteDL : IQuoteDL
     {
         public bool AddQuote(GetQuote quote, int userId)
         {

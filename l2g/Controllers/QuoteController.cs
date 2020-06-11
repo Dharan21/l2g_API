@@ -1,4 +1,5 @@
 ﻿using l2g.BL;
+using l2g.BL.Interfaces;
 using l2g.Entities.BusinessEntities;
 using l2g.Entities.ValidationEntities;
 using Newtonsoft.Json;
@@ -15,18 +16,24 @@ namespace l2g.Controllers
     [RoutePrefix("quote")]
     public class QuoteController : ApiController
     {
+        private IQuoteBL _quoteBL;
+
+        public QuoteController(IQuoteBL quoteBL) 
+        {
+            _quoteBL = quoteBL;
+        }
+
         [HttpPost]
         [Route("save")]
         public IHttpActionResult SaveQuote(GetQuote quote)
         {
             if (ModelState.IsValid)
             {
-                QuoteBL quoteBL = new QuoteBL();
-                ErrorResponseVM errors = quoteBL.ValidateGetQuote(quote);
+                ErrorResponseVM errors = _quoteBL.ValidateGetQuote(quote);
                 if (errors.IsValid)
                 {
                     string username = User.Identity.Name;
-                    bool isAdded = quoteBL.AddQuote(quote, username);
+                    bool isAdded = _quoteBL.AddQuote(quote, username);
                     if (isAdded)
                         return Ok();
                     else

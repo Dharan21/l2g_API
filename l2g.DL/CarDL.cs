@@ -1,4 +1,5 @@
-﻿using l2g.DL.Mapping;
+﻿using l2g.DL.Interfaces;
+using l2g.DL.Mapping;
 using l2g.Entities.BusinessEntities;
 using l2g.Entities.DataEntities;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace l2g.DL
 {
-    public class CarDL
+    public class CarDL : ICarDL
     {
         public bool CarExists(int carId)
         {

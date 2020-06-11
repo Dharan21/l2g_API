@@ -182,7 +182,6 @@
         }
 
         function saveQuote() {
-            debugger
             var quote = @Html.Raw(Json.Encode(ViewData["quote"]));
             var token = '@ViewData["token"]';
             $.ajax({
