@@ -68,7 +68,7 @@
                             </div>
                             <div class="form-group">
                                 <ul class="text-danger p-0 m-0" style="list-style: none;">
-                                    @foreach (var error in (Error[])ViewData["Errors"])
+                                    @foreach (var error in (List<Error>)ViewData["Errors"])
                                     {
                                         <li><small>@error.ErrorMessage</small></li>
                                     }

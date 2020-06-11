@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l2g.DL", "l2g.DL\l2g.DL.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l2g.MVC", "l2g.MVC\l2g.MVC.csproj", "{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l2g.MVC.BL", "l2g.MVC.BL\l2g.MVC.BL.csproj", "{AA38945D-0B0F-4E95-AF8C-9A9E54553A82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ADF0051-3BDF-458D-A8CB-C1B6118C870C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA38945D-0B0F-4E95-AF8C-9A9E54553A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA38945D-0B0F-4E95-AF8C-9A9E54553A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA38945D-0B0F-4E95-AF8C-9A9E54553A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA38945D-0B0F-4E95-AF8C-9A9E54553A82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

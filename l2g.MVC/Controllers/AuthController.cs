@@ -1,11 +1,8 @@
 ﻿using l2g.Entities.BusinessEntities;
-using l2g.Entities.ValidationEntities;
-using Newtonsoft.Json;
+using l2g.MVC.BL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,38 +14,26 @@ namespace l2g.MVC.Controllers
     public class AuthController : Controller
     {
         // GET: Default
-        [Route("Sign-Up")]
+        [Route("Register")]
         [HttpGet]
         public ActionResult Register()
         {
-            ViewData["Errors"] = new Error[0];
+            ViewData["Errors"] = new List<Error>();
             return View();
         }
 
-        [Route("Sign-Up")]
+        [Route("Register")]
         [HttpPost]
         public async Task<ActionResult> Register(UserVM user)
         {
             if (ModelState.IsValid)
             {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("http://localhost:52778/");
-                    var content = JsonConvert.SerializeObject(user);
-                    HttpContent c = new StringContent(content, Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync("api/auth", c);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        return RedirectToAction("Login");
-                    }
-                    else
-                    {
-                        var result = response.Content.ReadAsStringAsync().Result;
-                        var obj = JsonConvert.DeserializeObject<ErrorRes>(result);
-                        ViewData["Errors"] = JsonConvert.DeserializeObject<Error[]>(obj.Message);
-                        return View();
-                    }
-                }
+                AuthBL auth = new AuthBL();
+                ErrorResponseVM response = await auth.RegisterAsync(user);
+                if (response.IsValid)
+                    return RedirectToAction("Login");
+                else
+                    ViewData["Errors"] = response.Errors;
             }
             return View();
         }
@@ -66,40 +51,12 @@ namespace l2g.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("http://localhost:52778/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    var request = new HttpRequestMessage(HttpMethod.Post, "token");
-                    var keyValues = new List<KeyValuePair<string, string>>();
-                    keyValues.Add(new KeyValuePair<string, string>("username", user.Username));
-                    keyValues.Add(new KeyValuePair<string, string>("password", user.Password));
-                    keyValues.Add(new KeyValuePair<string, string>("grant_type", "password"));
-                   
-                    request.Content = new FormUrlEncodedContent(keyValues);
-                    var response = await client.SendAsync(request);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var result = response.Content.ReadAsStringAsync().Result;
-                        var obj = JsonConvert.DeserializeObject<TokenRes>(result);
-                        
-                        HttpCookie cookie = new HttpCookie("token");
-                        cookie.Value = obj.access_token;
-                        cookie.Expires = DateTime.Now.AddSeconds(obj.expires_in);
-                        Response.Cookies.Add(cookie);
-
-                        cookie = new HttpCookie("username");
-                        cookie.Value = user.Username;
-                        cookie.Expires = DateTime.Now.AddSeconds(obj.expires_in);
-                        Response.Cookies.Add(cookie);
-
-                        return RedirectToAction("Home", "Car");
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Username or Password is incorrect!";
-                    }
-                }
+                AuthBL auth = new AuthBL();
+                bool isSuccess = await auth.LoginAsync(user);
+                if(isSuccess)
+                    return RedirectToAction("Home", "Car");
+                else
+                    ViewBag.Error = "Username or Password is incorrect!";
             }
             return View();
         }
@@ -115,9 +72,8 @@ namespace l2g.MVC.Controllers
         [Route("Logout")]
         public ActionResult Logout()
         {
-            HttpCookie cookie = HttpContext.Request.Cookies.Get("token");
-            cookie.Expires = DateTime.Now.AddDays(-1);
-            HttpContext.Response.Cookies.Add(cookie);
+            AuthBL auth = new AuthBL();
+            auth.Logout();
             return RedirectToAction("Login");
         }
     }
