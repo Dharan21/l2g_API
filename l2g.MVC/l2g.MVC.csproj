@@ -294,10 +294,6 @@
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\l2g.BL\l2g.BL.csproj">
-      <Project>{65bb17a6-f090-4f64-9e6f-53a547242bb1}</Project>
-      <Name>l2g.BL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\l2g.Entities\l2g.Entities.csproj">
       <Project>{378b8015-3598-462d-a786-7baa051e5efc}</Project>
       <Name>l2g.Entities</Name>

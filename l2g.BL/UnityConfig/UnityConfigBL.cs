@@ -17,7 +17,6 @@ namespace l2g.BL
             Container.RegisterType<IQuoteDL, QuoteDL>();
             Container.RegisterType<IPaybackTimeDL, PaybackTimeDL>();
             Container.RegisterType<IMileageDL, MileageDL>();
-
         }
     }
 }

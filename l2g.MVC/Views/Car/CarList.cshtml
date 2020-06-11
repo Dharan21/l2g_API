@@ -212,6 +212,7 @@
         var selectedBrandList = @Html.Raw(Json.Encode(ViewData["SelectedBrands"]));
         var selectedGearboxList = @Html.Raw(Json.Encode(ViewData["SelectedGearboxTypes"]));
         var selectedPriceRange = @Html.Raw(Json.Encode(ViewData["SelectedPriceRangeIndexes"]));
+        var dataFromLocalstorage = false;
         if (selectedModelList == null)
             selectedModelList = [];
         if (selectedFuelList == null)
@@ -230,6 +231,7 @@
             selectedFuelList = selectedData.selectedFuelList;
             selectedGearboxList = selectedData.selectedGearboxList;
             selectedPriceRange = selectedData.selectedPriceRange;
+            dataFromLocalstorage = true;
          } else {
             selectedData.selectedBrandList = selectedBrandList;
             selectedData.selectedFuelList = selectedFuelList;
@@ -387,8 +389,7 @@
             $.each($('.leasePrice'), function (index) {
                 this.innerHTML = "&euro;&nbsp;" + calculateLease(cars[index].Price);
             });
-
-            if (selectedModelList.length == 0) {
+            if (dataFromLocalstorage || selectedModelList.length == 0) {
                 $('.car-item').filter(function (index) {
                     var brand = cars[index].Brand.BrandName;
                     var fuel = cars[index].Fuel.FuelType;
@@ -476,7 +477,7 @@
                 //console.log(selectedCarList);
                 //console.log(selectedFuelList);
                 $('.car-item').filter(function (index) {
-                    debugger
+                    
                     var brand = cars[index].Brand.BrandName;
                     var fuel = cars[index].Fuel.FuelType;
                     var gearbox = cars[index].Gearbox.GearboxType;
