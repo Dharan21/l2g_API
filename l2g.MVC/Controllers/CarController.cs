@@ -1,11 +1,9 @@
 ﻿using l2g.Entities.BusinessEntities;
+using l2g.MVC.BL;
 using l2g.MVC.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 
@@ -24,31 +22,15 @@ namespace l2g.MVC.Controllers
             GetResponse data = (GetResponse)TempData.Peek("Data");
             if (data == null)
             {
-                string token = HttpContext.Request.Cookies.Get("token").Value;
-                using (var client = new HttpClient())
+                CarBL carBL = new CarBL();
+                try
                 {
-                    client.BaseAddress = new Uri("http://localhost:52778/api/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.ConnectionClose = true;
-                    var response = client.GetAsync("car");
-                    var result = response.Result;
-                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        var objString = result.Content.ReadAsStringAsync().Result;
-                        var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
-                        TempData["Data"] = obj;
-                        return View(obj);
-                    }
-                    else
-                    {
-                        if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
-                        else
-                            ViewData["Error"] = "Unknown Error Occured!";
-                        return View();
-                    }
+                    data = carBL.GetCarData();
+                    TempData["Data"] = data;
+                }
+                catch(Exception e)
+                {
+                    ViewData["Error"] = e.Message;
                 }
             }
             return View(data);
@@ -68,40 +50,15 @@ namespace l2g.MVC.Controllers
             {
                 string[] temp = key.Split(' ');
                 if (temp[0] == "model")
-                {
-                    List<string> tempList = temp.ToList();
-                    tempList.Remove(temp[0]);
-                    string model = string.Join(" ", tempList);
-                    selectedModels.Add(model);
-                }
+                    selectedModels.Add(form[key]);
                 else if(temp[0] == "brand")
-                {
-                    List<string> tempList = temp.ToList();
-                    tempList.Remove(temp[0]);
-                    string model = string.Join(" ", tempList);
-                    selectedBrands.Add(temp[1]);
-                }
+                    selectedBrands.Add(form[key]);
                 else if(temp[0] == "fuel")
-                {
-                    List<string> tempList = temp.ToList();
-                    tempList.Remove(temp[0]);
-                    string model = string.Join(" ", tempList);
-                    selectedFuels.Add(temp[1]);
-                }
+                    selectedFuels.Add(form[key]);
                 else if(temp[0] == "gearbox")
-                {
-                    List<string> tempList = temp.ToList();
-                    tempList.Remove(temp[0]);
-                    string model = string.Join(" ", tempList);
-                    selectedGearboxes.Add(temp[1]);
-                }
+                    selectedGearboxes.Add(form[key]);
                 else if(temp[0] == "range")
-                {
-                    List<string> tempList = temp.ToList();
-                    tempList.Remove(temp[0]);
-                    string model = string.Join(" ", tempList);
-                    selectedPriceRanges.Add(temp[1]);
-                }
+                    selectedPriceRanges.Add(form[key]);
             }
             TempData["SelectedModels"] = selectedModels;
             TempData["SelectedBrands"] = selectedBrands;
@@ -125,31 +82,16 @@ namespace l2g.MVC.Controllers
             GetResponse data = (GetResponse)TempData.Peek("Data");
             if (data == null)
             {
-                string token = HttpContext.Request.Cookies.Get("token").Value;
-                using (var client = new HttpClient())
+                CarBL carBL = new CarBL();
+                try
                 {
-                    client.BaseAddress = new Uri("http://localhost:52778/api/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.ConnectionClose = true;
-                    var response = client.GetAsync("car");
-                    var result = response.Result;
-                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        var objString = result.Content.ReadAsStringAsync().Result;
-                        var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
-                        TempData["Data"] = obj;
-                        return View(obj);
-                    }
-                    else
-                    {
-                        if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
-                        else
-                            ViewData["Error"] = "Unknown Error Occured!";
-                        return View();
-                    }
+                    data = carBL.GetCarData();
+                    TempData["Data"] = data;
+                }
+                catch (Exception e)
+                {
+                    ViewData["Error"] = e.Message;
+                    // redirect to error page with error message
                 }
             }
             return View(data);
@@ -166,41 +108,21 @@ namespace l2g.MVC.Controllers
             CarVM car = new CarVM();
             if (data == null)
             {
-                string token = HttpContext.Request.Cookies.Get("token").Value;
-                using (var client = new HttpClient())
+                CarBL carBL = new CarBL();
+                try
                 {
-                    client.BaseAddress = new Uri("http://localhost:52778/api/");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Add("Authorization", "bearer " + token);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.ConnectionClose = true;
-                    var response = client.GetAsync("car");
-                    var result = response.Result;
-                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        var objString = result.Content.ReadAsStringAsync().Result;
-                        var obj = JsonConvert.DeserializeObject<GetResponse>(objString);
-                        TempData["Data"] = obj;
-                        car = obj.Cars.AsQueryable().Where(x => x.CarId == id).First();
-                        ViewData["Mileages"] = obj.Mileages;
-                        ViewData["PaybackTimes"] = obj.PaybackTimes;
-                    }
-                    else
-                    {
-                        if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                            ViewData["Error"] = "Unauthorized! Try first Login and then add details.";
-                        else
-                            ViewData["Error"] = "Unknown Error Occured!";
-                        return View();
-                    }
+                    data = carBL.GetCarData();
+                    TempData["Data"] = data;
+                }
+                catch (Exception e)
+                {
+                    ViewData["Error"] = e.Message;
+                    // redirect to error page with error message
                 }
             }
-            else
-            {
-                ViewData["Mileages"] = data.Mileages;
-                ViewData["PaybackTimes"] = data.PaybackTimes;
-                car = data.Cars.AsQueryable().Where(x => x.CarId == id).First();
-            }
+            ViewData["Mileages"] = data.Mileages;
+            ViewData["PaybackTimes"] = data.PaybackTimes;
+            car = data.Cars.AsQueryable().Where(x => x.CarId == id).First();
             ViewData["Car"] = car;
             return View();
         }
