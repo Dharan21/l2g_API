@@ -67,7 +67,6 @@ namespace l2g.MVC.Controllers
                         return View();
                     }          
                 }
-                
             }
             return View();
         }
