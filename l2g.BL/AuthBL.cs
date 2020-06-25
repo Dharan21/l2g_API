@@ -16,12 +16,6 @@ namespace l2g.BL
     public class AuthBL:IDisposable
     {
         AuthDL _authDL = new AuthDL();
-        //private IAuthDL _authDL;
-        ////public AuthBL() { }
-        //public AuthBL(IAuthDL authDL)
-        //{
-        //    _authDL = authDL;
-        //}
 
         public UserVM ValidateUser(string username, string password)
         {

@@ -14,18 +14,12 @@ namespace l2g.Models
 {
     public class MyAuthorizationProvider : OAuthAuthorizationServerProvider
     {
-        //private IAuthBL _authBL;
-        //public MyAuthorizationProvider(IAuthBL authBL)
-        //{
-        //    _authBL = authBL;
-        //}
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
         }
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            //var user = _authBL.ValidateUser(context.UserName, context.Password);
             AuthBL authBL = new AuthBL();
             var user = authBL.ValidateUser(context.UserName, context.Password);
             if (user == null)

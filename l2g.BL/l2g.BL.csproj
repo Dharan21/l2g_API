@@ -69,7 +69,6 @@
     <Compile Include="UnityConfig\UnityConfigBL.cs" />
     <Compile Include="AuthBL.cs" />
     <Compile Include="CarBL.cs" />
-    <Compile Include="Interfaces\IAuthBL.cs" />
     <Compile Include="Interfaces\ICarBL.cs" />
     <Compile Include="Interfaces\IQuoteBL.cs" />
     <Compile Include="Interfaces\IUserBL.cs" />

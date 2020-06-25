@@ -11,7 +11,6 @@ namespace l2g.BL
     {
         protected override void Initialize()
         {
-            Container.RegisterType<IAuthDL, AuthDL>();
             Container.RegisterType<ICarDL,CarDL>();
             Container.RegisterType<IUserDL, UserDL>();
             Container.RegisterType<IQuoteDL, QuoteDL>();

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace l2g.DL
 {
-    public class AuthDL : IAuthDL, IDisposable
+    public class AuthDL : IDisposable
     {
         Lead2OrderGenerateDbEntities db = new Lead2OrderGenerateDbEntities();
         public UserVM ValidateUser(string username, string password)

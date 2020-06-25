@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="AuthDL.cs" />
     <Compile Include="CarDL.cs" />
-    <Compile Include="Interfaces\IAuthDL.cs" />
     <Compile Include="Interfaces\ICarDL.cs" />
     <Compile Include="Interfaces\IMileageDL.cs" />
     <Compile Include="Interfaces\IPaybackTimeDL.cs" />

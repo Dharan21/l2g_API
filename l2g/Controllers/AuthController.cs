@@ -16,22 +16,16 @@ namespace l2g.Controllers
 {
     public class AuthController : ApiController
     {
-        private IAuthBL _authBL;
-
-        public AuthController(IAuthBL authBL) 
-        {
-            _authBL = authBL;
-        }
-
+        AuthBL authBL = new AuthBL();
         [HttpPost]
         public IHttpActionResult Register(UserVM userVM)
         {
             if (ModelState.IsValid)
             {
-                ErrorResponseVM errorResponse = _authBL.CheckUsernameOrEmailExists(userVM);
+                ErrorResponseVM errorResponse = authBL.CheckUsernameOrEmailExists(userVM);
                 if (errorResponse.IsValid)
                 {
-                    var isRegistered = _authBL.Register(userVM);
+                    var isRegistered = authBL.Register(userVM);
                     if(isRegistered)
                         return Ok();
                     else
@@ -50,10 +44,10 @@ namespace l2g.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetPassword(string email)
         {
-            bool isExists = _authBL.CheckEmailExists(email);
+            bool isExists = authBL.CheckEmailExists(email);
             if (isExists)
             {
-                var isSent = await _authBL.SendEmail(email);
+                var isSent = await authBL.SendEmail(email);
                 if (isSent)
                     return Ok();
                 else
