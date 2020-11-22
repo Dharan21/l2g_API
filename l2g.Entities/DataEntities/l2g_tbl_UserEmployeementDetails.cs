@@ -16,6 +16,7 @@ namespace l2g.Entities.DataEntities
     public partial class l2g_tbl_UserEmployeementDetails
     {
         [Key]
+        public int UserEmployeementDetails { get; set; }
         public int UserId { get; set; }
         public string Company { get; set; }
         public int Salary { get; set; }
@@ -24,8 +25,7 @@ namespace l2g.Entities.DataEntities
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<int> EmployeeStatusId { get; set; }
         public Nullable<int> ContractId { get; set; }
-        public int UserEmployeementDetails { get; set; }
-
+    
         public virtual l2g_tbl_Contract l2g_tbl_Contract { get; set; }
         public virtual l2g_tbl_EmployeeStatus l2g_tbl_EmployeeStatus { get; set; }
         public virtual l2g_tbl_User l2g_tbl_User { get; set; }

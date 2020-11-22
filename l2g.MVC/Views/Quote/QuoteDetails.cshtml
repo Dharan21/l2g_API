@@ -1,0 +1,202 @@
+﻿@model l2g.Entities.BusinessEntities.ConfirmQuote
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/steps.css" rel="stylesheet" />
+    <title>Quote Details</title>
+</head>
+<body>
+    <div>
+        <div class="container-fluid animated fadeIn fast shadow-lg" style="background-color: #1b262c;">
+            <div class="container">
+                <div class="row align-items-center" style="height: 12vh">
+                    <div class="col-4">
+                        <img src="~/Content/Images/jpg/car-logo.jpg" alt="logo" width="120" style="filter:invert(1)" />
+                    </div>
+                    <div class="col-8">
+                        <ul class="nav justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Logout", "Logout", "Auth", null, new { @class = "nav-link text-white" })
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- steps start -->
+        <div class="container">
+            <h3>The steps to get a car: </h3>
+            <section class="application-progress">
+                <div class="overlay">
+                    <div class="overlay-inner">
+                        <ul>
+                            <li class="click">
+                                <div>
+                                    <div class="step">1</div>
+                                    <label>Select Vehicle</label>
+                                </div>
+                            </li>
+                            <li class="click">
+                                <div>
+                                    <div class="step">2</div>
+                                    <label>Select Mileage and Payback Time</label>
+                                </div>
+                            </li>
+                            <li class="click">
+                                <div>
+                                    <div class="step">3</div>
+                                    <label>Add Personal Details</label>
+                                </div>
+                            </li>
+                            <li class="click">
+                                <div>
+                                    <div class="step">4</div>
+                                    <label>Add Employment Details</label>
+                                </div>
+                            </li>
+                            <li class="click">
+                                <div>
+                                    <div class="step">5</div>
+                                    <label>Add Bank Details</label>
+                                </div>
+                            </li>
+                            <li class="click">
+                                <div>
+                                    <div class="step done">6</div>
+                                    <label class="done">Generate Quote</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="marker-container">
+                    <div class="done-marker" style="margin-left: 8%; width: 0%;"></div>
+                    <div class="todo-marker" style="margin-right: 8%; width: 84%;"></div>
+                </div>
+            </section>
+        </div>
+        <!-- steps end -->
+
+        @* UI for quote *@
+    <div class="container-fluid">
+        <div class="container">
+            <h2 class="mb-4">Quote Summary</h2>
+            <div class="row bg-light" style="font-size: large">
+                <div class=" mt-2 mt-md-0 col-12 col-md-4 col-lg-3">
+                    @{string imagePath = "/Content/Images/cars/" + Model.Car.CarId + ".jpg"; }
+                    <img src="@imagePath" class="w-100 h-100 py-3" style="object-fit: contain" />
+                </div>
+                <div class="col-6 col-md-4 col-lg-5">
+                    <h3>@Model.Car.Model @Model.Car.Brand.BrandName</h3>
+                    <p class="m-0">Fuel: @Model.Car.Fuel.FuelType</p>
+                    <p class="m-0">Gearbox: @Model.Car.Gearbox.GearboxType</p>
+                    <p class="m-0">Color: @Model.Car.Color</p>
+                    <p>CO<sub>2</sub> Emission: @Model.Car.CO2Emission g/km</p>
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 text-right">
+                    <h3>Price: &euro; @Model.Price</h3>
+                    <p class="m-0">Payback Time: @Model.PaybackTime.Months months</p>
+                    <p class="m-0">Annual Mileage: @Model.Mileage.Kilometer km</p>
+                </div>
+            </div>
+            <h2 class="mt-4 mb-4">Personal Details</h2>
+            <div class="row bg-light">
+                <div class="col-12 mt-2 p-3" style="font-size: large">
+                    <p>Name: @Model.User.PersonalDetails.Firstname @Model.User.PersonalDetails.Lastname</p>
+                    <p>Contact: @Model.User.PersonalDetails.Contact</p>
+                    <p>
+                        Address: @Model.User.PersonalDetails.HouseNo
+                        @Model.User.PersonalDetails.Street,
+                        @Model.User.PersonalDetails.Town,
+                        @Model.User.PersonalDetails.PIN
+                    </p>
+                </div>
+            </div>
+            <h2 class="mt-4 mb-4">Employment Details</h2>
+            <div class="row bg-light">
+                <div class="col-12 mt-2 p-3" style="font-size: large">
+                    <p>Company: @Model.User.EmploymentDetails.Company</p>
+                    <p>Credit Score: @Model.User.EmploymentDetails.CreditScore</p>
+                    <p>Contract: @Model.User.EmploymentDetails.ContractType</p>
+                    <p>Employeement: @Model.User.EmploymentDetails.EmployeeStatusType</p>
+                </div>
+
+            </div>
+            <h2 class="mt-4 mb-4">Bank Details</h2>
+            <div class="row bg-light">
+                <div class="col-12 mt-2 p-3" style="font-size: large">
+                    <p>Account Number: @Model.User.BankDetails.AccountNo</p>
+                    <p>Account Holder Name: @Model.User.BankDetails.AccountHolderName</p>
+                    <p>Account Type: @Model.User.BankDetails.AccountType</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 my-3 text-right">
+                    <!-- just for testing model -->
+                    @*<button type="button" class="btn btn-primary" onclick="showModel()">
+                        Show Model
+                    </button>*@
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="saveQuote()">
+                        Generate Quote
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                    </div>
+                    <div class="modal-body">
+                        Quote Generated
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary" href="/Quote/Temp">Go To Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        function showModel() {
+            $('#exampleModal').modal('show');
+        }
+
+        function saveQuote() {
+            var quote = @Html.Raw(Json.Encode(ViewData["quote"]));
+            var token = '@ViewData["token"]';
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:52778/quote/save',
+                headers: { 'Authorization': 'bearer ' + token },
+                data: quote,
+                success: function (response) {
+                    showModel();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

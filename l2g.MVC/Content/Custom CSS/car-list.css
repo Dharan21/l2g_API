@@ -1,0 +1,23 @@
+﻿.car-item a {
+    color: #1b262c;
+    transition: transform .2s;
+}
+
+.car-item a:hover {
+    transform: scale(1.05);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+}
+
+@media ( min-width: 425px ) and (max-width: 768px) {
+    .car-item {
+        flex: 0 0 70%;
+        max-width: 70%;
+        margin-left: 1%;
+    }
+}
+@media ( min-width: 769px ) and (max-width: 1024px) {
+    .car-item {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}

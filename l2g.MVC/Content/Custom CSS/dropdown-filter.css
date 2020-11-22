@@ -1,0 +1,24 @@
+﻿.dropdown {
+    padding-bottom: 15px
+}
+
+.cb-text {
+    font-size: 14px;
+    margin-left: 20px;
+    font-weight: 400;
+}
+
+    .dropdown button {
+        width: 100%;
+        font-size: 14px;
+        background-color: #1b262c;
+    }
+
+.dropdown-menu {
+    max-height: 200px;
+    width: 100%;
+    margin-top: -15px;
+    overflow: auto;
+    padding: 0;
+    margin-top: 0px;
+}

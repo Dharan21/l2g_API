@@ -1,0 +1,11 @@
+﻿.filterbar button:active {
+    box-shadow: none !important;
+    outline: 0;
+}
+.filterbar button:focus {
+    box-shadow: none !important;
+    outline: 0;
+}
+.filterbar button:hover {
+    opacity: .85;
+}

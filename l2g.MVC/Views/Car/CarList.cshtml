@@ -1,0 +1,515 @@
+﻿@model l2g.Entities.BusinessEntities.GetResponse
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CarList</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/steps.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/filterbar.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/car-list.css" rel="stylesheet" />
+    <link href="~/Content/Custom CSS/dropdown-filter.css" rel="stylesheet" />
+    <style>
+        .content-header {
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            border: none;
+        }
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px
+        }
+    
+    </style>
+</head>
+<body>
+    <!-- Header start -->
+    <div class="container-fluid animated fadeIn fast shadow-lg" style="background-color: #1b262c;">
+        <div class="container">
+            <div class="row align-items-center" style="height: 12vh">
+                <div class="col-4">
+                    <img src="~/Content/Images/jpg/car-logo.jpg" alt="logo" width="120" style="filter:invert(1)" />
+                </div>
+                <div class="col-8">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Hello, @ViewData["Username"]</a>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Logout", "Logout", "Auth", null, new { @class = "nav-link text-white" })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header end -->
+
+    <div class="container-fluid" style="height: 85vh;padding: 0;">
+        <div class="row" style="margin-right: 0;margin-left: 0;">
+            <div class="col-md-12" style="padding:0;">
+                <div class="container-fluid">
+                    <!-- steps start -->
+                    <div class="container">
+                        <h3>The steps to get a car: </h3>
+                        <section class="application-progress">
+                            <div class="overlay">
+                                <div class="overlay-inner">
+                                    <ul>
+                                        <li class="click">
+                                            <div>
+                                                <div class="step done">1</div>
+                                                <label class="done">Select Vehicle</label>
+                                            </div>
+                                        </li>
+                                        <li class="click">
+                                            <div>
+                                                <div class="step">2</div>
+                                                <label>Select Mileage and Payback Time</label>
+                                            </div>
+                                        </li>
+                                        <li class="click">
+                                            <div>
+                                                <div class="step">3</div>
+                                                <label>Add Personal Details</label>
+                                            </div>
+                                        </li>
+                                        <li class="click">
+                                            <div>
+                                                <div class="step">4</div>
+                                                <label>Add Employment Details</label>
+                                            </div>
+                                        </li>
+                                        <li class="click">
+                                            <div>
+                                                <div class="step">5</div>
+                                                <label>Add Bank Details</label>
+                                            </div>
+                                        </li>
+                                        <li class="click">
+                                            <div>
+                                                <div class="step">6</div>
+                                                <label>Generate Quote</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="marker-container">
+                                <div class="done-marker" style="margin-left: 8%; width: 0%;"></div>
+                                <div class="todo-marker" style="margin-right: 8%; width: 84%;"></div>
+                            </div>
+                        </section>
+                    </div>
+                    <!-- steps end -->
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-3 filterbar">
+                            <!-- Filter bar start -->
+                            <h4 class="mt-2">Brand</h4>
+                            <!-- Brand list start -->
+                            <div id="brands" style="display: flex; flex-wrap: wrap"></div>
+                            <!-- Brand list end -->
+                            <br>
+                            <h4 class="mt-2">Fuel</h4>
+                            <!-- Fuel list start -->
+                            <div id="fuels" style="display: flex; flex-wrap: wrap"></div>
+                            <!-- Fuel list end -->
+                            <br>
+                            <h4 class="mt-2">Gearbox</h4>
+                            <!-- Gearbox list start -->
+                            <div id="gearboxes" style="display: flex; flex-wrap: wrap"></div>
+                            <!-- Gearbox list start -->
+                            <br>
+                            <h4 class="mt-2">Price</h4>
+                            <div id="priceRangeList" style="display: flex; flex-wrap: wrap">
+                                <!-- Price Ranges goes here -->
+                            </div>
+                            <br>
+                            <button class="btn btn-primary btn-lg rounded-0 my-5" style="background-color: #0f4c75;" onclick="onResetFilter()">
+                                Reset
+                            </button>
+                            <!-- Filter bar start -->
+                        </div>
+                            <div class="col-12 col-md-8 col-lg-9">
+                                @*<app-car-list></app-car-list>*@
+                                <div class="row justify-content-center">
+                                    @*<app-car-item style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3" *ngFor="let car of filteredCars"></app-car-item>*@
+                                    @foreach (var car in Model.Cars)
+                                    {
+                                        string imagePath = "../Content/Images/cars/" + car.CarId + ".jpg";
+                                        string href = "/Car/Select-Mileage-And-PaybackTime?id=" + car.CarId;
+                                        <div style="margin-bottom:10px;padding:0px 8px" class="col-12 col-lg-4 mb-3 car-item">
+                                            <a class="card text-decoration-none" href="@href">
+                                                <img class="card-img-top" src="@imagePath" alt="@car.Model" style="height: 250px;">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-7 d-flex align-items-center" style="padding: 0px 5px;">
+                                                            <p class="card-title p-0 m-0 font-weight-bold">@car.Brand.BrandName&nbsp;@car.Model</p>
+                                                        </div>
+                                                        <div class="col-5">
+                                                            <p class="card-title text-white text-center p-2 m-0 leasePrice" style="background-color: #00adb5;"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row justify-content-around mt-3">
+                                                        <div class="col-3 px-1">
+                                                            <p class="font-smaller m-0">Fuel</p>
+                                                            <p class="font-weight-bold">@car.Fuel.FuelType</p>
+                                                        </div>
+                                                        <div class="col-4 px-1">
+                                                            <p class="font-smaller m-0">Gearbox</p>
+                                                            <p class="font-weight-bold">@car.Gearbox.GearboxType</p>
+                                                        </div>
+                                                        <div class="col-5 px-1">
+                                                            <p class="font-smaller m-0">CO<sub>2</sub>&nbsp;Emission</p>
+                                                            <p class="font-weight-bold">@car.CO2Emission</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/umd/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Custom/calculateLease.js"></script>
+    <script>
+        var obj = @Html.Raw(Json.Encode(Model));
+        var cars = obj.Cars;
+        var brands = obj.Brands;
+        var fuelTypes = obj.FuelTypes;
+        var gearboxTypes = obj.GearBoxTypes;
+        var priceRanges = {
+            0: {
+                min: 400,
+                max: 499
+            },
+            1: {
+                min: 500,
+                max: 599
+            },
+            2: {
+                min: 600,
+                max: 699
+            }
+        };
+
+        var selectedModelList = @Html.Raw(Json.Encode(ViewData["SelectedModels"]));
+        var selectedFuelList = @Html.Raw(Json.Encode(ViewData["SelectedFuelTypes"]));
+        var selectedBrandList = @Html.Raw(Json.Encode(ViewData["SelectedBrands"]));
+        var selectedGearboxList = @Html.Raw(Json.Encode(ViewData["SelectedGearboxTypes"]));
+        var selectedPriceRange = @Html.Raw(Json.Encode(ViewData["SelectedPriceRangeIndexes"]));
+        var dataFromLocalstorage = false;
+        if (selectedModelList == null)
+            selectedModelList = [];
+        if (selectedFuelList == null)
+            selectedFuelList = [];
+        if (selectedBrandList == null)
+            selectedBrandList = [];
+        if (selectedGearboxList == null)
+            selectedGearboxList = [];
+        if (selectedPriceRange == null)
+            selectedPriceRange = [];
+
+        var selectedData = {};
+        if (localStorage.getItem('selectedItems') != null) {
+            selectedData = JSON.parse(localStorage.getItem('selectedItems'));
+            selectedBrandList = selectedData.selectedBrandList;
+            selectedFuelList = selectedData.selectedFuelList;
+            selectedGearboxList = selectedData.selectedGearboxList;
+            selectedPriceRange = selectedData.selectedPriceRange;
+            dataFromLocalstorage = true;
+         } else {
+            selectedData.selectedBrandList = selectedBrandList;
+            selectedData.selectedFuelList = selectedFuelList;
+            selectedData.selectedGearboxList = selectedGearboxList;
+            selectedData.selectedPriceRange = selectedPriceRange;
+            localStorage.setItem('selectedItems', JSON.stringify(selectedData));
+        }
+
+        function initializeBrands(brands, selectedBrands) {
+            $.each(brands, function (index, item) {
+                let str = '';
+                if (selectedBrands != null && selectedBrands.includes(item.BrandName)) {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" checked name="brand `+ item.BrandName + `" value="` + item.BrandName + `" autocomplete="off"> ` + item.BrandName +`
+                                </label>
+                            </div>`;
+                } else {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" name="brand `+ item.BrandName + `" value="` + item.BrandName + `" autocomplete="off"> ` + item.BrandName +`
+                                </label>
+                            </div>`;
+                }
+                $('#brands').append(str);
+            });
+        }
+
+        function initializeFuels(fuels, selectedFuels) {
+            $.each(fuels, function (index, item) {
+                let str = '';
+                if (selectedFuels != null && selectedFuels.includes(item.FuelType)) {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" checked name="fuel `+ item.FuelType + `" value="` + item.FuelType + `" autocomplete="off"> ` + item.FuelType +`
+                                </label>
+                            </div>`;
+                } else {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" name="fuel `+ item.FuelType + `" value="` + item.FuelType + `" autocomplete="off"> ` + item.FuelType +`
+                                </label>
+                            </div>`;
+                }
+                $('#fuels').append(str);
+            });
+        }   
+
+        function initializeGearboxes(gearboxes, selectedGearboxes) {
+            $.each(gearboxes, function (index, item) {
+                let str = '';
+                if (selectedGearboxes != null && selectedGearboxes.includes(item.GearboxType)) {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" checked name="gearbox `+ item.GearboxType + `" value="` + item.GearboxType + `" autocomplete="off"> ` + item.GearboxType +`
+                                </label>
+                            </div>`;
+                } else {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                                <label class="btn btn-secondary checkbox-label active">
+                                    <input type="checkbox" name="gearbox `+ item.GearboxType + `" value="` + item.GearboxType + `" autocomplete="off"> ` + item.GearboxType +`
+                                </label>
+                            </div>`;
+                }
+                $('#gearboxes').append(str);
+            });
+        }
+
+        function onResetFilter() {
+            $.each($('input[type=checkbox]'), function (index, obj) {
+                obj.checked = false;
+            });
+
+            $.each($('.checkbox-label'), function () {
+                $(this).removeClass('active');
+            });
+
+            selectedModelList = [];
+            selectedFuelList = [];
+            selectedBrandList = [];
+            selectedGearboxList = [];
+            selectedPriceRange = [];
+
+            $('.car-item').filter(function (index) {
+                $(this).removeClass('d-none');
+            });
+            localStorage.removeItem('selectedItems')
+        }
+
+        function inBrands(id) {
+            let inBrand = false;
+            let i = 0;
+            for (var brand of brands) {
+                if (brand.BrandName == id) {
+                    inBrand = true;
+                    break;
+                }
+                i++;
+            }
+            return inBrand ? i : -1;
+        }
+
+        function inFuelTypes(id) {
+            let inFuel = false;
+            let i = 0;
+            for (var fuel of fuelTypes) {
+                if (fuel.FuelType == id) {
+                    inFuel = true;
+                    break;
+                }
+                i++;
+            }
+            return inFuel ? i : -1;
+        }
+
+        function inGearboxTypes(id) {
+            let inGearbox = false;
+            let i = 0;
+            for (var gearbox of gearboxTypes) {
+                if (gearbox.GearboxType == id) {
+                    inGearbox = true;
+                    break;
+                }
+                i++;
+            }
+            return inGearbox ? i : -1;
+        }
+
+
+        $(document).ready(function () {
+
+            initializeBrands(obj.Brands, selectedBrandList);
+            initializeFuels(obj.FuelTypes, selectedFuelList);
+            initializeGearboxes(obj.GearBoxTypes, selectedGearboxList);
+  
+            // adds price range list 
+            $.each(priceRanges, function (index, item) {
+                let str = "";
+                if (selectedPriceRange != null && selectedPriceRange.includes(index+"")) {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                        <label class="btn btn-secondary active checkbox-label">
+                            <input type="checkbox" checked name="range `+ index + `" value="` + index + `" autocomplete="off"> ` + item.min + `-` + item.max +`
+                        </label>
+                    </div>`;
+                } else {
+                    str = `<div class="btn-group-toggle mt-2 mr-2" data-toggle="buttons">
+                        <label class="btn btn-secondary checkbox-label">
+                            <input type="checkbox" name="range `+ index + `" value="` + index + `" autocomplete="off"> ` + item.min + `-` + item.max +`
+                        </label>
+                    </div>`;
+                }
+                $('#priceRangeList').append(str);
+            });
+
+            $.each($('.leasePrice'), function (index) {
+                this.innerHTML = "&euro;&nbsp;" + calculateLease(cars[index].Price);
+            });
+            if (dataFromLocalstorage || selectedModelList.length == 0) {
+                $('.car-item').filter(function (index) {
+                    var brand = cars[index].Brand.BrandName;
+                    var fuel = cars[index].Fuel.FuelType;
+                    var gearbox = cars[index].Gearbox.GearboxType;
+
+                    var brandCheck = selectedBrandList.length > 0 ? selectedBrandList.includes(brand) : true;
+                    var fuelCheck = selectedFuelList.length > 0 ? selectedFuelList.includes(fuel) : true;
+                    var gearboxCheck = selectedGearboxList.length > 0 ? selectedGearboxList.includes(gearbox) : true;
+
+                    var rangeCheck = false;
+                    if (selectedPriceRange.length > 0) {
+                        var price = calculateLease(cars[index].Price);
+                        for (var index of selectedPriceRange) {
+
+                            var min = priceRanges[index].min;
+                            var max = priceRanges[index].max;
+                            if (price >= min && price <= max) rangeCheck = true;
+                        }
+                    } else {
+                        rangeCheck = true;
+                    }
+                    var r = brandCheck && fuelCheck && gearboxCheck && rangeCheck;
+                    if (r) {
+                        $(this).removeClass('d-none');
+                    } else {
+                        $(this).addClass('d-none');
+                    }
+                    if (selectedBrandList.length == 0 && selectedFuelList.length == 0 && selectedGearboxList.length == 0 && selectedPriceRange.length == 0) {
+                        $(this).removeClass('d-none');
+                    }
+                });
+            } else {
+                $('.car-item').filter(function (index) {
+                    if (selectedModelList.indexOf(cars[index].Model) != -1) {
+                        //$(this).removeClass('d-none');
+                    } else {
+                        $(this).addClass('d-none');
+                    }
+                });
+            }
+
+            
+
+            $("input[type=checkbox]").change(function (e) {
+
+                var value = e.target.value;
+                var brandIndex = inBrands(value);
+                var fuelIndex = inFuelTypes(value);
+                var gearboxIndex = inGearboxTypes(value);
+        
+                if (e.target.checked) {
+                    if (brandIndex != -1) {
+                        selectedBrandList.push(value);
+                    } else if (fuelIndex != -1) {
+                        selectedFuelList.push(value);
+                    } else if (gearboxIndex != -1) {
+                        selectedGearboxList.push(value);
+                    } else if (Object.keys(priceRanges).includes(value)) {
+                        selectedPriceRange.push(value);
+                    }
+                } else {
+                    if (!e.target.checked) {
+
+                        if (selectedBrandList.includes(value)) {
+                            var index = selectedBrandList.indexOf(value);
+                            selectedBrandList.splice(index, 1);
+                        } else if (selectedFuelList.includes(value)) {
+                            var index = selectedFuelList.indexOf(value);
+                            selectedFuelList.splice(index, 1);
+                        } else if (selectedGearboxList.includes(value)) {
+                            var index = selectedGearboxList.indexOf(value);
+                            selectedGearboxList.splice(index, 1);
+                        } else if (selectedPriceRange.includes(value)) {
+                            var index = selectedPriceRange.indexOf(value);
+                            selectedPriceRange.splice(index, 1);
+                        }
+                    }
+                }
+                let selectedData = {};
+                selectedData.selectedBrandList = selectedBrandList;
+                selectedData.selectedFuelList = selectedFuelList;
+                selectedData.selectedGearboxList = selectedGearboxList;
+                selectedData.selectedPriceRange = selectedPriceRange;
+                localStorage.setItem('selectedItems', JSON.stringify(selectedData));
+                //console.log(selectedCarList);
+                //console.log(selectedFuelList);
+                $('.car-item').filter(function (index) {
+                    
+                    var brand = cars[index].Brand.BrandName;
+                    var fuel = cars[index].Fuel.FuelType;
+                    var gearbox = cars[index].Gearbox.GearboxType;
+
+                    var brandCheck = selectedBrandList.length > 0 ? selectedBrandList.includes(brand) : true;
+                    var fuelCheck = selectedFuelList.length > 0 ? selectedFuelList.includes(fuel) : true;
+                    var gearboxCheck = selectedGearboxList.length > 0 ? selectedGearboxList.includes(gearbox) : true;
+
+                    var rangeCheck = false;
+                    if (selectedPriceRange.length > 0) {
+                        var price = calculateLease(cars[index].Price);
+                        for (var index of selectedPriceRange) {
+
+                            var min = priceRanges[index].min;
+                            var max = priceRanges[index].max;
+                            if (price >= min && price <= max) rangeCheck = true;
+                        }
+                    } else {
+                        rangeCheck = true;
+                    }
+                    var r = brandCheck && fuelCheck && gearboxCheck && rangeCheck;
+                    if (r) {
+                        $(this).removeClass('d-none');
+                    } else {
+                        $(this).addClass('d-none');
+                    }
+                    if (selectedBrandList.length == 0 && selectedFuelList.length == 0 && selectedGearboxList.length == 0 && selectedPriceRange.length == 0) {
+                        $(this).removeClass('d-none');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

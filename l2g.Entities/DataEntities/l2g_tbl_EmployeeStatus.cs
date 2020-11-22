@@ -20,7 +20,6 @@ namespace l2g.Entities.DataEntities
         {
             this.l2g_tbl_UserEmployeementDetails = new HashSet<l2g_tbl_UserEmployeementDetails>();
         }
-    
         [Key]
         public int EmployeeStatusId { get; set; }
         public string EmployeeStatusType { get; set; }

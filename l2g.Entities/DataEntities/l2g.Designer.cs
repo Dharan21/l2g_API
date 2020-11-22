@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\Professional\Gateway\Lead2OrderGenerate\l2g\l2g.Entities\DataEntities\l2g.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\bhvaya shah\Source\Repos\Dharan21\l2g_API\l2g.Entities\DataEntities\l2g.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

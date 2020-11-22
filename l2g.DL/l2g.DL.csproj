@@ -50,9 +50,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthDL.cs" />
     <Compile Include="CarDL.cs" />
+    <Compile Include="Interfaces\ICarDL.cs" />
+    <Compile Include="Interfaces\IMileageDL.cs" />
+    <Compile Include="Interfaces\IPaybackTimeDL.cs" />
+    <Compile Include="Interfaces\IQuoteDL.cs" />
+    <Compile Include="Interfaces\IUserDL.cs" />
     <Compile Include="Mapping\MappingConfig.cs" />
+    <Compile Include="MileageDL.cs" />
+    <Compile Include="PaybackTimeDL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuoteDL.cs" />
+    <Compile Include="UserDL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

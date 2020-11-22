@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace l2g.Entities.BusinessEntities
 {
-    public class CarResponse
+    public class PaybackTimeVM
     {
-        public int Count { get; set; }
-        public List<CarVM> Cars { get; set; }
+        public int MonthId { get; set; }
+        public int Months { get; set; }
     }
 }
